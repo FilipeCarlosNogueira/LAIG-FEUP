@@ -17,26 +17,25 @@ class MyCylinder extends CGFobject {
     // variables
     let ang = 0, deltaAng = (2 * Math.PI) / this.slices;
     let ca = 0, sa = 0, y = 0, deltaY = this.height / this.stacks;
+    let radius = this.radiusBase, deltaRadius = (this.radiusTop - this.radiusBase) / this.stacks;
 
     // vertices, normals and texture
     for (let j = 0; j <= this.stacks; j++) {
       y = deltaY * j;
+      radius = this.radiusBase + deltaRadius * j;
       for (let i = 0; i <= this.slices; i++) {
         ang = deltaAng * i;
         ca = Math.cos(ang);
         sa = Math.sin(ang);
 
-        this.vertices.push(ca * this.radiusBase, y, -sa * this.radiusBase);
-        this.normals.push(ca, 0, -sa);
+        this.vertices.push(ca * radius, y, -sa * radius);
+        this.normals.push(ca, -1 / (this.radiusTop - this.radiusBase), -sa);
         this.texCoords.push(i / this.slices, (this.stacks - j) / this.stacks);
       }
     }
 
     // indices
-    let b1 = 0,
-      e1 = 0,
-      b2 = 0,
-      e2 = 0;
+    let b1 = 0, e1 = 0, b2 = 0, e2 = 0;
     for (let j = 0; j < this.stacks; j++) {
       b1 = j * this.slices + j;
       e1 = this.slices * (j + 1) + j + 1;
