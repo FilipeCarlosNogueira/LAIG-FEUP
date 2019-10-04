@@ -8,10 +8,10 @@
         </perspective>
     </views>
 
-    <ambient>
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+    <global>
+        <global r="0.2" g="0.2" b="0.2" a="1.0" />
         <background r="0.0" g="0.0" b="0.0" a="1.0" />
-    </ambient>
+    </global>
 
     <lights>
         <omni id="demoLight" enabled="1">
@@ -68,8 +68,10 @@
     <components>
         <component id="demoRoot">
             <transformation>
+                <transformationref id="demoTransform"/>
                 <translate x="0" y="0" z="1" />
                 <scale x="2" y="1" z="1" />
+                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -77,7 +79,7 @@
             <texture id="demoTexture"/>
             <children>
                 <primitiveref id="demoRectangle" />
-                <primitive id="triangle" />
+                <primitiveref id="triangle" />
                 <primitiveref id="cylinder" />
                 <primitive id="sphere" />
             </children>

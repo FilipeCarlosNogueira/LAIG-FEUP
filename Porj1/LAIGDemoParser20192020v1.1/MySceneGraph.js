@@ -110,8 +110,8 @@ class MySceneGraph {
     }
 
     // <ambient>
-    if ((index = nodeNames.indexOf("ambient")) == -1)
-      return "tag <ambient> missing";
+    if ((index = nodeNames.indexOf("global")) == -1)
+      return "tag <global> missing";
     else {
       if (index != AMBIENT_INDEX)
         this.onXMLMinorError("tag <ambient> out of order");
@@ -238,10 +238,10 @@ class MySceneGraph {
     for (var i = 0; i < children.length; i++)
       nodeNames.push(children[i].nodeName);
 
-    var ambientIndex = nodeNames.indexOf("ambient");
+    var ambientIndex = nodeNames.indexOf("global");
     var backgroundIndex = nodeNames.indexOf("background");
 
-    var color = this.parseColor(children[ambientIndex], "ambient");
+    var color = this.parseColor(children[ambientIndex], "global");
     if (!Array.isArray(color)) return color;
     else this.ambient = color;
 
@@ -249,7 +249,7 @@ class MySceneGraph {
     if (!Array.isArray(color)) return color;
     else this.background = color;
 
-    this.log("Parsed ambient");
+    this.log("Parsed global");
 
     return null;
   }
@@ -761,13 +761,94 @@ class MySceneGraph {
       var childrenIndex = nodeNames.indexOf("children");
 
       this.onXMLMinorError("To do: Parse components.");
+      
       // Transformations
+      var tranformationChildren = grandChildren[transformationIndex].children;
+      var transfMatrix = mat4.create();
+
+      if(tranformationChildren[0].nodeName ==  "transformationref"){
+        var idTrans = this.reader.getString(tranformationChildren[0], 'id');
+        if(this.transformations[idTrans] == null){
+          return "transformationref failed!";
+        }
+        else transfMatrix = this.transformations[idTrans];
+      }
+      else{
+        for (var j = 0; j < tranformationChildren.length; j++) {
+          switch (tranformationChildren[j].nodeName) {
+  
+            case "translate":
+              var coordinates = this.parseCoordinates3D(
+                tranformationChildren[j],
+                "translate transformation for component for ID" + componentID
+              );
+              if (!Array.isArray(coordinates)) return coordinates;
+  
+              mat4.translate(
+                transfMatrix,
+                transfMatrix,
+                coordinates
+              );
+            break;
+  
+            case "scale":
+              //this.onXMLMinorError("To do: Parse scale transformations.");
+  
+              var coordinates = this.parseCoordinates3D(
+                tranformationChildren[j],
+                "scale transformation for component for ID" + componentID
+              );
+              if (!Array.isArray(coordinates)) return coordinates;
+  
+              mat4.scale(
+                transfMatrix,
+                transfMatrix,
+                coordinates
+              );
+            break;
+            
+            case "rotate":
+              //this.onXMLMinorError("To do: Parse rotate transformations.");
+              
+              //axis
+              var axis = this.reader.getString(tranformationChildren[j], 'axis');
+              // angle
+              var angle = this.reader.getFloat(tranformationChildren[j], 'angle');
+              
+              if (axis == null || angle == null) {
+                return "failed to parse 'rotate' from component";
+              }
+  
+              var axisAux = vec3.create();
+              if (axis == "x")
+                axisAux = vec3.fromValues(1, 0, 0);
+  
+              else if (axis == "y")
+                axisAux = [0, 1, 0];
+              else if (axis == "z")
+                axisAux = vec3.fromValues(0, 0, 1);
+              else
+                return "Unvalid axis fot rotation";
+              
+              mat4.rotate(
+                transfMatrix,
+                transfMatrix,
+                angle * DEGREE_TO_RAD,
+                axisAux
+              );
+  
+            break;
+          }
+        }
+      }
 
       // Materials
 
       // Texture
 
       // Children
+
+      //this.components[componentID] = new MyComponent(id, transfMatrix, );
     }
   }
 
@@ -894,4 +975,6 @@ class MySceneGraph {
   }
 
   //process node
+  processNode(id, ){
+  }
 }
