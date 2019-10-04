@@ -14,9 +14,8 @@ class MyTorus extends CGFobject {
     this.texCoords = [];
 
     // variables
-    let deltaF = 0, deltaT = 0, cF = 0, cT = 0, sF = 0, sT = 0;
+    let deltaF = (Math.PI * 2)/this.loops, deltaT = (Math.PI * 2) / this.slices, cF = 0, cT = 0, sF = 0, sT = 0;
     let x = 0, y = 0, z = 0;
-
     // vertices, normals and texture
     for (let j = 0; j <= this.loops; j++) {
       cF = Math.cos(deltaF * j);
@@ -37,16 +36,18 @@ class MyTorus extends CGFobject {
 
     // indices
     let b1 = 0, b2 = 0, b3 = 0;
-    for (let j = 0; j < this.stacks; j++) {
+    for (let j = 0; j < this.loops; j++) {
       b1 = j * this.slices + j;
       b2 = (j + 1) * this.slices + j + 1;
       b3 = (j + 2) * this.slices + j + 2;
 
-      for (let i = 0; i <= this.slices; i++) {
-        this.indices.push((i + b1) % b2, (i + 1 + b1) % b2, (i + b2) % b3);
-        this.indices.push((i + 1 + b1) % b2, (i + 1 + b2) % b3, (i + b2) % b3);
+      for (let i = 0; i < this.slices; i++) {
+        this.indices.push((i + b1) % b2, (i + b2) % b3, (i + 1 + b1) % b2);
+        this.indices.push((i + 1 + b1) % b2, (i + b2) % b3, (i + 1 + b2) % b3);
       }
     }
+
+
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();

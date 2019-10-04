@@ -702,14 +702,14 @@ class MySceneGraph {
       } else if (primitiveType == 'torus') {
         // slices
         var slices = this.reader.getFloat(grandChildren[0], 'slices');
-        if (!(slices != null && !isNaN(slices) && slices > 3))
+        if (!(slices != null && !isNaN(slices) && slices >= 3))
           return (
               'unable to parse slices of the primitive coordinates for ID = ' +
               primitiveId);
 
         // loops
         var loops = this.reader.getFloat(grandChildren[0], 'loops');
-        if (!(loops != null && !isNaN(loops) && loops > 0))
+        if (!(loops != null && !isNaN(loops) && loops >= 3))
           return (
               'unable to parse stacks of the primitive coordinates for ID = ' +
               primitiveId);
@@ -917,8 +917,8 @@ class MySceneGraph {
     // To test the parsing/creation of the primitives, call the display function
     // this.primitives['demoRectangle'].display();
     // this.primitives["triangle"].display();
-     this.primitives['cylinder'].display();
-    // this.primitives['sphere'].display();
+    // this.primitives['cylinder'].display();
+    this.primitives['sphere'].display();
     this.primitives['torus'].display();
   }
 
