@@ -699,6 +699,39 @@ class MySceneGraph {
             new MySphere(this.scene, primitiveId, radius, slices, stacks);
 
         this.primitives[primitiveId] = sphere;
+      } else if (primitiveType == 'torus') {
+        // slices
+        var slices = this.reader.getFloat(grandChildren[0], 'slices');
+        if (!(slices != null && !isNaN(slices) && slices > 3))
+          return (
+              'unable to parse slices of the primitive coordinates for ID = ' +
+              primitiveId);
+
+        // loops
+        var loops = this.reader.getFloat(grandChildren[0], 'loops');
+        if (!(loops != null && !isNaN(loops) && loops > 0))
+          return (
+              'unable to parse stacks of the primitive coordinates for ID = ' +
+              primitiveId);
+
+        // inner
+        var inner = this.reader.getFloat(grandChildren[0], 'inner');
+        if (!(inner != null && !isNaN(inner) && inner >= 0))
+          return (
+              'unable to parse inner of the primitive coordinates for ID = ' +
+              primitiveId);
+
+        // outer
+        var outer = this.reader.getFloat(grandChildren[0], 'outer');
+        if (!(outer != null && !isNaN(outer) && outer >= 0))
+          return (
+              'unable to parse outer of the primitive coordinates for ID = ' +
+              primitiveId);
+
+        var torus =
+            new MyTorus(this.scene, primitiveId, inner, outer, slices, loops);
+
+        this.primitives[primitiveId] = torus;
       } else {
         console.warn('To do: Parse other primitives.');
       }
@@ -877,12 +910,26 @@ class MySceneGraph {
   displayScene() {
     // To do: Create display loop for transversing the scene graph
 
+    /* processNode(this.graph.idRoot, ...) */
+
+
+
     // To test the parsing/creation of the primitives, call the display function
     // directly this.primitives['demoRectangle'].display();
     // this.primitives["triangle"].display();
-    // this.primitives['cylinder'].display();
-    this.primitives['sphere'].display();
+     this.primitives['cylinder'].display();
+    // this.primitives['sphere'].display();
+    //  this.primitives['torus'].display();
   }
 
   // process node
+  /**
+   * processNode(id, ...){
+   *  check if id exists
+   *  get material        this.components[id].materials[0] (id_mat)          this.materials[id_mat]
+   *  get texture         this.components[id] ...
+   *  get matrix          this.scene.multMatrix(matrix)
+   *  loop children       if(component) processNode(idChild) - else display
+   * }
+   */
 }

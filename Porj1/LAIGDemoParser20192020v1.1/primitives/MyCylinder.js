@@ -16,20 +16,21 @@ class MyCylinder extends CGFobject {
 
     // variables
     let ang = 0, deltaAng = (2 * Math.PI) / this.slices;
-    let ca = 0, sa = 0, y = 0, deltaY = this.height / this.stacks;
-    let radius = this.radiusBase, deltaRadius = (this.radiusTop - this.radiusBase) / this.stacks;
+    let ca = 0, sa = 0, z = 0, deltaZ = this.height / this.stacks;
+    let radius = this.radiusBase,
+        deltaRadius = (this.radiusTop - this.radiusBase) / this.stacks;
 
     // vertices, normals and texture
     for (let j = 0; j <= this.stacks; j++) {
-      y = deltaY * j;
+      z = deltaZ * j;
       radius = this.radiusBase + deltaRadius * j;
       for (let i = 0; i <= this.slices; i++) {
         ang = deltaAng * i;
         ca = Math.cos(ang);
         sa = Math.sin(ang);
 
-        this.vertices.push(ca * radius, y, -sa * radius);
-        this.normals.push(ca, -1 / (this.radiusTop - this.radiusBase), -sa);
+        this.vertices.push(ca * radius, sa * radius, z);
+        this.normals.push(ca, sa, -1 / (this.radiusTop - this.radiusBase));
         this.texCoords.push(i / this.slices, (this.stacks - j) / this.stacks);
       }
     }
@@ -52,7 +53,9 @@ class MyCylinder extends CGFobject {
     this.initGLBuffers();
   }
   updateBuffers(complexity) {
-    this.slices = 3 + Math.round(9 * complexity); //complexity varies 0-1, so slices varies 3-12
+    this.slices = 3 +
+        Math.round(
+            9 * complexity);  // complexity varies 0-1, so slices varies 3-12
 
     // reinitialize buffers
     this.initBuffers();
