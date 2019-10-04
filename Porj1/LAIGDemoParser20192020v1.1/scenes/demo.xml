@@ -53,7 +53,7 @@
         </primitive>
 
         <primitive id="cylinder">
-            <cylinder base="1" top="0" height="5" slices="30" stacks="30"/>
+            <cylinder base="1" top="1" height="5" slices="30" stacks="30"/>
         </primitive>
 
         <primitive id="sphere">

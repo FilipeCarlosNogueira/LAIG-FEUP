@@ -915,21 +915,21 @@ class MySceneGraph {
 
 
     // To test the parsing/creation of the primitives, call the display function
-    // directly this.primitives['demoRectangle'].display();
+    // this.primitives['demoRectangle'].display();
     // this.primitives["triangle"].display();
      this.primitives['cylinder'].display();
     // this.primitives['sphere'].display();
-    //  this.primitives['torus'].display();
+    this.primitives['torus'].display();
   }
 
   // process node
   /**
    * processNode(id, ...){
    *  check if id exists
-   *  get material        this.components[id].materials[0] (id_mat)          this.materials[id_mat]
-   *  get texture         this.components[id] ...
-   *  get matrix          this.scene.multMatrix(matrix)
-   *  loop children       if(component) processNode(idChild) - else display
+   *  get material        this.components[id].materials[0] (id_mat)
+   * this.materials[id_mat] get texture         this.components[id] ... get
+   * matrix          this.scene.multMatrix(matrix) loop children if(component)
+   * processNode(idChild) - else display
    * }
    */
 }
