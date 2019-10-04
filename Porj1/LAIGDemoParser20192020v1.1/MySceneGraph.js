@@ -471,12 +471,51 @@ class MySceneGraph {
             transfMatrix =
                 mat4.translate(transfMatrix, transfMatrix, coordinates);
             break;
+
           case 'scale':
-            this.onXMLMinorError('To do: Parse scale transformations.');
+            //this.onXMLMinorError('To do: Parse scale transformations.');
+            var coordinates = this.parseCoordinates3D(
+              grandChildren[j],
+              "scale transformation for component for ID" + transformationID
+            );
+            if (!Array.isArray(coordinates)) return coordinates;
+
+            mat4.scale(
+              transfMatrix,
+              transfMatrix,
+              coordinates
+            );
             break;
+
           case 'rotate':
+            //this.onXMLMinorError('To do: Parse rotate transformations.');
+            
+            //axis
+            var axis = this.reader.getString(grandChildren[j], 'axis');
             // angle
-            this.onXMLMinorError('To do: Parse rotate transformations.');
+            var angle = this.reader.getFloat(grandChildren[j], 'angle');
+            
+            if (axis == null || angle == null) {
+              return "failed to parse 'rotate' from component";
+            }
+
+            var axisAux = vec3.create();
+            if (axis == "x")
+              axisAux = vec3.fromValues(1, 0, 0);
+
+            else if (axis == "y")
+              axisAux = [0, 1, 0];
+            else if (axis == "z")
+              axisAux = vec3.fromValues(0, 0, 1);
+            else
+              return "Unvalid axis fot rotation";
+            
+            mat4.rotate(
+              transfMatrix,
+              transfMatrix,
+              angle * DEGREE_TO_RAD,
+              axisAux
+            );
             break;
         }
       }
