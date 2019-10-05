@@ -98,17 +98,38 @@
         <component id="demoRoot">
             <transformation>
                 <transformationref id="demoTransform"/>
-                <translate x="0" y="0" z="1" />
-                <scale x="2" y="1" z="1" />
-                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture"/>
             <children>
-                <primitiveref id="demoRectangle" />
-                <primitiveref id="triangle" />
+                <componentref id="table" />
+            </children>
+        </component>
+        
+        <component id="table">
+            <transformation>
+                <transformationref id="demoTransform"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="demoTexture"/>
+            <children>
+                <componentref id="leg" />
+            </children>
+        </component>
+        
+        <component id="leg">
+            <transformation>
+                <transformationref id="demoTransform"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="demoTexture"/>
+            <children>
                 <primitiveref id="cylinder" />
             </children>
         </component>
