@@ -33,14 +33,14 @@
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
         </material>
-        
+
         <material id="wood" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
         </material>
-        
+
         <material id="metal" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
@@ -54,7 +54,7 @@
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
         </material>
-        
+
         <material id="wall" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
@@ -65,20 +65,40 @@
 
     <transformations>
         <transformation id="demoTransform">
-            <scale x="2" y="1" z="1" />
+            <scale x="1" y="1" z="1" />
+        </transformation>
+
+        <transformation id="leg0">
+            <translate x="3.5" y="0" z="-3.5" />
+            <rotate axis="x" angle="-90" />
+        </transformation>
+
+        <transformation id="leg1">
+            <translate x="-3.5" y="0" z="-3.5" />
+            <rotate axis="x" angle="-90" />
+        </transformation>
+
+        <transformation id="leg2">
+            <translate x="-3.5" y="0" z="3.5" />
+            <rotate axis="x" angle="-90" />
+        </transformation>
+
+        <transformation id="leg3">
+            <translate x="3.5" y="0" z="3.5" />
+            <rotate axis="x" angle="-90" />
         </transformation>
     </transformations>
 
     <primitives>
-        <primitive id="demoRectangle">
-            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+        <primitive id="square">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
         </primitive>
 
         <primitive id="triangle">
-            <triangle x1="1" y1="0" z1="0" x2="0" y2="1" z2="0" x3="0" y3="0" z3="2"/>
+            <triangle x1="1" y1="0" z1="0" x2="0" y2="1" z2="0" x3="0" y3="0" z3="0"/>
         </primitive>
 
-        <primitive id="cylinder">
+        <primitive id="leg_cylinder">
             <cylinder base="1" top="1" height="5" slices="30" stacks="30"/>
         </primitive>
 
@@ -89,7 +109,6 @@
         <primitive id="torus">
             <torus inner="0.1" outer="1" slices="30" loops="20" />
         </primitive>
-
     </primitives>
 
     <components>
@@ -105,7 +124,7 @@
                 <componentref id="table" />
             </children>
         </component>
-        
+
         <component id="table">
             <transformation>
                 <transformationref id="demoTransform"/>
@@ -115,20 +134,197 @@
             </materials>
             <texture id="demoTexture"/>
             <children>
-                <componentref id="leg" />
+                <componentref id="table_leg0" />
+                <componentref id="table_leg1" />
+                <componentref id="table_leg2" />
+                <componentref id="table_leg3" />
+                <componentref id="table_top" />
+            </children>
+        </component>
+
+        <component id="table_leg0">
+            <transformation>
+                <transformationref id="leg0"/>
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_leg1">
+            <transformation>
+                <transformationref id="leg1"/>
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_leg2">
+            <transformation>
+                <transformationref id="leg2"/>
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_leg3">
+            <transformation>
+                <transformationref id="leg3"/>
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="leg_cylinder" />
             </children>
         </component>
         
-        <component id="leg">
+        <component id="table_top">
             <transformation>
-                <transformationref id="demoTransform"/>
+                <scale x="10" y="1" z="10" />
+                <translate x="0" y="5" z="0" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <material id="demoMaterial" />
+                <material id="legMat" />
             </materials>
-            <texture id="demoTexture"/>
+            <texture id="legTex"/>
             <children>
-                <primitiveref id="cylinder" />
+                <componentref id="cube" />
+            </children>
+        </component>
+
+        <component id="cube">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="cube_side0" />
+                <componentref id="cube_side1" />
+                <componentref id="cube_side2" />
+                <componentref id="cube_side3" />
+                <componentref id="cube_top" />
+                <componentref id="cube_bot" />
+            </children>
+        </component>
+
+        <component id="cube_side0">
+            <transformation>
+                <translate x="0" y="0.5" z="0.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_side1">
+            <transformation>
+                <translate x="0" y="-0.5" z="0.5" />
+                <rotate axis="x" angle="90" />                
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_side2">
+            <transformation>
+                <translate x="0.5" y="0" z="0.5" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_side3">
+            <transformation>
+                <translate x="-0.5" y="0" z="0.5" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_top">
+            <transformation>
+                <rotate axis="x" angle="180" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_bot">
+            <transformation>
+                <translate x="0" y="0" z="1" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="skybox">
+            <transformation>
+                <scale x="-60" y="-60" z="-60" />
+                <translate x="0" y="0" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="cube_side0" />
+                <componentref id="cube_side1" />
+                <componentref id="cube_side2" />
+                <componentref id="cube_side3" />
+                <componentref id="cube_top" />
+                <componentref id="cube_bot" />
             </children>
         </component>
     </components>

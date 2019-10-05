@@ -1026,14 +1026,13 @@ class MySceneGraph {
   }
 
   processNode(id) {
-    this.scene.pushMatrix();
-    
-    
     let comp = this.components[id];
     if (comp == null || comp == undefined) {
       this.onXMLError('Undefined component');
       return;
     }
+    
+    this.scene.pushMatrix();
     this.scene.multMatrix(comp.transformationMatrix);
 
     // process child components
