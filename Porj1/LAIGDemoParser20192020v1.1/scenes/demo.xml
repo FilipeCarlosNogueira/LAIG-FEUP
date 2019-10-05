@@ -68,25 +68,7 @@
             <scale x="1" y="1" z="1" />
         </transformation>
 
-        <transformation id="leg0">
-            <translate x="3.5" y="0" z="-3.5" />
-            <rotate axis="x" angle="-90" />
-        </transformation>
 
-        <transformation id="leg1">
-            <translate x="-3.5" y="0" z="-3.5" />
-            <rotate axis="x" angle="-90" />
-        </transformation>
-
-        <transformation id="leg2">
-            <translate x="-3.5" y="0" z="3.5" />
-            <rotate axis="x" angle="-90" />
-        </transformation>
-
-        <transformation id="leg3">
-            <translate x="3.5" y="0" z="3.5" />
-            <rotate axis="x" angle="-90" />
-        </transformation>
     </transformations>
 
     <primitives>
@@ -102,32 +84,299 @@
             <cylinder base="1" top="1" height="5" slices="30" stacks="30"/>
         </primitive>
 
+        <primitive id="omni_leg0">
+            <cylinder base="3" top="2.5" height="10" slices="30" stacks="30"/>
+        </primitive>
+
+        <primitive id="omni_leg1">
+            <cylinder base="3" top="2" height="10" slices="30" stacks="30"/>
+        </primitive>
+
+        <primitive id="omni_leg2">
+            <cylinder base="2.4" top="1.2" height="10" slices="30" stacks="30"/>
+        </primitive>
+
+        <primitive id="omni_claw">
+            <cylinder base="2" top="0" height="8" slices="3" stacks="30"/>
+        </primitive>
+
         <primitive id="sphere">
-            <sphere radius="1" slices="30" stacks="20"/>
+            <sphere radius="1" slices="30" stacks="30"/>
+        </primitive>
+
+        <primitive id="omni_sphere">
+            <sphere radius="1" slices="30" stacks="30"/>
         </primitive>
 
         <primitive id="torus">
             <torus inner="0.1" outer="1" slices="30" loops="20" />
+        </primitive>
+
+        <primitive id="omni_torus">
+            <torus inner="3" outer="2" slices="5" loops="20" />
         </primitive>
     </primitives>
 
     <components>
         <component id="demoRoot">
             <transformation>
-                <transformationref id="demoTransform"/>
+                <scale x="1" y="1" z="1" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture"/>
             <children>
-                <componentref id="table" />
+                <componentref id="omnidroid" />
+                <componentref id="skybox" />
+            </children>
+        </component>
+
+        <component id="omnidroid">
+            <transformation>
+                <scale x="0.5" y="0.5" z="0.5" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="demoTexture"/>
+            <children>
+                <componentref id="omnidroid_leg0" />
+                <componentref id="omnidroid_leg1" />
+                <componentref id="omnidroid_leg2" />
+                <componentref id="omnidroid_leg3" />
+                <componentref id="omnidroid_leg4" />
+                <componentref id="omnidroid_body" />
+                <componentref id="omnidroid_head" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg_p0">
+            <transformation>
+                <translate x="8" y="20" z="0" />
+                <rotate axis="z" angle="-20" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_leg0" />
+            </children>
+        </component>
+        
+        <component id="omnidroid_leg_p1">
+            <transformation>
+                <translate x="16" y="17" z="0" />
+                <rotate axis="z" angle="-50" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_leg1" />
+            </children>
+        </component>
+        
+        <component id="omnidroid_leg_p2">
+            <transformation>
+                <translate x="21.58" y="10.5" z="0" />
+                <rotate axis="z" angle="-80" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_leg2" />
+            </children>
+        </component>
+
+        <component id="omnidroid_claw_p0">
+            <transformation>
+                <translate x="23" y="1" z="0" />
+                <rotate axis="z" angle="-30" />
+                <rotate axis="x" angle="6" />
+                <rotate axis="y" angle="0" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_claw" />
+            </children>
+        </component>
+        
+        <component id="omnidroid_claw_p1">
+            <transformation>
+                <translate x="23" y="1" z="0" />
+                <rotate axis="y" angle="90" />
+                <rotate axis="z" angle="-30" />
+                <rotate axis="x" angle="6" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_claw" />
+            </children>
+        </component>
+        
+        <component id="omnidroid_claw_p2">
+            <transformation>
+                <translate x="23" y="1" z="0" />
+                <rotate axis="y" angle="180" />
+                <rotate axis="z" angle="-30" />
+                <rotate axis="x" angle="6" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_claw" />
+            </children>
+        </component>
+        
+        <component id="omnidroid_claw_p3">
+            <transformation>
+                <translate x="23" y="1" z="0" />
+                <rotate axis="y" angle="-90" />
+                <rotate axis="z" angle="-30" />
+                <rotate axis="x" angle="6" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_claw" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg_f">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="omnidroid_leg_p0" />
+                <componentref id="omnidroid_leg_p1" />
+                <componentref id="omnidroid_leg_p2" />
+                <componentref id="omnidroid_claw_p0" />
+                <componentref id="omnidroid_claw_p1" />
+                <componentref id="omnidroid_claw_p2" />
+                <componentref id="omnidroid_claw_p3" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg0">
+            <transformation>
+                <translate x="0" y="0" z="0" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="omnidroid_leg_f" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg1">
+            <transformation>
+                <rotate axis="y" angle="72" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="omnidroid_leg_f" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg2">
+            <transformation>
+                <rotate axis="y" angle="144" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="omnidroid_leg_f" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg3">
+            <transformation>
+                <rotate axis="y" angle="216" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="omnidroid_leg_f" />
+            </children>
+        </component>
+
+        <component id="omnidroid_leg4">
+            <transformation>
+                <rotate axis="y" angle="288" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="omnidroid_leg_f" />
+            </children>
+        </component>
+        
+        <component id="omnidroid_body">
+            <transformation>
+                <scale x="10" y="10" z="10" />
+                <translate x="0" y="2" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_sphere" />
+            </children>
+        </component>
+
+        <component id="omnidroid_head">
+            <transformation>
+                <scale x="1" y="1" z="1" />
+                <translate x="0" y="30" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="omni_torus" />
             </children>
         </component>
 
         <component id="table">
             <transformation>
-                <transformationref id="demoTransform"/>
+                <scale x="0.2" y="0.2" z="0.2" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -144,7 +393,8 @@
 
         <component id="table_leg0">
             <transformation>
-                <transformationref id="leg0"/>
+                <translate x="3.5" y="0" z="-3.5" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="legMat" />
@@ -157,7 +407,8 @@
 
         <component id="table_leg1">
             <transformation>
-                <transformationref id="leg1"/>
+                <translate x="-3.5" y="0" z="-3.5" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="legMat" />
@@ -170,7 +421,8 @@
 
         <component id="table_leg2">
             <transformation>
-                <transformationref id="leg2"/>
+                <translate x="-3.5" y="0" z="3.5" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="legMat" />
@@ -183,7 +435,8 @@
 
         <component id="table_leg3">
             <transformation>
-                <transformationref id="leg3"/>
+                <translate x="3.5" y="0" z="3.5" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="legMat" />
@@ -193,7 +446,7 @@
                 <primitiveref id="leg_cylinder" />
             </children>
         </component>
-        
+
         <component id="table_top">
             <transformation>
                 <scale x="10" y="1" z="10" />
@@ -244,7 +497,7 @@
         <component id="cube_side1">
             <transformation>
                 <translate x="0" y="-0.5" z="0.5" />
-                <rotate axis="x" angle="90" />                
+                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <material id="legMat" />
@@ -311,7 +564,96 @@
 
         <component id="skybox">
             <transformation>
-                <scale x="-60" y="-60" z="-60" />
+                <scale x="100" y="60" z="100" />
+                <translate x="0" y="0.5" z="0"/>
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="sky_side0" />
+                <componentref id="sky_side1" />
+                <componentref id="sky_side2" />
+                <componentref id="sky_side3" />
+                <componentref id="sky_top" />
+                <componentref id="sky_bot" />
+            </children>
+        </component>
+        
+
+        <component id="sky_side0">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side1">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side2">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side3">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_top">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="x" angle="180" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_bot">
+            <transformation>
                 <translate x="0" y="0" z="-0.5" />
             </transformation>
             <materials>
@@ -319,12 +661,7 @@
             </materials>
             <texture id="legTex"/>
             <children>
-                <componentref id="cube_side0" />
-                <componentref id="cube_side1" />
-                <componentref id="cube_side2" />
-                <componentref id="cube_side3" />
-                <componentref id="cube_top" />
-                <componentref id="cube_bot" />
+                <primitiveref id="square" />
             </children>
         </component>
     </components>
