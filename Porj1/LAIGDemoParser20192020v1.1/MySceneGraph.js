@@ -813,7 +813,6 @@ class MySceneGraph {
       var textureIndex = nodeNames.indexOf('texture');
       var childrenIndex = nodeNames.indexOf('children');
 
-      this.onXMLMinorError('To do: Parse components.');
 
       // Transformations
       var tranformationChildren = grandChildren[transformationIndex].children;
@@ -839,8 +838,6 @@ class MySceneGraph {
               break;
 
             case 'scale':
-              // this.onXMLMinorError("To do: Parse scale transformations.");
-
               var coordinates = this.parseCoordinates3D(
                   tranformationChildren[j],
                   'scale transformation for component for ID' + componentID);
@@ -850,8 +847,6 @@ class MySceneGraph {
               break;
 
             case 'rotate':
-              // this.onXMLMinorError("To do: Parse rotate transformations.");
-
               // axis
               var axis =
                   this.reader.getString(tranformationChildren[j], 'axis');
@@ -893,11 +888,13 @@ class MySceneGraph {
 
       for (let child of childVec) {
         let childID = this.reader.getString(children[i], 'id');
+        this.log(childID);
         if (child.nodeName == 'componentref') {
           if (childID == id)
             this.onXMLMinorError('Component' + id + 'includes itself.');
-          else
+          else {
             componentChild.push(childID);
+          }
         } else if (child.nodeName == 'primitiveref') {
           primitiveChild.push(childID);
         } else {
@@ -905,7 +902,8 @@ class MySceneGraph {
         }
       }
 
-      // this.components[componentID] = new MyComponent(id, transfMatrix, );
+      this.components[componentID] = new MyComponent(
+          componentID, transfMatrix, componentChild, primitiveChild);
     }
   }
 
@@ -1023,41 +1021,25 @@ class MySceneGraph {
    * Displays the scene, processing each node, starting in the root node.
    */
   displayScene() {
-    // To do: Create display loop for transversing the scene graph
-
-    /* processNode(this.graph.idRoot, ...) */
-
-
-
-    // To test the parsing/creation of the primitives, call the display function
-    // this.primitives['demoRectangle'].display();
-    // this.primitives["triangle"].display();
-    // this.primitives['cylinder'].display();
-    this.primitives['sphere'].display();
-    this.primitives['torus'].display();
+    this.processNode(this.idRoot);
   }
 
   processNode(id) {
     let comp = this.components[id];
-    
+    if (comp == null || comp == undefined) {
+      this.onXMLError('process undefined');
+      return;
+    }
+
     // process child components
-    for (let childComp of comp.childComp) {
+    for (let childComp of comp.componentChild) {
       this.processNode(childComp);
     }
 
     // display child primitives
-    for (let childPrim of comp.childPrim) {
-      this.primitives[childPrim.id].display();
+    for (let childPrim of comp.primitiveChild) {
+      console.log(childPrim);
+      // this.primitives[childPrim].display();
     }
   }
-  // process node
-  /**
-   * processNode(id, ...){
-   *  check if id exists
-   *  get material        this.components[id].materials[0] (id_mat)
-   * this.materials[id_mat] get texture         this.components[id] ... get
-   * matrix          this.scene.multMatrix(matrix) loop children if(component)
-   * processNode(idChild) - else display
-   * }
-   */
 }
