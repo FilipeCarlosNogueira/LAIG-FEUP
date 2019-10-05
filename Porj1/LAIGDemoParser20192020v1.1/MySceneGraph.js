@@ -891,7 +891,7 @@ class MySceneGraph {
         child_iterator++;
         let childID = this.reader.getString(childVec[child_iterator], 'id');
         if (child.nodeName == 'componentref') {
-          if (childID == id)
+          if (childID == componentID)
             this.onXMLMinorError('Component' + id + 'includes itself.');
           else {
             if (!componentChild.includes(childID)) componentChild.push(childID);
