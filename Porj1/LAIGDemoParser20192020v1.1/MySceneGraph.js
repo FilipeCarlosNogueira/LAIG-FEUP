@@ -885,25 +885,26 @@ class MySceneGraph {
       let childVec = grandChildren[childrenIndex].children;
       let componentChild = [];
       let primitiveChild = [];
+      let child_iterator = -1;
 
       for (let child of childVec) {
-        let childID = this.reader.getString(children[i], 'id');
-        this.log(childID);
+        child_iterator++;
+        let childID = this.reader.getString(childVec[child_iterator], 'id');
         if (child.nodeName == 'componentref') {
           if (childID == id)
             this.onXMLMinorError('Component' + id + 'includes itself.');
           else {
-            componentChild.push(childID);
+            if (!componentChild.includes(childID)) componentChild.push(childID);
           }
         } else if (child.nodeName == 'primitiveref') {
-          primitiveChild.push(childID);
+          if (!primitiveChild.includes(childID)) primitiveChild.push(childID);
         } else {
           this.onXMLMinorError('Invalid child nodeName.');
         }
       }
 
-      this.components[componentID] = new MyComponent(
-          componentID, transfMatrix, componentChild, primitiveChild);
+
+      this.components[componentID] = new MyComponent(componentID, transfMatrix, componentChild, primitiveChild);
     }
   }
 
@@ -1038,8 +1039,7 @@ class MySceneGraph {
 
     // display child primitives
     for (let childPrim of comp.primitiveChild) {
-      console.log(childPrim);
-      // this.primitives[childPrim].display();
+      this.primitives[childPrim].display();
     }
   }
 }
