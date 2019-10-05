@@ -113,8 +113,8 @@ class MySceneGraph {
     }
 
     // <ambient>
-    if ((index = nodeNames.indexOf("global")) == -1)
-      return "tag <global> missing";
+    if ((index = nodeNames.indexOf('global')) == -1)
+      return 'tag <global> missing';
     else {
       if (index != AMBIENT_INDEX)
         this.onXMLMinorError('tag <ambient> out of order');
@@ -240,12 +240,14 @@ class MySceneGraph {
     for (var i = 0; i < children.length; i++)
       nodeNames.push(children[i].nodeName);
 
-    var ambientIndex = nodeNames.indexOf("global");
-    var backgroundIndex = nodeNames.indexOf("background");
+    var ambientIndex = nodeNames.indexOf('global');
+    var backgroundIndex = nodeNames.indexOf('background');
 
-    var color = this.parseColor(children[ambientIndex], "global");
-    if (!Array.isArray(color)) return color;
-    else this.ambient = color;
+    var color = this.parseColor(children[ambientIndex], 'global');
+    if (!Array.isArray(color))
+      return color;
+    else
+      this.ambient = color;
 
     color = this.parseColor(children[backgroundIndex], 'background');
     if (!Array.isArray(color))
@@ -253,7 +255,7 @@ class MySceneGraph {
     else
       this.background = color;
 
-    this.log("Parsed global");
+    this.log('Parsed global');
 
     return null;
   }
@@ -473,49 +475,40 @@ class MySceneGraph {
             break;
 
           case 'scale':
-            //this.onXMLMinorError('To do: Parse scale transformations.');
+            // this.onXMLMinorError('To do: Parse scale transformations.');
             var coordinates = this.parseCoordinates3D(
-              grandChildren[j],
-              "scale transformation for component for ID" + transformationID
-            );
+                grandChildren[j],
+                'scale transformation for component for ID' + transformationID);
             if (!Array.isArray(coordinates)) return coordinates;
 
-            mat4.scale(
-              transfMatrix,
-              transfMatrix,
-              coordinates
-            );
+            mat4.scale(transfMatrix, transfMatrix, coordinates);
             break;
 
           case 'rotate':
-            //this.onXMLMinorError('To do: Parse rotate transformations.');
-            
-            //axis
+            // this.onXMLMinorError('To do: Parse rotate transformations.');
+
+            // axis
             var axis = this.reader.getString(grandChildren[j], 'axis');
             // angle
             var angle = this.reader.getFloat(grandChildren[j], 'angle');
-            
+
             if (axis == null || angle == null) {
-              return "failed to parse 'rotate' from component";
+              return 'failed to parse \'rotate\' from component';
             }
 
             var axisAux = vec3.create();
-            if (axis == "x")
+            if (axis == 'x')
               axisAux = vec3.fromValues(1, 0, 0);
 
-            else if (axis == "y")
+            else if (axis == 'y')
               axisAux = [0, 1, 0];
-            else if (axis == "z")
+            else if (axis == 'z')
               axisAux = vec3.fromValues(0, 0, 1);
             else
-              return "Unvalid axis fot rotation";
-            
+              return 'Unvalid axis fot rotation';
+
             mat4.rotate(
-              transfMatrix,
-              transfMatrix,
-              angle * DEGREE_TO_RAD,
-              axisAux
-            );
+                transfMatrix, transfMatrix, angle * DEGREE_TO_RAD, axisAux);
             break;
         }
       }
@@ -820,8 +813,7 @@ class MySceneGraph {
       var textureIndex = nodeNames.indexOf('texture');
       var childrenIndex = nodeNames.indexOf('children');
 
-      this.onXMLMinorError("To do: Parse components.");
-      
+
       // Transformations
       var tranformationChildren = grandChildren[transformationIndex].children;
       var transfMatrix = mat4.create();
@@ -912,8 +904,29 @@ class MySceneGraph {
       // Texture
 
       // Children
+      let childVec = grandChildren[childrenIndex].children;
+      let componentChild = [];
+      let primitiveChild = [];
+      let child_iterator = -1;
 
-      //this.components[componentID] = new MyComponent(id, transfMatrix, );
+      for (let child of childVec) {
+        child_iterator++;
+        let childID = this.reader.getString(childVec[child_iterator], 'id');
+        if (child.nodeName == 'componentref') {
+          if (childID == componentID)
+            this.onXMLMinorError('Component' + id + 'includes itself.');
+          else {
+            if (!componentChild.includes(childID)) componentChild.push(childID);
+          }
+        } else if (child.nodeName == 'primitiveref') {
+          if (!primitiveChild.includes(childID) && this.primitives[childID] != undefined) primitiveChild.push(childID);
+        } else {
+          this.onXMLMinorError('Invalid child nodeName.');
+        }
+      }
+
+
+      this.components[componentID] = new MyComponent(componentID, transfMatrix, componentChild, primitiveChild);
     }
   }
 
@@ -1031,11 +1044,28 @@ class MySceneGraph {
    * Displays the scene, processing each node, starting in the root node.
    */
   displayScene() {
-    // To do: Create display loop for transversing the scene graph
+    this.processNode(this.idRoot);
+  }
 
-    /* processNode(this.graph.idRoot, ...) */
+  processNode(id) {
+    let comp = this.components[id];
+    if (comp == null || comp == undefined) {
+      this.onXMLError('Undefined component');
+      return;
+    }
+    
+    this.scene.pushMatrix();
+    this.scene.multMatrix(comp.transformationMatrix);
 
+    // process child components
+    for (let childComp of comp.componentChild) {
+      this.processNode(childComp);
+    }
 
+    // display child primitives
+    for (let childPrim of comp.primitiveChild) {
+      this.primitives[childPrim].display();
+    }
 
     // To test the parsing/creation of the primitives, call the display function
     // this.primitives['demoRectangle'].display();
@@ -1044,15 +1074,4 @@ class MySceneGraph {
     // this.primitives['sphere'].display();
     this.primitives['torus'].display();
   }
-
-  // process node
-  /**
-   * processNode(id, ...){
-   *  check if id exists
-   *  get material        this.components[id].materials[0] (id_mat)
-   * this.materials[id_mat] get texture         this.components[id] ... get
-   * matrix          this.scene.multMatrix(matrix) loop children if(component)
-   * processNode(idChild) - else display
-   * }
-   */
 }
