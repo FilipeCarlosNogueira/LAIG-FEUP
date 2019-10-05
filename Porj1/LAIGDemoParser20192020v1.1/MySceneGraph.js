@@ -1026,11 +1026,15 @@ class MySceneGraph {
   }
 
   processNode(id) {
+    this.scene.pushMatrix();
+    
+    
     let comp = this.components[id];
     if (comp == null || comp == undefined) {
-      this.onXMLError('process undefined');
+      this.onXMLError('Undefined component');
       return;
     }
+    this.scene.multMatrix(comp.transformationMatrix);
 
     // process child components
     for (let childComp of comp.componentChild) {
@@ -1041,5 +1045,8 @@ class MySceneGraph {
     for (let childPrim of comp.primitiveChild) {
       this.primitives[childPrim].display();
     }
+
+
+    this.scene.popMatrix();
   }
 }
