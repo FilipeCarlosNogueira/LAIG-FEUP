@@ -95,22 +95,59 @@
     </primitives>
 
     <components>
+
+        <!-- LEVEL 2 -->
+        <component id="level2">
+            <transformation>
+                <scale x="10" y="10" z="10" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="demoRectangle" />
+                <primitiveref id="triangle" />
+                <primitiveref id="cylinder" />
+                <primitive id="sphere" />
+            </children>
+        </component>
+
+        <!-- LEVEL 1 -->
+        <component id="level1">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="level2"/>
+            </children>
+        </component>
+
+        <!-- ROOT -->
         <component id="demoRoot">
             <transformation>
+                <!--
                 <transformationref id="demoTransform"/>
                 <translate x="0" y="0" z="1" />
-                <scale x="2" y="1" z="1" />
+                <scale x="10" y="10" z="10" />
                 <rotate axis="x" angle="90" />
+                -->
             </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture"/>
             <children>
+                <componentref id="level1"/>
+                <!--
                 <primitiveref id="demoRectangle" />
                 <primitiveref id="triangle" />
                 <primitiveref id="cylinder" />
                 <primitive id="sphere" />
+                -->
             </children>
         </component>
     </components>

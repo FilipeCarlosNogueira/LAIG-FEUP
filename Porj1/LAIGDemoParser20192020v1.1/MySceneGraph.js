@@ -826,84 +826,89 @@ class MySceneGraph {
       var tranformationChildren = grandChildren[transformationIndex].children;
       var transfMatrix = mat4.create();
 
-      if(tranformationChildren[0].nodeName ==  "transformationref"){
-        var idTrans = this.reader.getString(tranformationChildren[0], 'id');
-        if(this.transformations[idTrans] == null){
-          return "transformationref failed!";
-        }
-        else transfMatrix = this.transformations[idTrans];
-      }
-      else{
-        for (var j = 0; j < tranformationChildren.length; j++) {
-          switch (tranformationChildren[j].nodeName) {
-  
-            case "translate":
-              var coordinates = this.parseCoordinates3D(
-                tranformationChildren[j],
-                "translate transformation for component for ID" + componentID
-              );
-              if (!Array.isArray(coordinates)) return coordinates;
-  
-              mat4.translate(
-                transfMatrix,
-                transfMatrix,
-                coordinates
-              );
-            break;
-  
-            case "scale":
-              //this.onXMLMinorError("To do: Parse scale transformations.");
-  
-              var coordinates = this.parseCoordinates3D(
-                tranformationChildren[j],
-                "scale transformation for component for ID" + componentID
-              );
-              if (!Array.isArray(coordinates)) return coordinates;
-  
-              mat4.scale(
-                transfMatrix,
-                transfMatrix,
-                coordinates
-              );
-            break;
-            
-            case "rotate":
-              //this.onXMLMinorError("To do: Parse rotate transformations.");
-              
-              //axis
-              var axis = this.reader.getString(tranformationChildren[j], 'axis');
-              // angle
-              var angle = this.reader.getFloat(tranformationChildren[j], 'angle');
-              
-              if (axis == null || angle == null) {
-                return "failed to parse 'rotate' from component";
-              }
-  
-              var axisAux = vec3.create();
-              if (axis == "x")
-                axisAux = vec3.fromValues(1, 0, 0);
-  
-              else if (axis == "y")
-                axisAux = [0, 1, 0];
-              else if (axis == "z")
-                axisAux = vec3.fromValues(0, 0, 1);
-              else
-                return "Unvalid axis fot rotation";
-              
-              mat4.rotate(
-                transfMatrix,
-                transfMatrix,
-                angle * DEGREE_TO_RAD,
-                axisAux
-              );
-  
-            break;
+      for (var j = 0; j < tranformationChildren.length; j++) {
+
+        //checks if it's transformationref.
+        if(tranformationChildren[j].nodeName ==  "transformationref"){
+          var idTrans = this.reader.getString(tranformationChildren[j], 'id');
+          if(this.transformations[idTrans] == null){
+            return "transformationref failed!";
           }
+          else transfMatrix = this.transformations[idTrans];
+
+          break;
+        }
+
+        //If not transformationref, parses the transformation(s) associated with this node.
+        switch (tranformationChildren[j].nodeName) {
+
+          case "translate":
+            var coordinates = this.parseCoordinates3D(
+              tranformationChildren[j],
+              "translate transformation for component for ID" + componentID
+            );
+            if (!Array.isArray(coordinates)) return coordinates;
+
+            mat4.translate(
+              transfMatrix,
+              transfMatrix,
+              coordinates
+            );
+          break;
+
+          case "scale":
+            //this.onXMLMinorError("To do: Parse scale transformations.");
+
+            var coordinates = this.parseCoordinates3D(
+              tranformationChildren[j],
+              "scale transformation for component for ID" + componentID
+            );
+            if (!Array.isArray(coordinates)) return coordinates;
+
+            mat4.scale(
+              transfMatrix,
+              transfMatrix,
+              coordinates
+            );
+          break;
+          
+          case "rotate":
+            //this.onXMLMinorError("To do: Parse rotate transformations.");
+            
+            //axis
+            var axis = this.reader.getString(tranformationChildren[j], 'axis');
+            // angle
+            var angle = this.reader.getFloat(tranformationChildren[j], 'angle');
+            
+            if (axis == null || angle == null) {
+              return "failed to parse 'rotate' from component";
+            }
+
+            var axisAux = vec3.create();
+            if (axis == "x")
+              axisAux = vec3.fromValues(1, 0, 0);
+
+            else if (axis == "y")
+              axisAux = [0, 1, 0];
+            else if (axis == "z")
+              axisAux = vec3.fromValues(0, 0, 1);
+            else
+              return "Unvalid axis fot rotation";
+            
+            mat4.rotate(
+              transfMatrix,
+              transfMatrix,
+              angle * DEGREE_TO_RAD,
+              axisAux
+            );
+
+          break;
         }
       }
 
       // Materials
-
+      var materialChildren = grandChildren[materialsIndex].children;
+      
       // Texture
 
       // Children
@@ -1036,7 +1041,7 @@ class MySceneGraph {
     // this.primitives['demoRectangle'].display();
     // this.primitives["triangle"].display();
     // this.primitives['cylinder'].display();
-    this.primitives['sphere'].display();
+    // this.primitives['sphere'].display();
     this.primitives['torus'].display();
   }
 
