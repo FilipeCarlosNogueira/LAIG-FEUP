@@ -121,42 +121,7 @@
     </primitives>
 
     <components>
-<<<<<<< HEAD:Porj1/LAIGDemoParser20192020v1.1/scenes/demo.xml
-
-        <!--
-        <component id="level2">
-            <transformation>
-                <scale x="10" y="10" z="10" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit"/>
-            <children>
-                <primitiveref id="demoRectangle" />
-                <primitiveref id="triangle" />
-                <primitiveref id="cylinder" />
-                <primitive id="sphere" />
-            </children>
-        </component>
-        
-        <component id="level1">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit"/>
-            <children>
-                <componentref id="level2"/>
-            </children>
-        </component>
-        -->
-
-        <!-- ROOT -->
-=======
 <!-- ROOT START -->
->>>>>>> dadb259e69c7a8319b69f52ae8c17ff8a8075213:Porj1/LAIGDemoParser20192020v1.1/scenes/LAIG_TP1_XML_T6_G08_v04.xml
         <component id="demoRoot">
             <transformation>
                 <transformationref id="scale_down" />
