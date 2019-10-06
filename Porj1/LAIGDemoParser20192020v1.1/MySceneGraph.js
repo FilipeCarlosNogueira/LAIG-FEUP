@@ -113,8 +113,8 @@ class MySceneGraph {
     }
 
     // <ambient>
-    if ((index = nodeNames.indexOf('global')) == -1)
-      return 'tag <global> missing';
+    if ((index = nodeNames.indexOf('globals')) == -1)
+      return 'tag <globals> missing';
     else {
       if (index != AMBIENT_INDEX)
         this.onXMLMinorError('tag <ambient> out of order');
@@ -240,10 +240,10 @@ class MySceneGraph {
     for (var i = 0; i < children.length; i++)
       nodeNames.push(children[i].nodeName);
 
-    var ambientIndex = nodeNames.indexOf('global');
+    var ambientIndex = nodeNames.indexOf('ambient');
     var backgroundIndex = nodeNames.indexOf('background');
 
-    var color = this.parseColor(children[ambientIndex], 'global');
+    var color = this.parseColor(children[ambientIndex], 'ambient');
     if (!Array.isArray(color))
       return color;
     else
@@ -255,7 +255,7 @@ class MySceneGraph {
     else
       this.background = color;
 
-    this.log('Parsed global');
+    this.log('Parsed globals');
 
     return null;
   }
@@ -660,7 +660,7 @@ class MySceneGraph {
               primitiveId);
 
         var rectTriangle = new MyTriangle(
-            this.scene, primitiveId, x1, y2, z1, x2, y2, z2, x3, y3, z3);
+            this.scene, primitiveId, x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
         this.primitives[primitiveId] = rectTriangle;
       } else if (primitiveType == 'cylinder') {
@@ -818,7 +818,8 @@ class MySceneGraph {
       var tranformationChildren = grandChildren[transformationIndex].children;
       var transfMatrix = mat4.create();
 
-      if (tranformationChildren[0].nodeName == 'transformationref') {
+      if(tranformationChildren[0] == undefined){}
+      else if (tranformationChildren[0].nodeName == 'transformationref') {
         var idTrans = this.reader.getString(tranformationChildren[0], 'id');
         if (this.transformations[idTrans] == null) {
           return 'transformationref failed!';

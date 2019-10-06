@@ -8,10 +8,10 @@
         </perspective>
     </views>
 
-    <global>
-        <global r="0.2" g="0.2" b="0.2" a="1.0" />
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
         <background r="0.0" g="0.0" b="0.0" a="1.0" />
-    </global>
+    </globals>
 
     <lights>
         <omni id="demoLight" enabled="1">
@@ -67,8 +67,6 @@
         <transformation id="demoTransform">
             <scale x="1" y="1" z="1" />
         </transformation>
-
-
     </transformations>
 
     <primitives>
@@ -77,7 +75,11 @@
         </primitive>
 
         <primitive id="triangle">
-            <triangle x1="1" y1="0" z1="0" x2="0" y2="1" z2="0" x3="0" y3="0" z3="0"/>
+            <triangle x1="1" y1="0" z1="0" x2="0" y2="1.414" z2="0" x3="-1" y3="0" z3="0"/>
+        </primitive>
+
+        <primitive id="base">
+            <triangle x1="0" y1="0" z1="0.6" x2="0.5" y2="0" z2="-0.3" x3="-0.5" y3="0" z3="-0.3"/>
         </primitive>
 
         <primitive id="leg_cylinder">
@@ -118,20 +120,23 @@
     </primitives>
 
     <components>
+<!-- ROOT START -->
         <component id="demoRoot">
             <transformation>
-                <scale x="1" y="1" z="1" />
             </transformation>
             <materials>
                 <material id="demoMaterial" />
             </materials>
             <texture id="demoTexture"/>
             <children>
+                <componentref id="city" />
                 <componentref id="omnidroid" />
-                <componentref id="skybox" />
+                <componentref id="billboard" />
             </children>
         </component>
+<!-- ROOT END -->
 
+<!-- OMNIDROID START -->
         <component id="omnidroid">
             <transformation>
                 <scale x="0.5" y="0.5" z="0.5" />
@@ -165,7 +170,7 @@
                 <primitiveref id="omni_leg0" />
             </children>
         </component>
-        
+
         <component id="omnidroid_leg_p1">
             <transformation>
                 <translate x="16" y="17" z="0" />
@@ -180,7 +185,7 @@
                 <primitiveref id="omni_leg1" />
             </children>
         </component>
-        
+
         <component id="omnidroid_leg_p2">
             <transformation>
                 <translate x="21.58" y="10.5" z="0" />
@@ -211,7 +216,7 @@
                 <primitiveref id="omni_claw" />
             </children>
         </component>
-        
+
         <component id="omnidroid_claw_p1">
             <transformation>
                 <translate x="23" y="1" z="0" />
@@ -227,7 +232,7 @@
                 <primitiveref id="omni_claw" />
             </children>
         </component>
-        
+
         <component id="omnidroid_claw_p2">
             <transformation>
                 <translate x="23" y="1" z="0" />
@@ -243,7 +248,7 @@
                 <primitiveref id="omni_claw" />
             </children>
         </component>
-        
+
         <component id="omnidroid_claw_p3">
             <transformation>
                 <translate x="23" y="1" z="0" />
@@ -343,7 +348,7 @@
                 <componentref id="omnidroid_leg_f" />
             </children>
         </component>
-        
+
         <component id="omnidroid_body">
             <transformation>
                 <scale x="10" y="10" z="10" />
@@ -373,7 +378,211 @@
                 <primitiveref id="omni_torus" />
             </children>
         </component>
+<!-- OMNIDROID END -->
 
+<!-- CITY START -->
+        <component id="city">
+            <transformation>   
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="building0" />
+                <componentref id="building1" />
+                <componentref id="building2" />
+                <componentref id="building3" />
+                <componentref id="building4" />
+            </children>
+        </component>
+        
+        <component id="billboard">
+            <transformation> 
+                <translate x="-40" y="50" z="15" />               
+                <scale x="10" y="10" z="10" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="billboard_temp" />
+            </children>
+        </component>
+<!-- CITY END -->
+
+<!-- BILLBOARD START -->
+        <component id="billboard_temp">
+            <transformation>   
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="billboard_p0" />
+                <componentref id="billboard_p1" />
+                <componentref id="billboard_p2" />
+                <componentref id="billboard_p3" />
+                <componentref id="billboard_p4" />
+            </children>
+        </component>
+
+        <component id="billboard_p0">
+            <transformation>
+                <translate x="0" y="0" z="0.575" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="billboard_p1">
+            <transformation>   
+                <rotate axis="y" angle="120" />
+                <translate x="0" y="0" z="0.575" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="billboard_p2">
+            <transformation>   
+                <rotate axis="y" angle="-120" />
+                <translate x="0" y="0" z="0.575" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="billboard_p3">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <primitiveref id="base" />
+            </children>
+        </component>
+
+        <component id="billboard_p4">
+            <transformation>
+                <scale x="0.2" y="1" z="0.2" />
+                <translate x="0" y="-0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+<!-- BILLBOARD END -->
+
+<!-- BUILDING START -->
+        <component id="building0">
+            <transformation>
+                <translate x="0" y="0" z="-40" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+        
+        <component id="building1">
+            <transformation>
+                <translate x="-10" y="0" z="-40" />
+                <scale x="1.5" y="1.2" z="1.5" />                
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+        
+        <component id="building2">
+            <transformation>
+                <translate x="-40" y="0" z="-40" />
+                <scale x="1.5" y="1.2" z="1.5" />                
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building3">
+            <transformation>
+                <translate x="-40" y="0" z="-15" />
+                <scale x="1.5" y="1.7" z="3" />                
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building4">
+            <transformation>
+                <translate x="-40" y="0" z="15" />
+                <scale x="2" y="1" z="2" />                
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building_temp">
+            <transformation>
+                <scale x="10" y="40" z="10" />
+                <translate x="0" y="0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="legMat" />
+            </materials>
+            <texture id="legTex"/>
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+<!-- BUILDING END -->
+
+<!-- TABLE START -->
         <component id="table">
             <transformation>
                 <scale x="0.2" y="0.2" z="0.2" />
@@ -461,10 +670,11 @@
                 <componentref id="cube" />
             </children>
         </component>
+<!-- TABLE END -->
 
+<!-- CUBE START -->
         <component id="cube">
             <transformation>
-                <translate x="0" y="0" z="0" />
             </transformation>
             <materials>
                 <material id="legMat" />
@@ -561,10 +771,12 @@
                 <primitiveref id="square" />
             </children>
         </component>
+<!-- CUBE END -->
 
+<!-- SKYBOX START -->
         <component id="skybox">
             <transformation>
-                <scale x="100" y="60" z="100" />
+                <scale x="120" y="100" z="120" />
                 <translate x="0" y="0.5" z="0"/>
             </transformation>
             <materials>
@@ -580,7 +792,6 @@
                 <componentref id="sky_bot" />
             </children>
         </component>
-        
 
         <component id="sky_side0">
             <transformation>
@@ -664,5 +875,6 @@
                 <primitiveref id="square" />
             </children>
         </component>
+<!-- SKYBOX END -->
     </components>
 </lxs>
