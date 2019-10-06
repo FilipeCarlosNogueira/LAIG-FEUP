@@ -423,6 +423,88 @@ class MySceneGraph {
 
       // Continue here
       this.onXMLMinorError('To do: Parse materials.');
+
+      // Get shininess of the current material
+      var shininess = this.reader.getFloat(children[i], 'shininess');
+      if (shininess == null) return 'no shininess defined for material';
+
+      grandChildren = children[i].children;
+
+      for(var j = 0; grandChildren.length; j++){
+        
+        nodeNames.push(grandChildren[i].nodeName);
+        
+        // Gets id of each element.
+        var emissionID = nodeNames.indexOf("emission");
+        var ambientID = nodeNames.indexOf("ambient");
+        var diffuseID = nodeNames.indexOf("diffuse");
+        var specularID = nodeNames.indexOf("specular");
+
+        var newMaterial = new CGFappearance(this.scene);
+        newMaterial.setShininess(shininess);
+
+        var r, g, b, a;
+
+        // Checks if the IDs are valid! If not, returns error.
+
+        //emission
+        if(emissionID != -1){
+
+          r = this.reader.getFloat(grandChildren[emissionID], 'r');
+          g = this.reader.getFloat(grandChildren[emissionID], 'g');
+          b = this.reader.getFloat(grandChildren[emissionID], 'b');
+          a = this.reader.getFloat(grandChildren[emissionID], 'a');
+
+          if (r == null || g == null || b == null || a == null)
+            return "RGBA values unvalid! Parsing emission from material failed!";
+
+          newMaterial.setEmission(r, g, b, a);
+        } else return 'failed to get id to emission!';
+
+        //ambient
+        if(ambientID != -1){
+
+          r = this.reader.getFloat(grandChildren[ambientID], 'r');
+          g = this.reader.getFloat(grandChildren[ambientID], 'g');
+          b = this.reader.getFloat(grandChildren[ambientID], 'b');
+          a = this.reader.getFloat(grandChildren[ambientID], 'a');
+
+          if (r == null || g == null || b == null || a == null)
+            return "RGBA values unvalid! Parsing emission from material failed!";
+
+          newMaterial.setAmbient(r, g, b, a);
+        } else return 'failed to get id to ambient!';
+
+        //diffuse
+        if(diffuseID != -1){
+
+          r = this.reader.getFloat(grandChildren[diffuseID], 'r');
+          g = this.reader.getFloat(grandChildren[diffuseID], 'g');
+          b = this.reader.getFloat(grandChildren[diffuseID], 'b');
+          a = this.reader.getFloat(grandChildren[diffuseID], 'a');
+
+          if (r == null || g == null || b == null || a == null)
+            return "RGBA values unvalid! Parsing emission from material failed!";
+
+          newMaterial.setDiffuse(r, g, b, a);
+        } else return 'failed to get id to diffuse!';
+
+        //specular
+        if(specularID != -1){
+
+          r = this.reader.getFloat(grandChildren[specularID], 'r');
+          g = this.reader.getFloat(grandChildren[specularID], 'g');
+          b = this.reader.getFloat(grandChildren[specularID], 'b');
+          a = this.reader.getFloat(grandChildren[specularID], 'a');
+
+          if (r == null || g == null || b == null || a == null)
+            return "RGBA values unvalid! Parsing emission from material failed!";
+
+          newMaterial.setSpecular(r, g, b, a);
+        } else return 'failed to get id to specular!';
+
+        this.materials[materialID] = newMaterial;
+      }
     }
 
     // this.log("Parsed materials");
@@ -900,6 +982,25 @@ class MySceneGraph {
 
       // Materials
       var materialChildren = grandChildren[materialsIndex].children;
+      var materialVec = [];
+
+      for(var j = 0; materialChildren.length; j++){
+        var idMaterial = this.reader.getString(materialChildren[j], 'id');
+
+        if(idMaterial != NULL){
+          //check if root node has its own material 
+          if (idComponent == this.root && id == "inherit")
+            return 'Root cannot have inherit materials';
+          
+          //check if a normal node that doesn't have a mateiral, receves one from inheritance
+          if (this.Material[id] == null && id != "inherit") 
+            return 'Material not defined';
+          
+          materialVec.push(idMaterial);
+
+        }
+        else return 'parseComponent materials failed!';
+      }
       
       // Texture
 
@@ -926,7 +1027,7 @@ class MySceneGraph {
       }
 
 
-      this.components[componentID] = new MyComponent(componentID, transfMatrix, componentChild, primitiveChild);
+      this.components[componentID] = new MyComponent(componentID, transfMatrix, materialVec, componentChild, primitiveChild);
     }
   }
 
