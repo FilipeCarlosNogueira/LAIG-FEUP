@@ -748,7 +748,7 @@ class MySceneGraph {
       } else if (primitiveType == 'cylinder') {
         // slices
         var slices = this.reader.getFloat(grandChildren[0], 'slices');
-        if (!(slices != null && !isNaN(slices) && slices > 3))
+        if (!(slices != null && !isNaN(slices) && slices >= 3))
           return (
               'unable to parse slices of the primitive coordinates for ID = ' +
               primitiveId);
