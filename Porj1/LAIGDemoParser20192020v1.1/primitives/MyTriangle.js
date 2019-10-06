@@ -7,6 +7,7 @@
 class MyTriangle extends CGFobject {
   constructor(scene, id, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
     super(scene);
+    
     this.x1 = x1;
     this.y1 = y1;
     this.z1 = z1;

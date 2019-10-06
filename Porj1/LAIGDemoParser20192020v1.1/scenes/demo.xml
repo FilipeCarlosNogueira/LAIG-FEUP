@@ -119,7 +119,7 @@
 
     <components>
 
-        <!-- LEVEL 2 -->
+        <!--
         <component id="level2">
             <transformation>
                 <scale x="10" y="10" z="10" />
@@ -135,8 +135,7 @@
                 <primitive id="sphere" />
             </children>
         </component>
-
-        <!-- LEVEL 1 -->
+        
         <component id="level1">
             <transformation>
             </transformation>
@@ -148,6 +147,7 @@
                 <componentref id="level2"/>
             </children>
         </component>
+        -->
 
         <!-- ROOT -->
         <component id="demoRoot">

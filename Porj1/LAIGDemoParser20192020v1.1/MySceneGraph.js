@@ -427,84 +427,86 @@ class MySceneGraph {
       // Get shininess of the current material
       var shininess = this.reader.getFloat(children[i], 'shininess');
       if (shininess == null) return 'no shininess defined for material';
-
+        
       grandChildren = children[i].children;
 
-      for(var j = 0; grandChildren.length; j++){
-        
-        nodeNames.push(grandChildren[i].nodeName);
-        
-        // Gets id of each element.
-        var emissionID = nodeNames.indexOf("emission");
-        var ambientID = nodeNames.indexOf("ambient");
-        var diffuseID = nodeNames.indexOf("diffuse");
-        var specularID = nodeNames.indexOf("specular");
+      // Gets id of each element.
+      nodeNames.push(grandChildren[0].nodeName);
+      var emissionID = nodeNames.indexOf("emission");
 
-        var newMaterial = new CGFappearance(this.scene);
-        newMaterial.setShininess(shininess);
+      nodeNames.push(grandChildren[1].nodeName);
+      var ambientID = nodeNames.indexOf("ambient");
 
-        var r, g, b, a;
+      nodeNames.push(grandChildren[2].nodeName);
+      var diffuseID = nodeNames.indexOf("diffuse");
 
-        // Checks if the IDs are valid! If not, returns error.
+      nodeNames.push(grandChildren[3].nodeName);
+      var specularID = nodeNames.indexOf("specular");
 
-        //emission
-        if(emissionID != -1){
+      var newMaterial = new CGFappearance(this.scene);
+      newMaterial.setShininess(shininess);
 
-          r = this.reader.getFloat(grandChildren[emissionID], 'r');
-          g = this.reader.getFloat(grandChildren[emissionID], 'g');
-          b = this.reader.getFloat(grandChildren[emissionID], 'b');
-          a = this.reader.getFloat(grandChildren[emissionID], 'a');
+      var r, g, b, a;
 
-          if (r == null || g == null || b == null || a == null)
-            return "RGBA values unvalid! Parsing emission from material failed!";
+      // Checks if the IDs are valid! If not, returns error.
 
-          newMaterial.setEmission(r, g, b, a);
-        } else return 'failed to get id to emission!';
+      //emission
+      if(emissionID != -1){
 
-        //ambient
-        if(ambientID != -1){
+        r = this.reader.getFloat(grandChildren[emissionID], 'r');
+        g = this.reader.getFloat(grandChildren[emissionID], 'g');
+        b = this.reader.getFloat(grandChildren[emissionID], 'b');
+        a = this.reader.getFloat(grandChildren[emissionID], 'a');
 
-          r = this.reader.getFloat(grandChildren[ambientID], 'r');
-          g = this.reader.getFloat(grandChildren[ambientID], 'g');
-          b = this.reader.getFloat(grandChildren[ambientID], 'b');
-          a = this.reader.getFloat(grandChildren[ambientID], 'a');
+        if (r == null || g == null || b == null || a == null)
+          return "RGBA values unvalid! Parsing emission from material failed!";
 
-          if (r == null || g == null || b == null || a == null)
-            return "RGBA values unvalid! Parsing emission from material failed!";
+        newMaterial.setEmission(r, g, b, a);
+      } else return 'failed to get id to emission!';
 
-          newMaterial.setAmbient(r, g, b, a);
-        } else return 'failed to get id to ambient!';
+      //ambient
+      if(ambientID != -1){
 
-        //diffuse
-        if(diffuseID != -1){
+        r = this.reader.getFloat(grandChildren[ambientID], 'r');
+        g = this.reader.getFloat(grandChildren[ambientID], 'g');
+        b = this.reader.getFloat(grandChildren[ambientID], 'b');
+        a = this.reader.getFloat(grandChildren[ambientID], 'a');
 
-          r = this.reader.getFloat(grandChildren[diffuseID], 'r');
-          g = this.reader.getFloat(grandChildren[diffuseID], 'g');
-          b = this.reader.getFloat(grandChildren[diffuseID], 'b');
-          a = this.reader.getFloat(grandChildren[diffuseID], 'a');
+        if (r == null || g == null || b == null || a == null)
+          return "RGBA values unvalid! Parsing emission from material failed!";
 
-          if (r == null || g == null || b == null || a == null)
-            return "RGBA values unvalid! Parsing emission from material failed!";
+        newMaterial.setAmbient(r, g, b, a);
+      } else return 'failed to get id to ambient!';
 
-          newMaterial.setDiffuse(r, g, b, a);
-        } else return 'failed to get id to diffuse!';
+      //diffuse
+      if(diffuseID != -1){
 
-        //specular
-        if(specularID != -1){
+        r = this.reader.getFloat(grandChildren[diffuseID], 'r');
+        g = this.reader.getFloat(grandChildren[diffuseID], 'g');
+        b = this.reader.getFloat(grandChildren[diffuseID], 'b');
+        a = this.reader.getFloat(grandChildren[diffuseID], 'a');
 
-          r = this.reader.getFloat(grandChildren[specularID], 'r');
-          g = this.reader.getFloat(grandChildren[specularID], 'g');
-          b = this.reader.getFloat(grandChildren[specularID], 'b');
-          a = this.reader.getFloat(grandChildren[specularID], 'a');
+        if (r == null || g == null || b == null || a == null)
+          return "RGBA values unvalid! Parsing emission from material failed!";
 
-          if (r == null || g == null || b == null || a == null)
-            return "RGBA values unvalid! Parsing emission from material failed!";
+        newMaterial.setDiffuse(r, g, b, a);
+      } else return 'failed to get id to diffuse!';
 
-          newMaterial.setSpecular(r, g, b, a);
-        } else return 'failed to get id to specular!';
+      //specular
+      if(specularID != -1){
 
-        this.materials[materialID] = newMaterial;
-      }
+        r = this.reader.getFloat(grandChildren[specularID], 'r');
+        g = this.reader.getFloat(grandChildren[specularID], 'g');
+        b = this.reader.getFloat(grandChildren[specularID], 'b');
+        a = this.reader.getFloat(grandChildren[specularID], 'a');
+
+        if (r == null || g == null || b == null || a == null)
+          return "RGBA values unvalid! Parsing emission from material failed!";
+
+        newMaterial.setSpecular(r, g, b, a);
+      } else return 'failed to get id to specular!';
+
+      this.materials[materialID] = newMaterial;
     }
 
     // this.log("Parsed materials");
@@ -741,8 +743,7 @@ class MySceneGraph {
               'unable to parse z3 of the primitive coordinates for ID = ' +
               primitiveId);
 
-        var rectTriangle = new MyTriangle(
-            this.scene, primitiveId, x1, y2, z1, x2, y2, z2, x3, y3, z3);
+        var rectTriangle = new MyTriangle(this.scene, primitiveId, x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
         this.primitives[primitiveId] = rectTriangle;
       } else if (primitiveType == 'cylinder') {
@@ -982,21 +983,21 @@ class MySceneGraph {
 
       // Materials
       var materialChildren = grandChildren[materialsIndex].children;
-      var materialVec = [];
+      var materialIDs = [];
 
       for(var j = 0; materialChildren.length; j++){
-        var idMaterial = this.reader.getString(materialChildren[j], 'id');
+        var materialID = this.reader.getString(materialChildren[j], 'id');
 
-        if(idMaterial != NULL){
+        if(materialID != -1){
           //check if root node has its own material 
-          if (idComponent == this.root && id == "inherit")
+          if (componentID == this.root && materialID == "inherit")
             return 'Root cannot have inherit materials';
           
           //check if a normal node that doesn't have a mateiral, receves one from inheritance
-          if (this.Material[id] == null && id != "inherit") 
+          if (this.materialChildren == null && materialID != "inherit") 
             return 'Material not defined';
           
-          materialVec.push(idMaterial);
+            materialIDs.push(materialID);
 
         }
         else return 'parseComponent materials failed!';
@@ -1026,8 +1027,8 @@ class MySceneGraph {
         }
       }
 
-
-      this.components[componentID] = new MyComponent(componentID, transfMatrix, materialVec, componentChild, primitiveChild);
+      var materialIDs = [];
+      this.components[componentID] = new MyComponent(componentID, transfMatrix, materialIDs, componentChild, primitiveChild);
     }
   }
 
