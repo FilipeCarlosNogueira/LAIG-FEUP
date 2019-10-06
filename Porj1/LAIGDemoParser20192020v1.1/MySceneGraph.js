@@ -295,9 +295,7 @@ class MySceneGraph {
 
       // Checks for repeated IDs.
       if (this.lights[lightId] != null)
-        return (
-            'ID must be unique for each light (conflict: ID = ' + lightId +
-            ')');
+        return ('ID must be unique for each light (conflict: ID = ' + lightId + ')');
 
       // Light enable/disable
       var enableLight = true;
@@ -389,7 +387,50 @@ class MySceneGraph {
   parseTextures(texturesNode) {
     // For each texture in textures block, check ID and file URL
     this.onXMLMinorError('To do: Parse textures.');
-    return null;
+
+    let children = texturesNode.children;
+    this.textures = [];
+
+    // Read textures
+    for(let i = 0; i < children.length; i++){
+
+      // Check nodeName
+      if (children[i].nodeName != 'texture') {
+        this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
+        continue;
+      }
+
+      // Check ID
+      let textID = this.reader.getString(children[i], 'id');
+      if(textID == null) continue;
+
+      // Checks for repeated IDs.
+      if (this.textures[textID] != null){
+        this.onXMLMinorError('Repeated texture ID will be ignored (' + textID + ')');
+        continue;
+      }
+
+      // Check URL
+      let file = this.reader.getString(children[i], 'file');
+      if(file == null){
+        this.onXMLMinorError('Error on texture file in (' + textID + ')');
+        continue;
+      }
+
+      // Open URL
+      let img = new Image();
+      img.src = file;
+      if(img.height == 0){
+        this.onXMLMinorError('Could not open (' + file + ')');
+        continue;
+      }
+      this.log('read (' + file + ') file');
+    }
+
+
+
+    this.log('Parsed textures');
+    return;
   }
 
   /**
@@ -417,9 +458,7 @@ class MySceneGraph {
 
       // Checks for repeated IDs.
       if (this.materials[materialID] != null)
-        return (
-            'ID must be unique for each light (conflict: ID = ' + materialID +
-            ')');
+        return ('ID must be unique for each light (conflict: ID = ' + materialID + ')');
 
       // Continue here
       this.onXMLMinorError('To do: Parse materials.');
@@ -453,9 +492,7 @@ class MySceneGraph {
 
       // Checks for repeated IDs.
       if (this.transformations[transformationID] != null)
-        return (
-            'ID must be unique for each transformation (conflict: ID = ' +
-            transformationID + ')');
+        return ('ID must be unique for each transformation (conflict: ID = ' + transformationID + ')');
 
       grandChildren = children[i].children;
       // Specifications for the current transformation.
@@ -465,20 +502,15 @@ class MySceneGraph {
       for (var j = 0; j < grandChildren.length; j++) {
         switch (grandChildren[j].nodeName) {
           case 'translate':
-            var coordinates = this.parseCoordinates3D(
-                grandChildren[j],
-                'translate transformation for ID ' + transformationID);
+            var coordinates = this.parseCoordinates3D(grandChildren[j], 'translate transformation for ID ' + transformationID);
             if (!Array.isArray(coordinates)) return coordinates;
 
-            transfMatrix =
-                mat4.translate(transfMatrix, transfMatrix, coordinates);
+            transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
             break;
 
           case 'scale':
             // this.onXMLMinorError('To do: Parse scale transformations.');
-            var coordinates = this.parseCoordinates3D(
-                grandChildren[j],
-                'scale transformation for component for ID' + transformationID);
+            var coordinates = this.parseCoordinates3D(grandChildren[j], 'scale transformation for component for ID' + transformationID);
             if (!Array.isArray(coordinates)) return coordinates;
 
             mat4.scale(transfMatrix, transfMatrix, coordinates);
@@ -543,9 +575,7 @@ class MySceneGraph {
 
       // Checks for repeated IDs.
       if (this.primitives[primitiveId] != null)
-        return (
-            'ID must be unique for each primitive (conflict: ID = ' +
-            primitiveId + ')');
+        return ('ID must be unique for each primitive (conflict: ID = ' + primitiveId + ')');
 
       grandChildren = children[i].children;
 
@@ -797,9 +827,7 @@ class MySceneGraph {
 
       // Checks for repeated IDs.
       if (this.components[componentID] != null)
-        return (
-            'ID must be unique for each component (conflict: ID = ' +
-            componentID + ')');
+        return ('ID must be unique for each component (conflict: ID = ' + componentID + ')');
 
       grandChildren = children[i].children;
 
@@ -1032,7 +1060,7 @@ class MySceneGraph {
       this.onXMLError('Undefined component');
       return;
     }
-    
+
     this.scene.pushMatrix();
     this.scene.multMatrix(comp.transformationMatrix);
 
