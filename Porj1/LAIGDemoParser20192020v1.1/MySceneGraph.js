@@ -220,12 +220,212 @@ class MySceneGraph {
    * @param {view block element} viewsNode
    */
   parseView(viewsNode) {
-    this.onXMLMinorError('To do: Parse views and create cameras.');
+    //this.onXMLMinorError('To do: Parse views and create cameras.');
 
-    var children = viewsNode.children;
+    //check if defaultCamera is defined
+    this.default = this.reader.getString(viewsNode, 'default');
+    if (this.default == null) {
+      this.onXMLMinorError("Default view not defined!");
+      this.default = "defaultCamera";
+    }
+
+    var childrenView = viewsNode.children;
 
     this.views = [];
-    
+
+    // Check if there's at least one view defined. If not, creats one.
+    if (childrenView.length == 0) {
+      this.onXMLMinorError("At least one view must be defined. Assuming default view! id = " + this.default);
+      
+      // Parse view
+      this.views[id] = {};
+      this.views[id].type = 'perspective';
+      this.views[id].near = 0.1;
+      this.views[id].far = 500;
+      this.views[id].angle = 45 * DEGREE_TO_RAD;
+      this.views[id].fromX = 150;
+      this.views[id].fromY = 50;
+      this.views[id].fromZ = 150;
+      this.views[id].toX = 0;
+      this.views[id].toY = 20;
+      this.views[id].toZ = 0;
+
+      this.log('Parsed Views');
+      return null;
+    }
+
+    // Any number of views.
+    var nodeName;
+    for(var i = 0; i < childrenView.length; i++){
+      nodeName = childrenView[i].nodeName;
+
+      // Perspective view
+      if(nodeName == 'perspective'){
+
+        // Parse and Verification:
+
+          // ID
+          var id = this.reader.getString(childrenView[i], 'id');
+          if(id == null) return 'ERROR! Perspective ID is null!';
+
+          // near
+          var near = this.reader.getFloat(childrenView[i], 'near');
+          if(near == null) return 'ERROR! Perspective near is null!';
+
+          // far
+          var far = this.reader.getFloat(childrenView[i], 'far');
+          if(far == null) return 'ERROR! Perspective far is null';
+
+          if(far <= near) return 'ERROR! far must be bigger than near!';
+
+          // angle
+          var angle = this.reader.getFloat(childrenView[i], 'angle');
+          if(angle == null) return 'ERROR! Perspective angle is null';
+          if(angle < 0 || angle > 90) return 'ERROR! Angle must be between 0 and 90!';
+
+          // from
+          var from = childrenView[i].getElementsByTagName('from');
+          if(from == null) return 'ERROR! from value must be defined!';
+          if(from.length > 1) return 'ERROR! Ther must only be one \'from\' value!';
+
+          var fromX = this.reader.getFloat(from[0], 'x');
+          if(fromX == null) return 'ERROR! from X undefined!';
+
+          var fromY = this.reader.getFloat(from[0], 'y');
+          if(fromY == null) return 'ERROR! from Y undefined!';
+
+          var fromZ = this.reader.getFloat(from[0], 'z');
+          if(fromZ == null) return 'ERROR! from Z undefined!';
+
+          // to
+          var to = childrenView[i].getElementsByTagName('to');
+          if(to == null) return 'ERROR! to value must be defined!';
+          if(to.length > 1) return 'ERROR! There must only be one \'to\' value';
+
+          var toX = this.reader.getFloat(to[0], 'x');
+          if(toX == null) return 'ERROR! from X undefined!';
+
+          var toY = this.reader.getFloat(to[0], 'y');
+          if(toY == null) return 'ERROR! from Y undefined!';
+
+          var toZ = this.reader.getFloat(to[0], 'z');
+          if(toZ == null) return 'ERROR! from Z undefined!';
+
+          // From and To Value verification
+          if (fromX == toX && fromy == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
+
+        // Check if view already exists
+        if(this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
+
+        //Parse view
+        this.views[id] = {};
+        this.views[id].type = 'perspective';
+        this.views[id].near = near;
+        this.views[id].far = far;
+        this.views[id].angle = angle * DEGREE_TO_RAD;
+        this.views[id].fromX = fromX;
+        this.views[id].fromY = fromY;
+        this.views[id].fromZ = fromZ;
+        this.views[id].toX = toX;
+        this.views[id].toY = toY;
+        this.views[id].toZ = toZ;
+      }
+
+      // Ortho view
+      else if (nodeName == 'ortho'){
+
+        // Parse and Verification:
+
+          // ID
+          var id = this.reader.getString(childrenView[i], 'id');
+          if(id == null) return 'ERROR! Ortho ID is null!';
+
+          // near
+          var near = this.reader.getFloat(childrenView[i], 'near');
+          if(near == null) return 'ERROR! Perspective near is null!';
+
+          // far
+          var far = this.reader.getFloat(childrenView[i], 'far');
+          if(far == null) return 'ERROR! Perspective far is null';
+
+          if(far <= near) return 'ERROR! far must be bigger than near!';
+
+          // left
+          var left = this.reader.getFloat(childrenView[i], 'left');
+          if(left == null) return 'ERROR! left is not defined!';
+
+          // right
+          var right = this.reader.getFloat(childrenView[i], 'right');
+          if(right == null) return 'ERROR! right is not defined!';
+
+          if(left == right) return 'ERROR! left and rigth must be different!';
+
+          // top
+          var top = this.reader.getFloat(childrenView[i], 'top');
+          if(top == null) return 'ERROR! top is not defined!';
+
+          // bottom
+          var bottom = this.reader.getFloat(childrenView[i], 'bottom');
+          if(bottom == null) return 'ERROR! bottom is not defined!';
+
+          if(top == bottom) return 'ERROR! top and bottom must be different!';
+
+          // from
+          var from = childrenView[i].getElementsByTagName('from');
+          if(from == null) return 'ERROR! from value must be defined!';
+          if(from.length > 1) return 'ERROR! Ther must only be one \'from\' value!';
+
+          var fromX = this.reader.getFloat(from[0], 'x');
+          if(fromX == null) return 'ERROR! from X undefined!';
+
+          var fromY = this.reader.getFloat(from[0], 'y');
+          if(fromY == null) return 'ERROR! from Y undefined!';
+
+          var fromZ = this.reader.getFloat(from[0], 'z');
+          if(fromZ == null) return 'ERROR! from Z undefined!';
+
+          // to
+          var to = childrenView[i].getElementsByTagName('to');
+          if(to == null) return 'ERROR! to value must be defined!';
+          if(to.length > 1) return 'ERROR! There must only be one \'to\' value';
+
+          var toX = this.reader.getFloat(to[0], 'x');
+          if(toX == null) return 'ERROR! from X undefined!';
+
+          var toY = this.reader.getFloat(to[0], 'y');
+          if(toY == null) return 'ERROR! from Y undefined!';
+
+          var toZ = this.reader.getFloat(to[0], 'z');
+          if(toZ == null) return 'ERROR! from Z undefined!';
+
+          // From and To Value verification
+          if (fromX == toX && fromy == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
+
+        // Check if view already exists
+        if(this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
+
+        //Parse view
+        this.views[id] = {};
+        this.views[id].type = 'ortho';
+        this.views[id].near = near;
+        this.views[id].far = far;
+        this.views[id].left = left;
+        this.views[id].right = right;
+        this.views[id].top = top;
+        this.views[id].bottom = bottom;
+        this.views[id].fromX = fromX;
+        this.views[id].fromY = fromY;
+        this.views[id].fromZ = fromZ;
+        this.views[id].toX = toX;
+        this.views[id].toY = toY;
+        this.views[id].toZ = toZ;
+      }
+    }
+
+    //????? this.scene.camera = new ... ?????
+
+    //console.log('this.views:'); console.log(this.views);
+    this.log('Parsed Views');
 
     return null;
   }
@@ -945,6 +1145,7 @@ class MySceneGraph {
       var transfMatrix = mat4.create();
 
       if(tranformationChildren[0] == undefined){}
+
       else if (tranformationChildren[0].nodeName == 'transformationref') {
         var idTrans = this.reader.getString(tranformationChildren[0], 'id');
         if (this.transformations[idTrans] == null) {

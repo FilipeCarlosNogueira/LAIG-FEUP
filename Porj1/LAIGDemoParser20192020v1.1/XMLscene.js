@@ -100,6 +100,8 @@ class XMLscene extends CGFscene {
         this.initLights();
 
         this.sceneInited = true;
+
+        this.interface.setActiveCamera(this.camera);
     }
 
     /**
