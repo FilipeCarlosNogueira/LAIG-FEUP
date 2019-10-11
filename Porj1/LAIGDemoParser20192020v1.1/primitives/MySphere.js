@@ -12,7 +12,7 @@ class MySphere extends CGFobject {
     this.indices = [];
     this.vertices = [];
     this.normals = [];
-    this.textCoords = [];
+    this.texCoords = [];
 
     var theta = Math.PI / this.stacks;
     var phi = 2 * Math.PI / this.slices;
@@ -34,7 +34,7 @@ class MySphere extends CGFobject {
             Math.sin(i * theta) * Math.cos(j * phi),
             Math.sin(i * theta) * Math.sin(j * phi), Math.cos(i * theta));
 
-        this.textCoords.push(j / this.slices, 1 - i / this.stacks);
+        this.texCoords.push(j / this.slices, 1 - i / this.stacks);
       }
     }
 
@@ -52,5 +52,16 @@ class MySphere extends CGFobject {
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
-  };
+  }
+
+  updateTexCoords(length_t, length_s){
+    this.texCoords = [];
+
+    for (var i = 0; i <= this.stacks; i++) {
+      for (var j = 0; j <= this.slices; j++) {
+        this.texCoords.push((j * length_s) / this.slices, 1 - (i * length_t) / this.stacks);
+      }
+    }
+    this.updateTexCoordsGLBuffers();
+  }
 }

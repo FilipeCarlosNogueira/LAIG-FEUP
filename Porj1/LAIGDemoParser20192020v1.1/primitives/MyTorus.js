@@ -52,6 +52,7 @@ class MyTorus extends CGFobject {
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
   updateBuffers(complexity) {
     this.slices = 3 +
         Math.round(
@@ -60,5 +61,18 @@ class MyTorus extends CGFobject {
     // reinitialize buffers
     this.initBuffers();
     this.initNormalVizBuffers();
+  }
+
+  updateTexCoords(length_t, length_s){
+    this.texCoords = [];
+
+    for (let j = 0; j <= this.loops; j++) {
+      for (let i = 0; i <= this.slices; i++) {
+
+        this.texCoords.push( ( i * length_s) / this.slices, ((this.loops - j) * length_t) / this.loops);
+
+      }
+    }
+    this.updateTexCoordsGLBuffers();
   }
 }

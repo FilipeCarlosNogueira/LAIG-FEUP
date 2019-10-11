@@ -70,15 +70,14 @@ class MyTriangle extends CGFobject {
     this.normals = [n[0], n[1], n[2], n[0], n[1], n[2], n[0], n[1], n[2]];
     //--
 
-    this.textCoords =
+    this.texCoords =
         [this.C - this.A * this.cosB, this.A * this.sinB, 0, 0, this.C, 0];
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
 
-  //??
-  setTextCoords(length_s, length_t) {
+  updateTexCoords(length_s, length_t) {
     this.texCoords = [
       (this.C - this.A * this.cosB) / length_s, (this.A * this.sinB) / length_t,
       0, 0, this.C / length_s, 0
@@ -88,5 +87,4 @@ class MyTriangle extends CGFobject {
 
     this.updateTexCoordsGLBuffers();
   }
-  //---
 }

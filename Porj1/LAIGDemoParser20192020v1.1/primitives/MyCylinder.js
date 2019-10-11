@@ -8,6 +8,7 @@ class MyCylinder extends CGFobject {
     this.height = height;
     this.initBuffers();
   }
+
   initBuffers() {
     this.vertices = [];
     this.indices = [];
@@ -51,6 +52,7 @@ class MyCylinder extends CGFobject {
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
   updateBuffers(complexity) {
     this.slices = 3 +
         Math.round(
@@ -59,5 +61,18 @@ class MyCylinder extends CGFobject {
     // reinitialize buffers
     this.initBuffers();
     this.initNormalVizBuffers();
+  }
+
+  updateTexCoords(length_t, length_s){
+    this.texCoords = [];
+
+    for (let j = 0; j <= this.stacks; j++) {
+      for (let i = 0; i <= this.slices; i++) {
+
+        this.texCoords.push( ( i * length_s) / this.slices, ((this.stacks - j) * length_t) / this.stacks);
+
+      }
+    }
+    this.updateTexCoordsGLBuffers();
   }
 }
