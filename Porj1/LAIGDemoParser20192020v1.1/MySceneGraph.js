@@ -1382,10 +1382,10 @@ class MySceneGraph {
    * Displays the scene, processing each node, starting in the root node.
    */
   displayScene() {
-    this.processNode(this.idRoot, "none", "none");
+    this.processNode(this.idRoot, "none", "none", 1, 1);
   }
 
-  processNode(id, parentMaterial, parentTexture) {
+  processNode(id, parentMaterial, parentTexture, parent_length_t, parent_length_s) {
     let comp = this.components[id];
     if (comp == null || comp == undefined) {
       this.onXMLError('Undefined component');
@@ -1396,7 +1396,8 @@ class MySceneGraph {
     this.scene.multMatrix(comp.transformationMatrix);
 
 
-    let apply_material = "none", apply_texture = "none";
+    let apply_material = "none", apply_texture = "none",
+        apply_length_t = 1, apply_length_s = 1;
 
     // Display materials
     if (comp.materialID == "inherit") {
@@ -1408,17 +1409,24 @@ class MySceneGraph {
 
     if (apply_material != "none") {
       // Display textures
+      // Null texture
       if (comp.textureID == "none") {
         this.materials[apply_material].setTexture(null);
+      // Inherit texture
       } else if (comp.textureID == "inherit") {
         if (parentTexture == "none") {
           apply_texture = "none";
           this.materials[apply_material].setTexture(null);
         } else {
+          apply_length_t = parent_length_t;
+          apply_length_s = parent_length_s;
           apply_texture = parentTexture;
           this.materials[apply_material].setTexture(this.textures[apply_texture]);
         }
+      // Defined texture
       } else {
+        apply_length_t = comp.length_t;
+        apply_length_s = comp.length_s;
         apply_texture = comp.textureID
         this.materials[apply_material].setTexture(this.textures[apply_texture]);
       }
@@ -1427,13 +1435,13 @@ class MySceneGraph {
 
     // process child components
     for (let childComp of comp.componentChild) {
-      this.processNode(childComp, apply_material, apply_texture);
+      this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
     }
 
     // display child primitives
     for (let childPrim of comp.primitiveChild) {
       if(apply_material != "none" && apply_texture != "none"){
-        this.primitives[childPrim].updateTexCoords(comp.length_t, comp.length_s);
+        this.primitives[childPrim].updateTexCoords(apply_length_t, apply_length_s);
       }
 
       this.primitives[childPrim].display();

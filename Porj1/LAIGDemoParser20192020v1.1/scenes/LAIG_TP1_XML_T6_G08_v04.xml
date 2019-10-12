@@ -28,9 +28,9 @@
     </lights>
 
     <textures>
-        <texture id="omnidroid_legs_text" file="scenes/images/rossete.png" />
-        <texture id="omnidroid_body_text" file="scenes/images/vidral.jpg" />
-        <texture id="omnidroid_head_text" file="scenes/images/vidral.jpg" />
+        <texture id="omnidroid_legs_text" file="scenes/images/robot_leg.jpg" />
+        <texture id="omnidroid_body_text" file="scenes/images/robot_body.jpg" />
+        <texture id="omnidroid_head_text" file="scenes/images/robot_head.jpg" />
 
         <texture id="building0_text" file="scenes/images/building_side_0.jpg" />
         <texture id="building1_text" file="scenes/images/building_side_0.jpg" />
@@ -38,12 +38,12 @@
         <texture id="building3_text" file="scenes/images/building_side_0.jpg" />
         <texture id="building4_text" file="scenes/images/building_side_0.jpg" />
 
-        <texture id="skybox0_text" file="scenes/images/vidral.jpg" />
-        <texture id="skybox1_text" file="scenes/images/vidral.jpg" />
-        <texture id="skybox2_text" file="scenes/images/vidral.jpg" />
-        <texture id="skybox3_text" file="scenes/images/vidral.jpg" />
-        <texture id="skybox4_text" file="scenes/images/vidral.jpg" />
-        <texture id="skybox5_text" file="scenes/images/vidral.jpg" />
+        <texture id="skybox_down_text" file="scenes/images/city_down.png" />
+        <texture id="skybox_up_text" file="scenes/images/city_up.png" />
+        <texture id="skybox_back_text" file="scenes/images/city_back.png" />
+        <texture id="skybox_right_text" file="scenes/images/city_right.png" />
+        <texture id="skybox_front_text" file="scenes/images/city_front.png" />
+        <texture id="skybox_left_text" file="scenes/images/city_left.png" />
     </textures>
 
     <materials>
@@ -57,23 +57,23 @@
 
         <material id="skybox_mate" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </material>
 
         <material id="omnidroid_mate" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.0" g="1.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="1.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="1.0" b="0.0" a="1.0" />
+            <diffuse r="0.6" g="0.5" b="0.4" a="1.0" />
+            <specular r="0.6" g="0.5" b="0.4" a="1.0" />
         </material>
 
         <material id="building_mate" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
         </material>
     </materials>
 
@@ -133,7 +133,7 @@
         </primitive>
 
         <primitive id="omni_torus">
-            <torus inner="3" outer="2" slices="5" loops="20" />
+            <torus inner="3" outer="2" slices="20" loops="20" />
         </primitive>
     </primitives>
 
@@ -162,7 +162,7 @@
                 <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="omnidroid_mate" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -186,7 +186,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_leg0" />
             </children>
@@ -201,7 +201,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_leg1" />
             </children>
@@ -216,7 +216,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_leg2" />
             </children>
@@ -232,7 +232,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -248,7 +248,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -264,7 +264,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -280,7 +280,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <texture id="inherit" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -314,7 +314,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
             <children>
                 <componentref id="omnidroid_leg_f" />
             </children>
@@ -409,7 +409,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="skybox_mate" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -427,7 +427,7 @@
                 <scale x="10" y="10" z="10" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="skybox_mate" />
             </materials>
             <texture id="none" length_s="1" length_t="1" />
             <children>
@@ -527,7 +527,7 @@
                 <translate x="0" y="0" z="-40" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="building0_text" length_s="1" length_t="4" />
             <children>
@@ -541,7 +541,7 @@
                 <scale x="1.5" y="1.2" z="1.5" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="building1_text" length_s="1" length_t="1" />
             <children>
@@ -555,7 +555,7 @@
                 <scale x="1.5" y="1.2" z="1.5" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="building2_text" length_s="1" length_t="1" />
             <children>
@@ -569,7 +569,7 @@
                 <scale x="1.5" y="1.7" z="3" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="building3_text" length_s="1" length_t="1" />
             <children>
@@ -583,7 +583,7 @@
                 <scale x="2" y="1" z="2" />
             </transformation>
             <materials>
-                <material id="none" />
+                <material id="inherit" />
             </materials>
             <texture id="building4_text" length_s="1" length_t="1" />
             <children>
@@ -701,7 +701,7 @@
             <transformation>
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -720,7 +720,7 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -734,7 +734,7 @@
                 <rotate axis="x" angle="90" />
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -748,7 +748,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -762,7 +762,7 @@
                 <rotate axis="y" angle="-90" />
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -775,7 +775,7 @@
                 <rotate axis="x" angle="180" />
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -788,7 +788,7 @@
                 <translate x="0" y="0" z="1" />
             </transformation>
             <materials>
-                <material id="omnidroid_mate" />
+                <material id="inherit" />
             </materials>
             <texture id="inherit" length_s="1" length_t="1" />
             <children>
@@ -817,7 +817,7 @@
             </children>
         </component>
 
-        <component id="sky_side0">
+        <component id="sky_bot">
             <transformation>
                 <translate x="0" y="-0.5" z="0" />
                 <rotate axis="x" angle="-90" />
@@ -825,21 +825,22 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="skybox0_text" length_s="1" length_t="1" />
+            <texture id="skybox_down_text" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="square" />
             </children>
         </component>
 
-        <component id="sky_side1">
+        <component id="sky_top">
             <transformation>
                 <translate x="0" y="0.5" z="0" />
+                <rotate axis="y" angle="180" />
                 <rotate axis="x" angle="90" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="skybox1_text" length_s="1" length_t="1" />
+            <texture id="skybox_up_text" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -853,7 +854,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="skybox2_text" length_s="1" length_t="1" />
+            <texture id="skybox_front_text" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -867,34 +868,34 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="skybox3_text" length_s="1" length_t="1" />
+            <texture id="skybox_back_text" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="square" />
             </children>
         </component>
 
-        <component id="sky_top">
+        <component id="sky_side1">
             <transformation>
                 <translate x="0" y="0" z="0.5" />
-                <rotate axis="x" angle="180" />
+                <rotate axis="y" angle="180" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="skybox4_text" length_s="1" length_t="1" />
+            <texture id="skybox_right_text" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="square" />
             </children>
         </component>
 
-        <component id="sky_bot">
+        <component id="sky_side0">
             <transformation>
                 <translate x="0" y="0" z="-0.5" />
             </transformation>
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="skybox5_text" length_s="1" length_t="1" />
+            <texture id="skybox_left_text" length_s="1" length_t="1" />
             <children>
                 <primitiveref id="square" />
             </children>
