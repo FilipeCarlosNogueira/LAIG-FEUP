@@ -220,8 +220,6 @@ class MySceneGraph {
    * @param {view block element} viewsNode
    */
   parseView(viewsNode) {
-    //this.onXMLMinorError('To do: Parse views and create cameras.');
-
     //check if defaultCamera is defined
     this.default = this.reader.getString(viewsNode, 'default');
     if (this.default == null) {
@@ -424,7 +422,6 @@ class MySceneGraph {
 
     //????? this.scene.camera = new ... ?????
 
-    //console.log('this.views:'); console.log(this.views);
     this.log('Parsed Views');
 
     return null;
