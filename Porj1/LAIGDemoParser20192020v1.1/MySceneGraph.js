@@ -37,6 +37,9 @@ class MySceneGraph {
     // File reading
     this.reader = new CGFXMLreader();
 
+    // Views Array
+    this.views = [];
+
     /*
      * Read the contents of the xml file, and refer to this class for loading
      * and error handlers. After the file is read, the reader calls onXMLReady
@@ -231,8 +234,6 @@ class MySceneGraph {
 
     var childrenView = viewsNode.children;
 
-    this.views = [];
-
     // Check if there's at least one view defined. If not, creats one.
     if (childrenView.length == 0) {
       this.onXMLMinorError("At least one view must be defined. Assuming default view! id = " + this.default);
@@ -320,15 +321,9 @@ class MySceneGraph {
         //Parse view
         this.views[id] = {};
         this.views[id].type = 'perspective';
-        this.views[id].near = near;
-        this.views[id].far = far;
-        this.views[id].angle = angle * DEGREE_TO_RAD;
-        this.views[id].fromX = fromX;
-        this.views[id].fromY = fromY;
-        this.views[id].fromZ = fromZ;
-        this.views[id].toX = toX;
-        this.views[id].toY = toY;
-        this.views[id].toZ = toZ;
+
+        // Create Camera
+        this.views[id].camera = new CGFcamera(angle * DEGREE_TO_RAD, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
       }
 
       // Ortho view
@@ -407,22 +402,11 @@ class MySceneGraph {
         //Parse view
         this.views[id] = {};
         this.views[id].type = 'ortho';
-        this.views[id].near = near;
-        this.views[id].far = far;
-        this.views[id].left = left;
-        this.views[id].right = right;
-        this.views[id].top = top;
-        this.views[id].bottom = bottom;
-        this.views[id].fromX = fromX;
-        this.views[id].fromY = fromY;
-        this.views[id].fromZ = fromZ;
-        this.views[id].toX = toX;
-        this.views[id].toY = toY;
-        this.views[id].toZ = toZ;
+
+        // Create Camera
+        this.views[id].camera = new CGFcamera(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
       }
     }
-
-    //????? this.scene.camera = new ... ?????
 
     //console.log('this.views:'); console.log(this.views);
     this.log('Parsed Views');
@@ -490,8 +474,8 @@ class MySceneGraph {
         this.onXMLMinorError('unknown tag <' + children[i].nodeName + '>');
         continue;
       } else {
-        attributeNames.push(...['location', 'ambient', 'diffuse', 'specular']);
-        attributeTypes.push(...['position', 'color', 'color', 'color']);
+        attributeNames.push(...['location', 'ambient', 'diffuse', 'specular', 'attenuation']);
+        attributeTypes.push(...['position', 'color', 'color', 'color', 'attenuation']);
       }
 
       // Get id of the current light.
@@ -532,6 +516,30 @@ class MySceneGraph {
             var aux = this.parseCoordinates4D(
               grandChildren[attributeIndex],
               'light position for ID' + lightId);
+          else if(attributeTypes[j] == 'attenuation'){
+
+            // constant
+            var constant = this.reader.getFloat(grandChildren[attributeIndex], 'constant');
+            if (!(constant != null && !isNaN(constant)))
+              return 'unable to parse constant-coordinate of the ' + 'light attenuation for ID' + lightId;
+
+            // linear
+            var linear = this.reader.getFloat(grandChildren[attributeIndex], 'linear');
+            if (!(linear != null && !isNaN(linear)))
+              return 'unable to parse linear-coordinate of the ' + 'light attenuation for ID' + lightId;
+
+            // quadratic
+            var quadratic = this.reader.getFloat(grandChildren[attributeIndex], 'quadratic');
+            if (!(quadratic != null && !isNaN(quadratic)))
+              return 'unable to parse quadratic-coordinate of the ' + 'light attenuation for ID' + lightId;
+
+            // Values Verification
+            if(constant + linear + quadratic != 1)
+              return 'ERROR! Light attenuation values invalid!';
+
+            var aux = [];
+            aux.push(...[constant, linear, quadratic]);
+          }
           else
             var aux = this.parseColor(
               grandChildren[attributeIndex],
@@ -574,6 +582,8 @@ class MySceneGraph {
       this.lights[lightId] = global;
       numLights++;
     }
+
+    console.log('Lights:'); console.log(this.lights);
 
     if (numLights == 0)
       return 'at least one light must be defined';
@@ -1386,6 +1396,7 @@ class MySceneGraph {
   }
 
   processNode(id, parentMaterial, parentTexture, parent_length_t, parent_length_s) {
+    console.log("this.components:"); console.log(this.components);
     let comp = this.components[id];
     if (comp == null || comp == undefined) {
       this.onXMLError('Undefined component');

@@ -11,6 +11,9 @@ class XMLscene extends CGFscene {
     constructor(myinterface) {
         super();
 
+        // New lights array
+        this.newLights = [];
+
         this.interface = myinterface;
     }
 
@@ -102,6 +105,12 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
 
         this.interface.setActiveCamera(this.camera);
+
+        /*
+        for(var i = 0; i < this.scene.views.length; ++i){
+            this.newLights.push(true);
+        }
+        */
     }
 
     /**
@@ -125,7 +134,9 @@ class XMLscene extends CGFscene {
         //this.axis.display();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
+
+            this.lights[i].setVisible(this.newLights[i]);
+
             this.lights[i].enable();
         }
 

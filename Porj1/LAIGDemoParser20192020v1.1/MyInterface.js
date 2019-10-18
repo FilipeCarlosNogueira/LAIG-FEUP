@@ -47,4 +47,35 @@ class MyInterface extends CGFinterface {
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     }
+
+    // Views Group
+    addViewsGroup(views) {
+        var Names = [];
+
+        for (var v in views)
+            Names.push(v);
+
+
+        this.gui.add(this.scene, 'Views', Names);
+    }
+
+    /*
+    addLightsGroup(lights){
+
+        var groupLights = gui.addFolder('Lights');
+        groupLights.open();
+        
+        for (var key in lights) {
+            if (lights.hasOwnProperty(key)) {
+                if (lights[key].enabled == 0)
+                    this.scene.[key] = false;
+                
+                if (lights[key].enabled == 1)
+                    this.scene.lightValues[key] = true;
+                
+                groupLights.add(this.scene.lightValues, key);
+            }
+        }
+    }
+    */
 }
