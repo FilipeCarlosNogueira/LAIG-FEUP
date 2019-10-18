@@ -492,7 +492,7 @@ class MySceneGraph {
           'unable to parse value component of the \'enable light\' field for ID = ' +
           lightId + '; assuming \'value = 1\'');
 
-      enableLight = aux || 1;
+      enableLight = aux;
 
       // Add enabled boolean and type name to light info
       global.push(enableLight);
@@ -511,9 +511,8 @@ class MySceneGraph {
 
         if (attributeIndex != -1) {
           if (attributeTypes[j] == 'position')
-            var aux = this.parseCoordinates4D(
-              grandChildren[attributeIndex],
-              'light position for ID' + lightId);
+            var aux = this.parseCoordinates4D(grandChildren[attributeIndex], 'light position for ID' + lightId);
+          
           else if(attributeTypes[j] == 'attenuation'){
 
             // constant
@@ -538,7 +537,8 @@ class MySceneGraph {
             var aux = [];
             aux.push(...[constant, linear, quadratic]);
           }
-          else
+
+          else if(attributeTypes[j] == 'color')
             var aux = this.parseColor(
               grandChildren[attributeIndex],
               attributeNames[j] + ' illumination for ID' + lightId);
@@ -577,11 +577,12 @@ class MySceneGraph {
         global.push(...[angle, exponent, targetLight]);
       }
 
+      // Parse ID
+      global.push(lightId);
+
       this.lights[lightId] = global;
       numLights++;
     }
-
-    console.log('Lights:'); console.log(this.lights);
 
     if (numLights == 0)
       return 'at least one light must be defined';
@@ -1394,7 +1395,6 @@ class MySceneGraph {
   }
 
   processNode(id, parentMaterial, parentTexture, parent_length_t, parent_length_s) {
-    console.log("this.components:"); console.log(this.components);
     let comp = this.components[id];
     if (comp == null || comp == undefined) {
       this.onXMLError('Undefined component');

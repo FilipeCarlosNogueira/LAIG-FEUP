@@ -12,7 +12,7 @@ class XMLscene extends CGFscene {
         super();
 
         // New lights array
-        this.newLights = [];
+        this.lightValues = [];
 
         this.interface = myinterface;
     }
@@ -45,6 +45,7 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
     }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -64,24 +65,33 @@ class XMLscene extends CGFscene {
                 this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
                 this.lights[i].setDiffuse(light[4][0], light[4][1], light[4][2], light[4][3]);
                 this.lights[i].setSpecular(light[5][0], light[5][1], light[5][2], light[5][3]);
+                this.lights[i].setConstantAttenuation(light[6][0]);
+                this.lights[i].setLinearAttenuation(light[6][1]);
+                this.lights[i].setQuadraticAttenuation(light[6][2]);
 
                 if (light[1] == "spot") {
-                    this.lights[i].setSpotCutOff(light[6]);
-                    this.lights[i].setSpotExponent(light[7]);
-                    this.lights[i].setSpotDirection(light[8][0], light[8][1], light[8][2]);
+                    this.lights[i].setSpotCutOff(light[7]);
+                    this.lights[i].setSpotExponent(light[8]);
+                    this.lights[i].setSpotDirection(light[9][0], light[9][1], light[9][2]);
                 }
 
                 this.lights[i].setVisible(true);
-                if (light[0])
-                    this.lights[i].enable();
+                if (light[0]){
+                    this.lights[i].enable();}
                 else
                     this.lights[i].disable();
 
                 this.lights[i].update();
+                
+                this.lights[i]["name"] = light[light.length-1];
+                console.log("olaaa"); console.log(this.lights[i]["name"] );
+                this.lightValues[key] = this.lights[i].enabled;
 
                 i++;
             }
         }
+
+        this.interface.addLightsGroup(this.lightValues);
     }
 
     setDefaultAppearance() {
@@ -105,12 +115,6 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
 
         this.interface.setActiveCamera(this.camera);
-
-        /*
-        for(var i = 0; i < this.scene.views.length; ++i){
-            this.newLights.push(true);
-        }
-        */
     }
 
     /**
@@ -131,13 +135,24 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
-        //this.axis.display();
+        this.axis.display();
 
-        for (var i = 0; i < this.lights.length; i++) {
+        // Lights interface dropDown manager
+        var i = 0;
 
-            this.lights[i].setVisible(this.newLights[i]);
+        for (var key in this.graph.lights) {
 
-            this.lights[i].enable();
+            // this.lights[i].setVisible(this.lightValues[i]);
+            if (this.graph.lights.hasOwnProperty(key)) {
+                if (this.lightValues[key])
+                    this.lights[i].enable();
+                else   
+                    this.lights[i].disable();
+
+                this.lights[i].update();
+            }
+
+            ++i;
         }
 
         if (this.sceneInited) {
