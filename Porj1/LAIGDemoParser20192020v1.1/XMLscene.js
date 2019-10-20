@@ -14,6 +14,10 @@ class XMLscene extends CGFscene {
         // New lights array
         this.lightValues = [];
 
+        // New views array
+        this.viewsValues = [];
+        this.currentView = null;
+
         this.interface = myinterface;
     }
 
@@ -50,8 +54,9 @@ class XMLscene extends CGFscene {
      * Initializes the scene lights with the values read from the XML file.
      */
     initLights() {
-        var i = 0;
+        
         // Lights index.
+        var i = 0;
 
         // Reads the lights from the scene graph.
         for (var key in this.graph.lights) {
@@ -84,7 +89,7 @@ class XMLscene extends CGFscene {
                 this.lights[i].update();
                 
                 this.lights[i]["name"] = light[light.length-1];
-                console.log("olaaa"); console.log(this.lights[i]["name"] );
+
                 this.lightValues[key] = this.lights[i].enabled;
 
                 i++;
@@ -92,6 +97,26 @@ class XMLscene extends CGFscene {
         }
 
         this.interface.addLightsGroup(this.lightValues);
+    }
+
+    /**
+     * Initializes the scene views with the values read from the XML file.
+     */
+    initViews(){
+
+        for(var key in this.graph.views){
+            if(!this.graph.views.hasOwnProperty(key)) continue;
+
+            this.viewsValues[key] = false;
+
+            if(key == 'defaultCamera'){
+                this.camera = this.graph.views[key].camera;
+                this.currentView = key;
+                this.viewsValues[key] = true;
+            }
+        }
+
+        this.interface.addViewsGroup(this.graph.views);
     }
 
     setDefaultAppearance() {
@@ -104,6 +129,7 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded() {
+
         this.axis = new CGFaxis(this, this.graph.referenceLength);
 
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
@@ -111,6 +137,8 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
 
         this.initLights();
+
+        this.initViews();
 
         this.sceneInited = true;
 
@@ -135,14 +163,12 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
-        this.axis.display();
+        //this.axis.display();
 
-        // Lights interface dropDown manager
+        // Lights interface drop-down manager
         var i = 0;
-
         for (var key in this.graph.lights) {
 
-            // this.lights[i].setVisible(this.lightValues[i]);
             if (this.graph.lights.hasOwnProperty(key)) {
                 if (this.lightValues[key])
                     this.lights[i].enable();
@@ -154,6 +180,27 @@ class XMLscene extends CGFscene {
 
             ++i;
         }
+        
+        //Views interface drop-down manager 
+        if (!this.viewsValues[this.currentView]){
+            
+            this.currentView = null;
+
+            // Finds the current selected view
+            for(var key in this.viewsValues){
+                if(this.viewsValues[key]){ 
+                    this.currentView = key;
+                }
+            }
+
+            if(this.currentView != null)
+                this.camera = this.graph.views[this.currentView].camera;
+            else
+                this.initCameras();
+
+            console.log("XMLscene: this.camera:"); console.log(this.camera);
+        }
+        
 
         if (this.sceneInited) {
             // Draw axis

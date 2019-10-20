@@ -37,9 +37,6 @@ class MySceneGraph {
     // File reading
     this.reader = new CGFXMLreader();
 
-    // Views Array
-    this.views = [];
-
     /*
      * Read the contents of the xml file, and refer to this class for loading
      * and error handlers. After the file is read, the reader calls onXMLReady
@@ -223,6 +220,9 @@ class MySceneGraph {
    * @param {view block element} viewsNode
    */
   parseView(viewsNode) {
+    // Views Array
+    this.views = [];
+    
     //check if defaultCamera is defined
     this.default = this.reader.getString(viewsNode, 'default');
     if (this.default == null) {
@@ -402,11 +402,10 @@ class MySceneGraph {
         this.views[id].type = 'ortho';
 
         // Create Camera
-        this.views[id].camera = new CGFcamera(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
+        this.views[id].camera = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
       }
     }
-
-    //console.log('this.views:'); console.log(this.views);
+    
     this.log('Parsed Views');
 
     return null;
