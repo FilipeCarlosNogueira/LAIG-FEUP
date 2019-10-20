@@ -69,7 +69,7 @@ class MyCylinder extends CGFobject {
     for (let j = 0; j <= this.stacks; j++) {
       for (let i = 0; i <= this.slices; i++) {
 
-        this.texCoords.push( ( i * length_s) / this.slices, ((this.stacks - j) * length_t) / this.stacks);
+        this.texCoords.push( ( i / length_s) / this.slices, ((this.stacks - j) / length_t) / this.stacks);
 
       }
     }

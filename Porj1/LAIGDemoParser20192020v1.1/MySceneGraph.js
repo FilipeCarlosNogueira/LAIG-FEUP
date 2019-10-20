@@ -312,7 +312,7 @@ class MySceneGraph {
         if (toZ == null) return 'ERROR! from Z undefined!';
 
         // From and To Value verification
-        if (fromX == toX && fromy == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
+        if (fromX == toX && fromY == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
 
         // Check if view already exists
         if (this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
@@ -393,7 +393,7 @@ class MySceneGraph {
         if (toZ == null) return 'ERROR! from Z undefined!';
 
         // From and To Value verification
-        if (fromX == toX && fromy == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
+        if (fromX == toX && fromY == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
 
         // Check if view already exists
         if (this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
@@ -474,13 +474,12 @@ class MySceneGraph {
         continue;
       } else {
         attributeNames.push(...['location', 'ambient', 'diffuse', 'specular', 'attenuation']);
-        attributeTypes.push(...['position', 'color', 'color', 'color', 'attenuation']);
+        attributeTypes.push(...['location', 'color', 'color', 'color', 'attenuation']);
       }
 
       // Get id of the current light.
       var lightId = this.reader.getString(children[i], 'id');
       if (lightId == null) return 'no ID defined for light';
-
       // Checks for repeated IDs.
       if (this.lights[lightId] != null)
         return ('ID must be unique for each light (conflict: ID = ' + lightId + ')');
@@ -511,7 +510,7 @@ class MySceneGraph {
         var attributeIndex = nodeNames.indexOf(attributeNames[j]);
 
         if (attributeIndex != -1) {
-          if (attributeTypes[j] == 'position')
+          if (attributeTypes[j] == 'location')
             var aux = this.parseCoordinates4D(grandChildren[attributeIndex], 'light position for ID' + lightId);
 
           else if (attributeTypes[j] == 'attenuation') {
@@ -548,8 +547,7 @@ class MySceneGraph {
 
           global.push(aux);
         } else
-          return (
-            'light ' + attributeNames[i] + ' undefined for ID = ' + lightId);
+          this.onXMLError('light ' + attributeNames[i] + ' undefined for ID = ' + lightId);
       }
 
       // Gets the additional attributes of the spot light
@@ -1216,12 +1214,12 @@ class MySceneGraph {
           this.onXMLMinorError("Error reading material id.");
           continue;
         }
-        if (this.materials[materialID] == null && materialID != "inherit"){
+        if (this.materials[materialID] == null && materialID != "inherit") {
           this.onXMLError('Material does not exist (' + materialID + ')');
           continue;
         }
         //check if root node has its own material
-        if (componentID == this.root && materialID == "inherit"){
+        if (componentID == this.root && materialID == "inherit") {
           this.onXMLMinorError('Root cannot have inherit materials');
           continue;
         }
@@ -1241,19 +1239,21 @@ class MySceneGraph {
         this.onXMLMinorError("Error reading texture id.");
         continue;
       }
+      let length_s,length_t;
+      if (textureID != "none" && textureID != "inherit") {
+        length_s = this.reader.getString(textureInfo, 'length_s');
+        // Checking length_s
+        if (length_s == null) {
+          this.onXMLMinorError("Error reading texture length_s on '" + textureID + "'.");
+          continue;
+        }
 
-      let length_s = this.reader.getString(textureInfo, 'length_s');
-      // Checking length_s
-      if (length_s == null) {
-        this.onXMLMinorError("Error reading texture length_s on '" + textureID + "'.");
-        continue;
-      }
-
-      let length_t = this.reader.getString(textureInfo, 'length_t');
-      // Checking length_t
-      if (length_t == null) {
-        this.onXMLMinorError("Error reading texture length_t on '" + textureID + "'.");
-        continue;
+        length_t = this.reader.getString(textureInfo, 'length_t');
+        // Checking length_t
+        if (length_t == null) {
+          this.onXMLMinorError("Error reading texture length_t on '" + textureID + "'.");
+          continue;
+        }
       }
 
 

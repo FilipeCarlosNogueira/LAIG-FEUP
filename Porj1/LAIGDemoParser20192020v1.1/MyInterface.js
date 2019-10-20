@@ -21,9 +21,9 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
         // add a group of controls (and open/expand by defult)
-        
+
         this.groupLights =this.gui.addFolder('Lights');
-        
+
         this.initKeys();
 
         return true;
@@ -53,16 +53,15 @@ class MyInterface extends CGFinterface {
     // Lights Group
     addLightsGroup(lights){
         this.groupLights.open();
-        
+
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
-                
+
                 if (lights[key])
                     this.scene.lightValues[key] = true;
                 else
                     this.scene.lightValues[key] = false;
-                
-                console.log("lights[key].name");console.log(lights[key]);
+
                 this.groupLights.add(this.scene.lightValues, key).name(key);
             }
         }

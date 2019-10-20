@@ -1,0 +1,1683 @@
+<lxs>
+    <scene root="demoRoot" axis_length="5"/>
+
+    <views default="defaultCamera">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="10" y="8" z="30" />
+            <to x="10" y="0" z="5" />
+        </perspective>
+    </views>
+
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.8" g="0.8" b="0.8" a="1.0" />
+    </globals>
+
+    <lights>
+        <omni id="demoLight" enabled="1">
+            <location x="9.8" y="8" z="10" w="1.0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="0" linear="1" quadratic="0" /> 
+        </omni>
+        <spot id="treeLights" enabled="1" angle="10" exponent="10">
+            <location x="3" y="7" z="3" w="1" />
+            <target x="0" y="-7" z="0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.87" g="0.87" b="0.35" a="1.0" />
+            <specular r="0.87" g="0.87" b="0.35" a="0.6" />
+            <attenuation constant="0" linear="1" quadratic="0" />
+        </spot>
+    </lights>
+
+    <textures>
+        <texture id="demoTexture" file="scenes/images/vidral.jpg" />
+        <texture id="melhorCao" file="scenes/images/loki.jpg" />
+        <texture id="melhorCadelaOG" file="scenes/images/missy.jpg" />
+        <texture id="melhorCadela" file="scenes/images/daisy.jpg" />
+        <texture id="treeText" file="scenes/images/pine_leaves.jpg" />
+        <texture id="treeBaseText" file="scenes/images/trunk-image.jpg" />
+        <texture id="treeBallText" file="scenes/images/red.jpg" />
+        <texture id="fireplaceText" file="scenes/images/fireplace.jpg" />
+        <texture id="coroaText" file="scenes/images/leaves.jpg" />
+        <texture id="woodCabinWall" file="scenes/images/cabin_wall.jpg" />
+        <texture id="woodCabinFloor" file="scenes/images/cabin_floor.jpg" />
+        <texture id="present1Text" file="scenes/images/gift_wrap1.png" />
+        <texture id="present2Text" file="scenes/images/gift_wrap2.jpg" />
+        <texture id="present3Text" file="scenes/images/gift_wrap3.jpg" />
+        <texture id="present4Text" file="scenes/images/gift_wrap4.jpg" />
+        <texture id="tableText" file="scenes/images/table.jpg" />
+        <texture id="window1Text" file="scenes/images/window_snow.jpg" />
+        <texture id="greenCookie" file="scenes/images/xmas_cookie1.jpg" />
+        <texture id="treeCookie" file="scenes/images/xmas_cookie2.jpg" />
+        <texture id="cookiePlate" file="scenes/images/xmas_plate.jpg" />
+        <texture id="doorText" file="scenes/images/cabin_door.jpg" />
+        <texture id="carpetText" file="scenes/images/carpet.jpg" />
+        <texture id="goldTex" file="scenes/images/gold.jpg" />
+
+    </textures>
+
+    <materials>
+        <material id="demoMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1" g="1.0" b="1" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+        </material>
+        <material id="woodMaterial" shininess="15">
+            <emission r="0.026" g="0.018" b="0.0" a="1.0" />
+            <ambient r="0.26" g="0.18" b="0.0" a="1.0" />
+            <diffuse r="0.26" g="0.18" b="0.0" a="1.0" />
+            <specular r="0.26" g="0.18" b="0.0" a="1.0" />
+        </material>
+        <material id="goldStar" shininess="100">
+            <emission r="0.077" g="0.070" b="0.034" a="1.0" />
+            <ambient r="0.77" g="0.70" b="0.34" a="1.0" />
+            <diffuse r="0.77" g="0.70" b="0.34" a="1.0" />
+            <specular r="0.7" g="0.70" b="0.34" a="1.0" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="floorTrans">
+            <rotate axis="x" angle="-90" />
+            <scale x="18" y="10" z="1" />
+            <translate x="0.5" y="-1" z="0" />
+        </transformation>
+    </transformations>
+
+    <primitives>
+        <primitive id="Rectangles">
+            <rectangle x1="-0.5" y1="-1" x2="0.5" y2="1" />
+        </primitive>
+
+        <primitive id="TreeBranches">
+            <cylinder base="4" top="2" height="3" slices="20" stacks="20" />
+        </primitive>
+
+        <primitive id="TreeBranches2">
+            <cylinder base="4" top="1" height="3" slices="20" stacks="20" />
+        </primitive>
+
+        <primitive id="TreeBranches3">
+            <cylinder base="4" top="0.2" height="3" slices="20" stacks="20" />
+        </primitive>
+
+        <primitive id="TreeBase">
+            <cylinder base="1" top="1" height="1" slices="20" stacks="20" />
+        </primitive>
+    
+        <primitive id="demoTorus">
+            <torus inner="0.3" outer="0.8" slices="80" loops="80" />
+        </primitive>
+
+        <primitive id="triang">
+          <triangle   x1="0" y1="0" z1="0"
+                        x2="5" y2="0" z2="0"
+                        x3="8" y3="4" z3="0" />
+        </primitive>
+
+        <primitive id="sphere">
+              <sphere radius="0.1" slices="30" stacks="30" />
+        </primitive>
+
+        <primitive id="starPoint">
+            <cylinder base="0.08" top="0" height="0.4" slices="20" stacks="10" />
+        </primitive>
+
+        <primitive id="disk">
+            <cylinder base="1" top="0.8" height="0.02" slices="30" stacks="1" />
+        </primitive>
+    </primitives>
+
+    <components>
+        <component id="demoRoot">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="demoTexture" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ChristmasTree" />
+                <componentref id="DaisyFrame" />
+                <componentref id="LokiFrame" />
+                <componentref id="Coroa" />
+                <componentref id="Cabin" />
+                <componentref id="Present1" />
+                <componentref id="Present2" />
+                <componentref id="Present3" />
+                <componentref id="Present4" />
+                <componentref id="Present5" />
+                <componentref id="Present6" />
+                <componentref id="Table" />
+                <componentref id="Window1" />
+                <componentref id="Door" />
+                <componentref id="Cookies" />
+                <componentref id="Carpete" />
+                <componentref id="Chair1" />
+                <componentref id="Chair2" />
+                <componentref id="Chair3" />
+                <componentref id="Chair4" />
+            </children>
+        </component>
+
+        <component id="Present1">
+            <transformation>
+                <translate x="1" y="0.35" z="5.2" />   
+                <rotate axis="y" angle="-30" /> 
+                <scale x="0.7" y="0.7" z="0.7" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="present1Text" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="Present2">
+            <transformation>
+                <translate x="2.7" y="0.35" z="6.2" />   
+                <rotate axis="y" angle="97" /> 
+                <scale x="0.7" y="0.7" z="1.4" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="present2Text" length_s="1" length_t="1"/>
+            <children>
+                 <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="Present3">
+            <transformation>
+                <translate x="5.2" y="0.5" z="4.9" />  
+                <rotate axis="y" angle="55" /> 
+                <scale x="1.2" y="1" z="1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="present1Text" length_s="1" length_t="1"/>
+            <children>
+                 <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="Present4">
+            <transformation>
+                <translate x="4" y="0.4" z="5.7" />   
+                <scale x="4" y="4" z="4" />
+                <rotate axis="x" angle="-90" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="present3Text" length_s="1" length_t="1"/>
+            <children>
+            <primitiveref id="sphere" />
+            </children>
+        </component>
+
+         <component id="Present5">
+            <transformation>
+                <translate x="4.5" y="0.5" z="5.3" />  
+                <scale x="0.3" y="1" z="0.6" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="present4Text" length_s="1" length_t="1"/>
+            <children>
+                 <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="Present6">
+            <transformation>
+                <translate x="1.5" y="0.95" z="5.5" />  
+                <scale x="0.6" y="0.5" z="0.6" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="present4Text" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="TableLeg3">
+            <transformation>
+                <translate x="4.3" y="-1.3" z="-0.8" /> 
+                <scale x="0.2" y="2.5" z="0.2"/>  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="TableLeg4">
+            <transformation>
+                <translate x="4.3" y="-1.3" z="0.8" /> 
+                <scale x="0.2" y="2.5" z="0.2"/>  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="TableLeg2">
+            <transformation>
+                <translate x="0.5" y="-1.3" z="-0.8" /> 
+                <scale x="0.2" y="2.5" z="0.2"/>  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="TableLeg">
+            <transformation>
+                <translate x="0.5" y="-1.3" z="0.8" /> 
+                <scale x="0.2" y="2.5" z="0.2"/>  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="TableTop">
+            <transformation>
+                <scale x="5" y="0.2" z="3" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="Table">
+            <transformation>
+                <translate x="2" y="2.5" z="15" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="TableTop" />
+                <componentref id="TableLeg" />
+                <componentref id="TableLeg2" />
+                <componentref id="TableLeg3" />
+                <componentref id="TableLeg4" />
+            </children>
+        </component>
+
+        <component id="Chair1">
+            <transformation>
+                <translate x="2.5" y="0" z="12.8" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ChairTop" />
+                <componentref id="ChairLeg1" />
+                <componentref id="ChairLeg2" />
+                <componentref id="ChairLeg3" />
+                <componentref id="ChairLeg4" />
+            </children>
+        </component>
+
+         <component id="Chair2">
+            <transformation>
+                <translate x="5.2" y="0" z="12.8" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ChairTop" />
+                <componentref id="ChairLeg1" />
+                <componentref id="ChairLeg2" />
+                <componentref id="ChairLeg3" />
+                <componentref id="ChairLeg4" />
+            </children>
+        </component>
+
+         <component id="Chair3">
+            <transformation>
+                <translate x="2.5" y="0" z="17.2" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ChairTop" />
+                <componentref id="ChairLeg1" />
+                <componentref id="ChairLeg2" />
+                <componentref id="ChairLeg3" />
+                <componentref id="ChairLeg4" />
+            </children>
+        </component>
+
+         <component id="Chair4">
+            <transformation>
+                <translate x="5.2" y="0" z="17.2" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="ChairTop" />
+                <componentref id="ChairLeg1" />
+                <componentref id="ChairLeg2" />
+                <componentref id="ChairLeg3" />
+                <componentref id="ChairLeg4" />
+            </children>
+        </component>
+
+
+        <component id="ChairLeg1">
+            <transformation>
+                <translate x="0.2" y="0.7" z="0.2" /> 
+                <scale x="0.1" y="1.4" z="0.1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+            <component id="ChairLeg2">
+            <transformation>
+                <translate x="0.2" y="0.7" z="-0.2" /> 
+                <scale x="0.1" y="1.4" z="0.1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="ChairLeg3">
+            <transformation>
+                <translate x="0.8" y="0.7" z="-0.2" /> 
+                <scale x="0.1" y="1.4" z="0.1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+          <component id="ChairLeg4">
+            <transformation>
+                <translate x="0.8" y="0.7" z="0.2" /> 
+                <scale x="0.1" y="1.4" z="0.1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+         <component id="ChairTop">
+            <transformation>
+                <translate x="0" y="1.5" z="0" /> 
+                <scale x="1.1" y="0.2" z="1.1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="tableText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Quad11" />
+                <componentref id="Quad12" />
+                <componentref id="Quad13" />
+                <componentref id="Quad14" />
+                <componentref id="Quad15" />
+                <componentref id="Quad16" />
+            </children>
+        </component>
+
+        <component id="Quad11">
+            <transformation>
+                <translate x="0.5" y="0" z="0.5" />   
+                <scale x="1" y="0.5" z="1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Quad12">
+            <transformation>
+                <translate x="0.5" y="0.5" z="0" />   
+                <rotate axis="x" angle="-90" /> 
+                <scale x="1" y="0.5" z="1" />                  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Quad13">
+            <transformation>
+                <translate x="0.5" y="0" z="-0.5" />   
+                <rotate axis="x" angle="-180" /> 
+                <scale x="1" y="0.5" z="1" />                  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Quad14">
+            <transformation>
+                <translate x="0" y="0" z="0" />   
+                <rotate axis="y" angle="-90" /> 
+                <scale x="1" y="0.5" z="1" />                  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Quad15">
+            <transformation>
+                <translate x="1" y="0" z="0" />   
+                <rotate axis="y" angle="90" /> 
+                <scale x="1" y="0.5" z="1" />                  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Quad16">
+            <transformation>
+                <translate x="0.5" y="-0.5" z="0" />   
+                <rotate axis="x" angle="90" /> 
+                <scale x="1" y="0.5" z="1" />                  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Window1">
+            <transformation>
+                <translate x="0" y="4.5" z="15" /> 
+                <rotate axis="y" angle="90" /> 
+                <scale x="5.5" y="2.5" z="1" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="window1Text" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Door">
+            <transformation>
+              <translate x="18" y="3" z="15" /> 
+                 <rotate axis="y" angle="-90" />   
+                <scale x="3" y="3" z="1" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="doorText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="Coroa">
+            <transformation>
+                <translate x="17.7" y="5" z="3" /> 
+                <rotate axis="y" angle="-90" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="coroaText" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="CoroaBall1" />
+                <componentref id="CoroaBall2" />
+                <componentref id="CoroaBall3" />
+                <componentref id="CoroaBase" />
+            </children>
+        </component>
+        
+
+        <component id="CoroaBall1">
+            <transformation>
+                <translate x="-0.2" y="0.9" z="0.4" />   
+                <scale x="1.5" y="1.5" z="1.5" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+         <component id="CoroaBall2">
+            <transformation>
+                <translate x="0.2" y="0.9" z="0.4" />   
+                <scale x="1.5" y="1.5" z="1.5" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+         <component id="CoroaBall3">
+            <transformation>
+                <translate x="0" y="0.7" z="0.4" />   
+                <scale x="1.5" y="1.5" z="1.5" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="CoroaBase">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="coroaText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="demoTorus" />
+            </children>
+        </component>
+
+        <component id="treeLeafs2">
+            <transformation>
+                <translate x="0" y="0" z="2.1" />   
+                <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="TreeBranches" />
+            </children>
+        </component> 
+
+        <component id="treeLeafs3">
+            <transformation>
+                <translate x="0" y="0" z="3.8" />   
+                <scale x="0.7" y="0.7" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="TreeBranches2" />
+            </children>
+        </component> 
+
+        <component id="treeLeafs4">
+            <transformation>
+                <translate x="0" y="0" z="5.1" />   
+                <scale x="0.6" y="0.6" z="0.6" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="TreeBranches2" />
+            </children>
+        </component>   
+
+        <component id="treeLeafs5">
+            <transformation>
+                <translate x="0" y="0" z="6.2" /> 
+                <scale x="0.5" y="0.5" z="0.5" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="TreeBranches3" />
+            </children>
+        </component>    
+
+        <component id="treeBall6">
+            <transformation>
+                <translate x="-0.5" y="1.4" z="1.9" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="treeBall7">
+            <transformation>
+                <translate x="-0.5" y="2.5" z="1.5" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall8">
+            <transformation>
+                <translate x="-0.5" y="3.3" z="1.3" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall9">
+            <transformation>
+                <translate x="-0.5" y="4.1" z="1" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall10">
+            <transformation>
+                <translate x="-0.5" y="4.7" z="0.7" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall">
+            <transformation>
+                <translate x="1.4" y="1.5" z="1.3" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="treeBall2">
+            <transformation>
+                <translate x="1.4" y="2.5" z="0.8" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall3">
+            <transformation>
+                <translate x="1" y="3.4" z="0.9" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall4">
+            <transformation>
+                <translate x="0.7" y="4.1" z="0.9" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall5">
+            <transformation>
+                <translate x="0.6" y="4.8" z="0.4" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall11">
+            <transformation>
+                <translate x="-2" y="1.3" z="0" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="treeBall12">
+            <transformation>
+                <translate x="-1.6" y="2.5" z="0" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall13">
+            <transformation>
+                <translate x="-1.4" y="3.3" z="0" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall14">
+            <transformation>
+                <translate x="-1.1" y="4.1" z="0" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall15">
+            <transformation>
+                <translate x="-0.9" y="4.7" z="0" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall16">
+            <transformation>
+                <translate x="-0.5" y="1.3" z="-2" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="treeBall17">
+            <transformation>
+                <translate x="-0.5" y="2.5" z="-1.5" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall18">
+            <transformation>
+                <translate x="-0.5" y="3.2" z="-1.4" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall19">
+            <transformation>
+                <translate x="-0.5" y="4.1" z="-1" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall20">
+            <transformation>
+                <translate x="-0.5" y="4.6" z="-0.9" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+    <component id="treeBall21">
+            <transformation>
+                <translate x="1" y="1.3" z="-1.8" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="treeBall22">
+            <transformation>
+                <translate x="1" y="2.5" z="-1.2" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall23">
+            <transformation>
+                <translate x="1" y="3.2" z="-1.1" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall24">
+            <transformation>
+                <translate x="0.9" y="4.1" z="-0.7" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="treeBall25">
+            <transformation>
+                <translate x="0.7" y="4.6" z="-0.6" />   
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBallText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+
+        <component id="treeBase">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeBaseText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="TreeBase" />
+            </children>
+        </component>   
+   
+        <component id="treeTop">
+            <transformation>
+                <rotate axis="x" angle="-90" />
+                <translate x="0" y="0" z="0.6" />   
+                <scale x="0.6" y="0.6" z="0.6" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="treeText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="TreeBranches" />
+                <componentref id="treeLeafs2" />
+                <componentref id="treeLeafs3" />
+                <componentref id="treeLeafs4" />
+                <componentref id="treeLeafs5" />
+            </children>
+        </component> 
+
+         <component id="treeStar">
+            <transformation>
+                <translate x="0" y="5.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="goldTex" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="starBody" />
+                <componentref id="starPointUp" />
+                <componentref id="starPointLeft" />
+                <componentref id="starPointFarLeft" />
+                <componentref id="starPointRight" />
+                <componentref id="starPointFarRight" />
+            </children>
+        </component> 
+
+        <component id="starPointLeft">
+            <transformation>
+                <rotate axis="y" angle="-80" /> 
+                <translate x="0" y="0" z="0.25" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="starPoint" />
+            </children>
+        </component> 
+
+        <component id="starPointFarLeft">
+            <transformation>
+                <rotate axis="y" angle="-140" /> 
+                <translate x="0" y="0" z="0.25" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="starPoint" />
+            </children>
+        </component> 
+
+        <component id="starPointRight">
+            <transformation>
+                <rotate axis="y" angle="80" /> 
+                <translate x="0" y="0" z="0.25" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="starPoint" />
+            </children>
+        </component> 
+
+        <component id="starPointFarRight">
+            <transformation>
+                <rotate axis="y" angle="140" />
+                <translate x="0" y="0" z="0.25" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="starPoint" />
+            </children>
+        </component> 
+
+        <component id="starPointUp">
+            <transformation>
+                <translate x="0" y="0" z="0.25" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="starPoint" />
+            </children>
+        </component> 
+        
+        <component id="starBody">
+            <transformation>
+                <scale x="2.8" y="2.8" z="2.8" />
+                <rotate axis="z" angle="110" />
+            </transformation>
+            <materials>
+                <material id="goldStar" />
+            </materials>
+            <texture id="melhorCadelaOG" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component> 
+
+        <component id="ChristmasTree">
+            <transformation>
+                <translate x="3" y="0" z="3" />   
+                <rotate axis="y" angle="20" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="treeTop" />
+                <componentref id="treeBase"/>
+                <componentref id="treeBall"/>
+                <componentref id="treeBall2"/>
+                <componentref id="treeBall3"/>
+                <componentref id="treeBall4"/>
+                <componentref id="treeBall5"/>
+                <componentref id="treeBall6"/>
+                <componentref id="treeBall7"/>
+                <componentref id="treeBall8"/>
+                <componentref id="treeBall9"/>
+                <componentref id="treeBall10"/>
+                <componentref id="treeBall11"/>
+                <componentref id="treeBall12"/>
+                <componentref id="treeBall13"/>
+                <componentref id="treeBall14"/>
+                <componentref id="treeBall15"/>
+                <componentref id="treeBall16"/>
+                <componentref id="treeBall17"/>
+                <componentref id="treeBall18"/>
+                <componentref id="treeBall19"/>
+                <componentref id="treeBall20"/>
+                <componentref id="treeBall21"/>
+                <componentref id="treeBall22"/>
+                <componentref id="treeBall23"/>
+                <componentref id="treeBall24"/>
+                <componentref id="treeBall25"/>
+                <componentref id="treeStar" />
+            </children>
+        </component>   
+
+
+        <component id="Carpete">
+            <transformation>
+                <translate x="10" y="0.01" z="5" /> 
+                <scale x="8" y="2" z="2.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+                <texture id="carpetText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>  
+
+        <component id="DaisyFrame">
+            <transformation>
+                <translate x="9" y="5.3" z="0" /> 
+                <scale x="2" y="1" z="1" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+                <texture id="melhorCadela" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>  
+
+         <component id="LokiFrame">
+            <transformation>
+                <translate x="11" y="5.3" z="0" /> 
+                <scale x="2" y="1" z="1" /> 
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+                <texture id="melhorCao" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component> 
+
+        <component id="Cabin">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="woodMaterial" />
+            </materials>
+            <texture id="woodCabinWall" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="northWall" />
+                <componentref id="southWall" />
+                <componentref id="westWall" />
+                <componentref id="eastWall" />
+                <componentref id="floor" />
+                <componentref id="fireplace" />
+            </children>
+        </component>
+
+        <component id="northWall">
+            <transformation>
+                <scale x="18" y="4" z="1" />
+                <translate x="0.5" y="1" z="-0.005" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="southWall">
+            <transformation>
+                <scale x="18" y="4" z="1" />
+                <translate x="0.5" y="1" z="-0.005" />
+                <rotate axis="x" angle="180" />
+                <translate x="0" y="0" z="-20" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="westWall">
+            <transformation>
+                <translate x="0" y="8" z="0" />
+                <rotate axis="y" angle="90" />
+                <rotate axis="z" angle="-180" />
+                <scale x="20" y="4" z="1" />
+                <translate x="0.5" y="1" z="-0.005" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+       
+        <component id="eastWall">
+            <transformation>
+                <translate x="18" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+                <scale x="20" y="4" z="1" />
+                <translate x="0.5" y="1" z="-0.005" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="floor">
+            <transformation>
+                  <transformationref id="floorTrans" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="woodCabinFloor" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles" />
+            </children>
+        </component>
+
+        <component id="fireplace">
+            <transformation>
+                <translate x="10" y="1.5" z="0" /> 
+                <scale x="4" y="1.5" z="1" />  
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="fireplaceWestBor" />
+                <componentref id="fireplaceEastBor" />
+                <componentref id="fireplaceNorthBor" />
+                <componentref id="fireplaceFront" />
+            </children>
+        </component>
+
+        <component id="fireplaceFront">
+            <transformation>
+                <translate x="0" y="0" z="1" />  
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="fireplaceText" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles"/>
+            </children>
+        </component>
+
+        <component id="fireplaceWestBor">
+            <transformation>
+                <scale x="0.2" y="1" z="1" />  
+                <rotate axis="y" angle="-90" />
+                <translate x="0.5" y="0" z="2.5" /> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles"/>
+            </children>
+        </component>
+
+        <component id="fireplaceEastBor">
+             <transformation>
+                <scale x="0.2" y="1" z="1" />  
+                <rotate axis="y" angle="90" />
+                <translate x="-0.5" y="0" z="2.5" /> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="Rectangles"/>
+            </children>
+        </component>
+
+        <component id="fireplaceNorthBor">
+            <transformation>
+                <scale x="1" y="1" z="0.5" />
+                <rotate axis="x" angle="-90" /> 
+                <translate x="0" y="-1" z="1" /> 
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="0.5" length_t="0.4"/>
+            <children>
+                <primitiveref id="Rectangles"/>
+            </children>
+        </component>
+
+        <component id="Cookies">
+            <transformation>
+                <translate x="4.5" y="2.62" z="15" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="cookiePlate" />
+                <componentref id="greenCookies"/>
+                <componentref id="treeCookies" />
+            </children>
+        </component>
+
+        <component id="cookiePlate">
+            <transformation>
+                <scale x="1" y="1" z="1.6" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="cookiePlate" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="disk" />
+            </children>
+        </component>
+
+        <component id="greenCookies">
+            <transformation>
+                <scale x="0.2" y="0.2" z="0.5" />
+                <translate x="0" y="0" z="-0.02" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="greenCookie" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="greenCookie1" />
+                <componentref id="greenCookie2" />
+                <componentref id="greenCookie3" />
+                <componentref id="greenCookie4" />
+                <primitiveref id="disk" />
+            </children>
+        </component>
+
+        <component id="greenCookie1">
+            <transformation>
+                <translate x="1.8" y="1.8" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="disk" />
+            </children>
+        </component>
+
+        <component id="greenCookie2">
+            <transformation>
+                <translate x="-1.8" y="1.8" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="disk" />
+            </children>
+        </component>
+        
+        <component id="greenCookie3">
+            <transformation>
+                <translate x="1.8" y="-1.8" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="disk" />
+            </children>
+        </component>
+
+        <component id="greenCookie4">
+            <transformation>
+                <translate x="-1.8" y="-1.8" z="0" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="disk" />
+            </children>
+        </component>
+
+        <component id="treeCookies">
+             <transformation>
+                <scale x="0.17" y="0.17" z="0.5" />
+                <translate x="0" y="0" z="-0.02" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="treeCookie" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="treeCookie1" />
+                <componentref id="treeCookie2" />
+                <componentref id="treeCookie3" />
+                <componentref id="treeCookie4" />
+            </children>
+        </component>
+
+    <component id="treeCookie1">
+        <transformation>
+            <translate x="2.4" y="0" z="0" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1"/>
+        <children>
+            <primitiveref id="disk" />
+        </children>
+    </component>
+    
+    <component id="treeCookie2">
+        <transformation>
+            <translate x="-2.4" y="0" z="0" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1"/>
+        <children>
+            <primitiveref id="disk" />
+        </children>
+    </component>
+    
+    <component id="treeCookie3">
+        <transformation>
+            <translate x="0" y="2.4" z="0" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1"/>
+        <children>
+            <primitiveref id="disk" />
+        </children>
+    </component>
+    
+    <component id="treeCookie4">
+        <transformation>
+            <translate x="0" y="-2.4" z="0" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="inherit" length_s="1" length_t="1"/>
+        <children>
+            <primitiveref id="disk" />
+        </children>
+    </component>
+
+    </components>
+</lxs>

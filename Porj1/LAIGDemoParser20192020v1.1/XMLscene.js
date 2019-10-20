@@ -84,7 +84,6 @@ class XMLscene extends CGFscene {
                 this.lights[i].update();
 
                 this.lights[i]["name"] = light[light.length-1];
-                console.log("olaaa"); console.log(this.lights[i]["name"] );
                 this.lightValues[key] = this.lights[i].enabled;
 
                 i++;
