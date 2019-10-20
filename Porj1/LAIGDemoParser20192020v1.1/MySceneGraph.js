@@ -414,7 +414,7 @@ class MySceneGraph {
 
           upZ = this.reader.getFloat(up[0], 'z');
           if (upZ == null) return 'ERROR! upZ undefined!';
-        }else if (up.length > 1) return 'ERROR! There must only be one \'up\' value';
+        } else if (up.length > 1) return 'ERROR! There must only be one \'up\' value';
 
         // Check if view already exists
         if (this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
