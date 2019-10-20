@@ -28,6 +28,7 @@ class MySceneGraph {
     this.nodes = [];
 
     this.idRoot = null;  // The id of the root element.
+    this.matID = 0;
 
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
@@ -512,8 +513,8 @@ class MySceneGraph {
         if (attributeIndex != -1) {
           if (attributeTypes[j] == 'position')
             var aux = this.parseCoordinates4D(grandChildren[attributeIndex], 'light position for ID' + lightId);
-          
-          else if(attributeTypes[j] == 'attenuation'){
+
+          else if (attributeTypes[j] == 'attenuation') {
 
             // constant
             var constant = this.reader.getFloat(grandChildren[attributeIndex], 'constant');
@@ -531,14 +532,14 @@ class MySceneGraph {
               return 'unable to parse quadratic-coordinate of the ' + 'light attenuation for ID' + lightId;
 
             // Values Verification
-            if(constant + linear + quadratic != 1)
+            if (constant + linear + quadratic != 1)
               return 'ERROR! Light attenuation values invalid!';
 
             var aux = [];
             aux.push(...[constant, linear, quadratic]);
           }
 
-          else if(attributeTypes[j] == 'color')
+          else if (attributeTypes[j] == 'color')
             var aux = this.parseColor(
               grandChildren[attributeIndex],
               attributeNames[j] + ' illumination for ID' + lightId);
@@ -1205,19 +1206,27 @@ class MySceneGraph {
 
       // Materials
       var materialChildren = grandChildren[materialsIndex].children;
-      var materialID = this.reader.getString(materialChildren[0], 'id');
+      let materialArray = [];
 
-      // check if material has a valid ID
-      if (materialID == -1)
-        return 'parseComponent materials failed!';
+      for (let i = 0; i < materialChildren.length; i++) {
+        let materialID = this.reader.getString(materialChildren[i], 'id');
 
-      //check if root node has its own material
-      if (componentID == this.root && materialID == "inherit")
-        return 'Root cannot have inherit materials';
-
-      //check if a normal node that doesn't have a mateiral, receves one from inheritance
-      if (materialChildren[0] == null && materialID != "inherit")
-        return 'Material not defined';
+        // check if material has a valid ID
+        if (materialID == null) {
+          this.onXMLMinorError("Error reading material id.");
+          continue;
+        }
+        if (this.materials[materialID] == null && materialID != "inherit"){
+          this.onXMLError('Material does not exist (' + materialID + ')');
+          continue;
+        }
+        //check if root node has its own material
+        if (componentID == this.root && materialID == "inherit"){
+          this.onXMLMinorError('Root cannot have inherit materials');
+          continue;
+        }
+        materialArray.push(materialID);
+      }
 
       // Texture
       let textureInfo = grandChildren[textureIndex];
@@ -1271,7 +1280,7 @@ class MySceneGraph {
       }
 
       // Parsing component properties
-      this.components[componentID] = new MyComponent(componentID, materialID, transfMatrix, textureID, length_s, length_t, componentChild, primitiveChild);
+      this.components[componentID] = new MyComponent(componentID, materialArray, transfMatrix, textureID, length_s, length_t, componentChild, primitiveChild);
     }
 
     this.log("Parsed components");
@@ -1406,14 +1415,13 @@ class MySceneGraph {
 
 
     let apply_material = "none", apply_texture = "none",
-        apply_length_t = 1, apply_length_s = 1;
+      apply_length_t = 1, apply_length_s = 1, apply_mat_id = this.matID % comp.material.length;
 
     // Display materials
-    if (comp.materialID == "inherit") {
+    if (comp.material[apply_mat_id] == "inherit") {
       apply_material = parentMaterial;
     } else {
-      apply_material = comp.materialID;
-
+      apply_material = comp.material[apply_mat_id];
     }
 
     if (apply_material != "none") {
@@ -1421,7 +1429,7 @@ class MySceneGraph {
       // Null texture
       if (comp.textureID == "none") {
         this.materials[apply_material].setTexture(null);
-      // Inherit texture
+        // Inherit texture
       } else if (comp.textureID == "inherit") {
         if (parentTexture == "none") {
           apply_texture = "none";
@@ -1432,7 +1440,7 @@ class MySceneGraph {
           apply_texture = parentTexture;
           this.materials[apply_material].setTexture(this.textures[apply_texture]);
         }
-      // Defined texture
+        // Defined texture
       } else {
         apply_length_t = comp.length_t;
         apply_length_s = comp.length_s;
@@ -1449,7 +1457,7 @@ class MySceneGraph {
 
     // display child primitives
     for (let childPrim of comp.primitiveChild) {
-      if(apply_material != "none" && apply_texture != "none"){
+      if (apply_material != "none" && apply_texture != "none") {
         this.primitives[childPrim].updateTexCoords(apply_length_t, apply_length_s);
       }
 
@@ -1457,5 +1465,9 @@ class MySceneGraph {
     }
 
     this.scene.popMatrix();
+  }
+
+  nextMaterial() {
+    this.matID++;
   }
 }

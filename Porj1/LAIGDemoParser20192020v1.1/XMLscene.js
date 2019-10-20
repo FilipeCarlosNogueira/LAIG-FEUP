@@ -82,7 +82,7 @@ class XMLscene extends CGFscene {
                     this.lights[i].disable();
 
                 this.lights[i].update();
-                
+
                 this.lights[i]["name"] = light[light.length-1];
                 console.log("olaaa"); console.log(this.lights[i]["name"] );
                 this.lightValues[key] = this.lights[i].enabled;
@@ -121,6 +121,8 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
+        this.checkKeys();
+
         // ---- BEGIN Background, camera and axis setup
 
         // Clear image and depth buffer everytime we update the scene
@@ -146,7 +148,7 @@ class XMLscene extends CGFscene {
             if (this.graph.lights.hasOwnProperty(key)) {
                 if (this.lightValues[key])
                     this.lights[i].enable();
-                else   
+                else
                     this.lights[i].disable();
 
                 this.lights[i].update();
@@ -165,5 +167,9 @@ class XMLscene extends CGFscene {
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    checkKeys() {
+        if (this.gui.isKeyPressed("KeyM")) this.graph.nextMaterial();
     }
 }
