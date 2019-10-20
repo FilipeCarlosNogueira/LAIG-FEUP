@@ -59,7 +59,7 @@ class MySphere extends CGFobject {
 
     for (var i = 0; i <= this.stacks; i++) {
       for (var j = 0; j <= this.slices; j++) {
-        this.texCoords.push((j * length_s) / this.slices, 1 - (i * length_t) / this.stacks);
+        this.texCoords.push((j / length_s) / this.slices, 1 - (i / length_t) / this.stacks);
       }
     }
     this.updateTexCoordsGLBuffers();

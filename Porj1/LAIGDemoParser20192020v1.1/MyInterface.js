@@ -55,15 +55,14 @@ class MyInterface extends CGFinterface {
     // Lights Group
     addLightsGroup(lights){
         this.groupLights.open();
-        
+
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
-                
+
                 if (lights[key])
                     this.scene.lightValues[key] = true;
                 else
                     this.scene.lightValues[key] = false;
-                
                 this.groupLights.add(this.scene.lightValues, key).name(key);
             }
         }
