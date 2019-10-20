@@ -14,11 +14,6 @@ class XMLscene extends CGFscene {
         // New lights array
         this.lightValues = [];
 
-        // New views array
-        this.viewsValues = [];
-        this.currentView = null;
-        this.previousView = null;
-
         this.interface = myinterface;
     }
 
@@ -55,7 +50,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene lights with the values read from the XML file.
      */
     initLights() {
-        
+
         // Lights index.
         var i = 0;
 
@@ -103,21 +98,9 @@ class XMLscene extends CGFscene {
      * Initializes the scene views with the values read from the XML file.
      */
     initViews(){
-
-        for(var key in this.graph.views){
-            if(!this.graph.views.hasOwnProperty(key)) continue;
-
-            this.viewsValues[key] = false;
-
-            if(key == 'defaultCamera'){
-                this.camera = this.graph.views[key].camera;
-                this.currentView = key;
-                this.previousView = this.currentView;
-                this.viewsValues[key] = true;
-            }
-        }
-
-        this.interface.addViewsGroup(this.graph.views);
+        this.view = 0;
+        this.camera = this.graph.views[this.graph.default].camera;
+        this.interface.addViewsGroup();
     }
 
     setDefaultAppearance() {
@@ -184,27 +167,6 @@ class XMLscene extends CGFscene {
             ++i;
         }
 
-        //console.log("this.viewsValues:");console.log(this.viewsValues);
-        
-        //Views interface drop-down manager 
-        if (this.previousView != this.currentView){
-
-            this.viewsValues[this.previousView] = false;
-
-            if(this.currentView != null)
-                this.camera = this.graph.views[this.currentView].camera;
-            else
-                this.initCameras();
-
-            this.previousView = this.currentView;
-
-            this.interface.setActiveCamera(this.camera);
-
-            console.log("XMLscene: this.camera:"); console.log(this.camera);
-        }
-        
-        
-
         if (this.sceneInited) {
             // Draw axis
             this.setDefaultAppearance();
@@ -219,5 +181,10 @@ class XMLscene extends CGFscene {
 
     checkKeys() {
         if (this.gui.isKeyPressed("KeyM")) this.graph.nextMaterial();
+    }
+
+    updateCamera(){
+        this.camera = this.graph.views[this.view].camera;
+        this.interface.setActiveCamera(this.camera);
     }
 }

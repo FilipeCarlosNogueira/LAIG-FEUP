@@ -223,12 +223,12 @@ class MySceneGraph {
   parseView(viewsNode) {
     // Views Array
     this.views = [];
-    
+    this.scene.viewsSelect = [];
+
     //check if defaultCamera is defined
     this.default = this.reader.getString(viewsNode, 'default');
     if (this.default == null) {
-      this.onXMLMinorError("Default view not defined!");
-      this.default = "defaultCamera";
+      this.onXMLError("Default view not defined!");
     }
 
     var childrenView = viewsNode.children;
@@ -239,6 +239,7 @@ class MySceneGraph {
 
       // Parse view
       this.views[id] = {};
+      this.views[id].id = 'default';
       this.views[id].type = 'perspective';
       this.views[id].near = 0.1;
       this.views[id].far = 500;
@@ -419,8 +420,9 @@ class MySceneGraph {
         // Create Camera
         this.views[id].camera = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ), vec3.fromValues(upX, upY, upZ));
       }
+      this.scene.viewsSelect[i] = id;
     }
-    
+
     this.log('Parsed Views');
 
     return null;
@@ -1463,11 +1465,6 @@ class MySceneGraph {
       this.materials[apply_material].apply();
     }
 
-    // process child components
-    for (let childComp of comp.componentChild) {
-      this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
-    }
-
     // display child primitives
     for (let childPrim of comp.primitiveChild) {
       if (apply_material != "none" && apply_texture != "none") {
@@ -1476,6 +1473,11 @@ class MySceneGraph {
 
       this.primitives[childPrim].display();
     }
+    // process child components
+    for (let childComp of comp.componentChild) {
+      this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
+    }
+
 
     this.scene.popMatrix();
   }

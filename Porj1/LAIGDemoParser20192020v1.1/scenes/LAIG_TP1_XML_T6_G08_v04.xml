@@ -169,7 +169,7 @@
             <materials>
                 <material id="none"/>
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="city" />
                 <componentref id="omnidroid" />
@@ -188,7 +188,7 @@
                 <material id="omnidroid_mate" />
                 <material id="f_in_the_chat" />
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="omnidroid_leg0" />
                 <componentref id="omnidroid_leg1" />
@@ -210,7 +210,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_leg0" />
             </children>
@@ -225,7 +225,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_leg1" />
             </children>
@@ -240,7 +240,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_leg2" />
             </children>
@@ -256,7 +256,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -272,7 +272,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -288,7 +288,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -304,7 +304,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="omni_claw" />
             </children>
@@ -351,7 +351,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <componentref id="omnidroid_leg_f" />
             </children>
@@ -364,7 +364,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <componentref id="omnidroid_leg_f" />
             </children>
@@ -377,7 +377,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <componentref id="omnidroid_leg_f" />
             </children>
@@ -390,7 +390,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <componentref id="omnidroid_leg_f" />
             </children>
@@ -435,7 +435,7 @@
             <materials>
                 <material id="skybox_mate" />
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="building0" />
                 <componentref id="building1" />
@@ -453,7 +453,7 @@
             <materials>
                 <material id="skybox_mate" />
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="billboard_temp" />
             </children>
@@ -553,7 +553,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="building0_text" length_s="1" length_t="4" />
+            <texture id="building0_text" length_s="1" length_t="0.2" />
             <children>
                 <componentref id="building_temp" />
             </children>
@@ -623,7 +623,7 @@
             <materials>
                 <material id="building_mate" />
             </materials>
-            <texture id="building0_text" length_s="1" length_t="4" />
+            <texture id="building0_text" length_s="1" length_t="0.2" />
             <children>
                 <componentref id="cube" />
             </children>
@@ -638,7 +638,7 @@
             <materials>
                 <material id="omnidroid_mate" />
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="table_leg0" />
                 <componentref id="table_leg1" />
@@ -727,7 +727,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <componentref id="cube_side0" />
                 <componentref id="cube_side1" />
@@ -746,7 +746,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -760,7 +760,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -774,7 +774,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -788,7 +788,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -801,7 +801,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -814,7 +814,7 @@
             <materials>
                 <material id="inherit" />
             </materials>
-            <texture id="inherit" length_s="1" length_t="1" />
+            <texture id="inherit" />
             <children>
                 <primitiveref id="square" />
             </children>
@@ -830,7 +830,7 @@
             <materials>
                 <material id="skybox_mate" />
             </materials>
-            <texture id="none" length_s="1" length_t="1" />
+            <texture id="none" />
             <children>
                 <componentref id="sky_side0" />
                 <componentref id="sky_side1" />
