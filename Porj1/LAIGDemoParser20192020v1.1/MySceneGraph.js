@@ -290,13 +290,13 @@ class MySceneGraph {
         if (from.length > 1) return 'ERROR! Ther must only be one \'from\' value!';
 
         var fromX = this.reader.getFloat(from[0], 'x');
-        if (fromX == null) return 'ERROR! from X undefined!';
+        if (fromX == null) return 'ERROR! fromX undefined!';
 
         var fromY = this.reader.getFloat(from[0], 'y');
-        if (fromY == null) return 'ERROR! from Y undefined!';
+        if (fromY == null) return 'ERROR! fromY undefined!';
 
         var fromZ = this.reader.getFloat(from[0], 'z');
-        if (fromZ == null) return 'ERROR! from Z undefined!';
+        if (fromZ == null) return 'ERROR! fromZ undefined!';
 
         // to
         var to = childrenView[i].getElementsByTagName('to');
@@ -304,13 +304,13 @@ class MySceneGraph {
         if (to.length > 1) return 'ERROR! There must only be one \'to\' value';
 
         var toX = this.reader.getFloat(to[0], 'x');
-        if (toX == null) return 'ERROR! from X undefined!';
+        if (toX == null) return 'ERROR! toX undefined!';
 
         var toY = this.reader.getFloat(to[0], 'y');
-        if (toY == null) return 'ERROR! from Y undefined!';
+        if (toY == null) return 'ERROR! toY undefined!';
 
         var toZ = this.reader.getFloat(to[0], 'z');
-        if (toZ == null) return 'ERROR! from Z undefined!';
+        if (toZ == null) return 'ERROR! toZ undefined!';
 
         // From and To Value verification
         if (fromX == toX && fromY == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
@@ -371,13 +371,13 @@ class MySceneGraph {
         if (from.length > 1) return 'ERROR! Ther must only be one \'from\' value!';
 
         var fromX = this.reader.getFloat(from[0], 'x');
-        if (fromX == null) return 'ERROR! from X undefined!';
+        if (fromX == null) return 'ERROR! fromX undefined!';
 
         var fromY = this.reader.getFloat(from[0], 'y');
-        if (fromY == null) return 'ERROR! from Y undefined!';
+        if (fromY == null) return 'ERROR! fromY undefined!';
 
         var fromZ = this.reader.getFloat(from[0], 'z');
-        if (fromZ == null) return 'ERROR! from Z undefined!';
+        if (fromZ == null) return 'ERROR! fromZ undefined!';
 
         // to
         var to = childrenView[i].getElementsByTagName('to');
@@ -385,30 +385,36 @@ class MySceneGraph {
         if (to.length > 1) return 'ERROR! There must only be one \'to\' value';
 
         var toX = this.reader.getFloat(to[0], 'x');
-        if (toX == null) return 'ERROR! from X undefined!';
+        if (toX == null) return 'ERROR! toX undefined!';
 
         var toY = this.reader.getFloat(to[0], 'y');
-        if (toY == null) return 'ERROR! from Y undefined!';
+        if (toY == null) return 'ERROR! toY undefined!';
 
         var toZ = this.reader.getFloat(to[0], 'z');
-        if (toZ == null) return 'ERROR! from Z undefined!';
+        if (toZ == null) return 'ERROR! toZ undefined!';
 
         // From and To Value verification
         if (fromX == toX && fromY == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
 
         // up
         var up = childrenView[i].getElementsByTagName('up');
-        if (up == null) return 'ERROR! to value must be defined!';
-        if (up.length > 1) return 'ERROR! There must only be one \'to\' value';
+        var upX, upY, upZ;
+        console.log("up:");console.log(up);
+        if (up.length == 0){ // Create default value
+          upX = 0;
+          upY = 1;
+          upZ = 0;
+        } else if(up.length == 1){
 
-        var upX = this.reader.getFloat(up[0], 'x');
-        if (upX == null) return 'ERROR! from X undefined!';
+          upX = this.reader.getFloat(up[0], 'x');
+          if (upX == null) return 'ERROR! upX undefined!';
 
-        var upY = this.reader.getFloat(up[0], 'y');
-        if (upY == null) return 'ERROR! from Y undefined!';
+          upY = this.reader.getFloat(up[0], 'y');
+          if (upY == null) return 'ERROR! upY undefined!';
 
-        var upZ = this.reader.getFloat(up[0], 'z');
-        if (upZ == null) return 'ERROR! from Z undefined!';
+          upZ = this.reader.getFloat(up[0], 'z');
+          if (upZ == null) return 'ERROR! upZ undefined!';
+        }else if (up.length > 1) return 'ERROR! There must only be one \'up\' value';
 
         // Check if view already exists
         if (this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
