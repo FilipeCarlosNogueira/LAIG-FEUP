@@ -14,10 +14,6 @@ class XMLscene extends CGFscene {
         // New lights array
         this.lightValues = [];
 
-        // New views array
-        this.viewsValues = [];
-        this.currentView = null;
-
         this.interface = myinterface;
     }
 
@@ -54,7 +50,7 @@ class XMLscene extends CGFscene {
      * Initializes the scene lights with the values read from the XML file.
      */
     initLights() {
-        
+
         // Lights index.
         var i = 0;
 
@@ -102,19 +98,8 @@ class XMLscene extends CGFscene {
      * Initializes the scene views with the values read from the XML file.
      */
     initViews(){
-
-        for(var key in this.graph.views){
-            if(!this.graph.views.hasOwnProperty(key)) continue;
-
-            this.viewsValues[key] = false;
-
-            if(key == 'defaultCamera'){
-                this.camera = this.graph.views[key].camera;
-                this.currentView = key;
-                this.viewsValues[key] = true;
-            }
-        }
-
+        this.view = 0;
+        this.camera = this.graph.views[this.graph.default].camera;
         this.interface.addViewsGroup(this.graph.views);
     }
 
@@ -181,27 +166,6 @@ class XMLscene extends CGFscene {
 
             ++i;
         }
-        
-        //Views interface drop-down manager 
-        if (!this.viewsValues[this.currentView]){
-            
-            this.currentView = null;
-
-            // Finds the current selected view
-            for(var key in this.viewsValues){
-                if(this.viewsValues[key]){ 
-                    this.currentView = key;
-                }
-            }
-
-            if(this.currentView != null)
-                this.camera = this.graph.views[this.currentView].camera;
-            else
-                this.initCameras();
-
-            console.log("XMLscene: this.camera:"); console.log(this.camera);
-        }
-        
 
         if (this.sceneInited) {
             // Draw axis
@@ -217,5 +181,10 @@ class XMLscene extends CGFscene {
 
     checkKeys() {
         if (this.gui.isKeyPressed("KeyM")) this.graph.nextMaterial();
+    }
+
+    updateCamera(){
+        this.camera = this.graph.views[this.view].camera;
+        this.interface.setActiveCamera(this.camera);
     }
 }

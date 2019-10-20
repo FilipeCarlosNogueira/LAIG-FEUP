@@ -223,12 +223,12 @@ class MySceneGraph {
   parseView(viewsNode) {
     // Views Array
     this.views = [];
-    
+    this.scene.viewsSelect = [];
+
     //check if defaultCamera is defined
     this.default = this.reader.getString(viewsNode, 'default');
     if (this.default == null) {
-      this.onXMLMinorError("Default view not defined!");
-      this.default = "defaultCamera";
+      this.onXMLError("Default view not defined!");
     }
 
     var childrenView = viewsNode.children;
@@ -239,6 +239,7 @@ class MySceneGraph {
 
       // Parse view
       this.views[id] = {};
+      this.views[id].id = 'default';
       this.views[id].type = 'perspective';
       this.views[id].near = 0.1;
       this.views[id].far = 500;
@@ -405,8 +406,9 @@ class MySceneGraph {
         // Create Camera
         this.views[id].camera = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
       }
+      this.scene.viewsSelect[i] = id;
     }
-    
+
     this.log('Parsed Views');
 
     return null;

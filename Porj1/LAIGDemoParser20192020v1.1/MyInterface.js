@@ -21,11 +21,11 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
         // add a group of controls (and open/expand by defult)
-        
+
         this.groupLights = this.gui.addFolder('Lights');
 
         this.groupViews = this.gui.addFolder('Views');
-        
+
         this.initKeys();
 
         return true;
@@ -67,19 +67,12 @@ class MyInterface extends CGFinterface {
             }
         }
     }
-    
+
     // Views Group
-    addViewsGroup(viewNames) {
+    addViewsGroup(views) {
         this.groupViews.open();
 
-        var names = [];
+        this.gui.add(this.scene, 'view', this.scene.viewsSelect).onChange(this.scene.updateCamera.bind(this.scene));
 
-        for (var key in viewNames){
-            names.push(key);
-            this.groupViews.add(this.scene.viewsValues, key).name(key);
-        }
-
-        //this.groupViews.add(names);
-        //this.groupViews.add(this.groupViews, 'Views').name(names);
     }
 }
