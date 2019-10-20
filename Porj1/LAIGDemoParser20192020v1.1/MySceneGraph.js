@@ -1449,11 +1449,6 @@ class MySceneGraph {
       this.materials[apply_material].apply();
     }
 
-    // process child components
-    for (let childComp of comp.componentChild) {
-      this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
-    }
-
     // display child primitives
     for (let childPrim of comp.primitiveChild) {
       if (apply_material != "none" && apply_texture != "none") {
@@ -1462,6 +1457,11 @@ class MySceneGraph {
 
       this.primitives[childPrim].display();
     }
+    // process child components
+    for (let childComp of comp.componentChild) {
+      this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
+    }
+
 
     this.scene.popMatrix();
   }
