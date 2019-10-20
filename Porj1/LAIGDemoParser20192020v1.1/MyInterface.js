@@ -22,10 +22,6 @@ class MyInterface extends CGFinterface {
 
         // add a group of controls (and open/expand by defult)
         
-        this.groupLights = this.gui.addFolder('Lights');
-
-        this.groupViews = this.gui.addFolder('Views');
-        
         this.initKeys();
 
         return true;
@@ -54,6 +50,8 @@ class MyInterface extends CGFinterface {
 
     // Lights Group
     addLightsGroup(lights){
+
+        this.groupLights = this.gui.addFolder('Lights');
         this.groupLights.open();
 
         for (var key in lights) {
@@ -69,17 +67,13 @@ class MyInterface extends CGFinterface {
     }
     
     // Views Group
-    addViewsGroup(viewNames) {
-        this.groupViews.open();
+    addViewsGroup(viewValues) {
+        var viewNames = [];
 
-        var names = [];
-
-        for (var key in viewNames){
-            names.push(key);
-            this.groupViews.add(this.scene.viewsValues, key).name(key);
+        for (var key in viewValues){
+            viewNames.push(key);
         }
 
-        //this.groupViews.add(names);
-        //this.groupViews.add(this.groupViews, 'Views').name(names);
+        this.gui.add(this.scene, 'currentView', viewNames).name("Views");
     }
 }

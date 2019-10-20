@@ -395,6 +395,20 @@ class MySceneGraph {
         // From and To Value verification
         if (fromX == toX && fromY == toY && fromZ == toZ) return 'ERROR! \'from\' and \'to\' must have different values!';
 
+        // up
+        var up = childrenView[i].getElementsByTagName('up');
+        if (up == null) return 'ERROR! to value must be defined!';
+        if (up.length > 1) return 'ERROR! There must only be one \'to\' value';
+
+        var upX = this.reader.getFloat(up[0], 'x');
+        if (upX == null) return 'ERROR! from X undefined!';
+
+        var upY = this.reader.getFloat(up[0], 'y');
+        if (upY == null) return 'ERROR! from Y undefined!';
+
+        var upZ = this.reader.getFloat(up[0], 'z');
+        if (upZ == null) return 'ERROR! from Z undefined!';
+
         // Check if view already exists
         if (this.views[id] != null) return 'ERROR! View ID already exists! Change ID and reload!';
 
@@ -403,7 +417,7 @@ class MySceneGraph {
         this.views[id].type = 'ortho';
 
         // Create Camera
-        this.views[id].camera = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
+        this.views[id].camera = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ), vec3.fromValues(upX, upY, upZ));
       }
     }
     

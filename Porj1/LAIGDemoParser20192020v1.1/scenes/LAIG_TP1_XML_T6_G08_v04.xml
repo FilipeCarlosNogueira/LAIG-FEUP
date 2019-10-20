@@ -15,6 +15,7 @@
         <ortho id="ortho_view" near="0.1" far="500" left="-20" right="20" top="10" bottom="-10">
             <from x="30" y="35" z="40" />
             <to x="1" y="5" z="0" />
+            <up x="0" y="1" z="0" />
         </ortho>
     </views>
 

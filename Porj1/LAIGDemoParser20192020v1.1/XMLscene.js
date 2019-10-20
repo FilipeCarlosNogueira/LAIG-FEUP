@@ -17,6 +17,7 @@ class XMLscene extends CGFscene {
         // New views array
         this.viewsValues = [];
         this.currentView = null;
+        this.previousView = null;
 
         this.interface = myinterface;
     }
@@ -111,6 +112,7 @@ class XMLscene extends CGFscene {
             if(key == 'defaultCamera'){
                 this.camera = this.graph.views[key].camera;
                 this.currentView = key;
+                this.previousView = this.currentView;
                 this.viewsValues[key] = true;
             }
         }
@@ -181,26 +183,26 @@ class XMLscene extends CGFscene {
 
             ++i;
         }
+
+        //console.log("this.viewsValues:");console.log(this.viewsValues);
         
         //Views interface drop-down manager 
-        if (!this.viewsValues[this.currentView]){
-            
-            this.currentView = null;
+        if (this.previousView != this.currentView){
 
-            // Finds the current selected view
-            for(var key in this.viewsValues){
-                if(this.viewsValues[key]){ 
-                    this.currentView = key;
-                }
-            }
+            this.viewsValues[this.previousView] = false;
 
             if(this.currentView != null)
                 this.camera = this.graph.views[this.currentView].camera;
             else
                 this.initCameras();
 
+            this.previousView = this.currentView;
+
+            this.interface.setActiveCamera(this.camera);
+
             console.log("XMLscene: this.camera:"); console.log(this.camera);
         }
+        
         
 
         if (this.sceneInited) {
