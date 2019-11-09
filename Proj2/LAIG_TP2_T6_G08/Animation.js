@@ -44,9 +44,9 @@ class KeyframeAnimation extends Animation{
         rotate[0] = fraction_p * prev_frame.rotate[0] + fraction_c * curr_frame.rotate[0];
         rotate[1] = fraction_p * prev_frame.rotate[1] + fraction_c * curr_frame.rotate[1];
         rotate[2] = fraction_p * prev_frame.rotate[2] + fraction_c * curr_frame.rotate[2];
-        mat4.rotate(this.matrix, this.matrix, rotate[0], [1,0,0]);
-        mat4.rotate(this.matrix, this.matrix, rotate[1], [0,1,0]);
         mat4.rotate(this.matrix, this.matrix, rotate[2], [0,0,1]);
+        mat4.rotate(this.matrix, this.matrix, rotate[1], [0,1,0]);
+        mat4.rotate(this.matrix, this.matrix, rotate[0], [1,0,0]);
 
         // translate
         let translate = [];

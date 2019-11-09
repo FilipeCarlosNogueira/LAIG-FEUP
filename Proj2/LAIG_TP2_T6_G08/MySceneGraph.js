@@ -8,8 +8,9 @@ var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var TRANSFORMATIONS_INDEX = 6;
-var PRIMITIVES_INDEX = 7;
-var COMPONENTS_INDEX = 8;
+var ANIMATIONS_INDEX = 7;
+var PRIMITIVES_INDEX = 8;
+var COMPONENTS_INDEX = 9;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -165,6 +166,18 @@ class MySceneGraph {
 
       // Parse transformations block
       if ((error = this.parseTransformations(nodes[index])) != null)
+        return error;
+    }
+
+    // <animations>
+    if ((index = nodeNames.indexOf('animations')) == -1)
+      return 'tag <animations> missing';
+    else {
+      if (index != ANIMATIONS_INDEX)
+        this.onXMLMinorError('tag <animations> out of order');
+
+      // Parse transformations block
+      if ((error = this.parseAnimations(nodes[index])) != null)
         return error;
     }
 
@@ -866,6 +879,101 @@ class MySceneGraph {
 
     this.log('Parsed transformations');
     return null;
+  }
+
+  parseAnimations(animationsNode){
+    this.animations = [];
+
+    // parse each animation
+    let children = animationsNode.children;
+    for(let i = 0; i < children.length; i++){
+      let anim = [];
+      if(children[i].nodeName != "animation"){
+        this.onXMLMinorError("Error on animation number:" + i);
+        continue;
+      }
+
+      // get animation id
+      let anim_id = this.reader.getString(children[i], 'id');
+      if(anim_id == null){
+        this.onXMLMinorError("Error on animation number:" + i);
+        continue;
+      }
+      if(this.animations[anim_id]!=null){
+        this.onXMLMinorError("Duplicate animation id:" + anim_id);
+        continue;
+      }
+
+      // parse each keyframe
+      let grandChildren = children[i].children;
+      for(let j = 0; j < grandChildren.length; j++){
+        let key;
+
+        // instant
+        key.time = this.reader.getString(grandChildren[j], 'instant');
+        if(key.time == null){
+          this.onXMLMinorError("Invalid instant on animation:" + anim_id);
+          continue;
+        }
+
+        let grandgrandChildren = grandChildren[j].children;
+
+        // translate
+        if(grandgrandChildren[0].nodeName != "translate"){
+          this.onXMLMinorError("Translate out of order on animation:" + anim_id);
+          continue;
+        }
+        let translate = this.parseCoordinates3D(grandChildren[j], 'translate transformation for animation ID ' + anim_id);
+
+
+
+
+        // rotate
+        if(grandgrandChildren[1].nodeName != "rotate"){
+          this.onXMLMinorError("Rotate out of order on animation:" + anim_id);
+          continue;
+        }
+        let rotate;
+
+        // x
+        let x = this.reader.getFloat(node, 'angle_x');
+        if (!(x != null && !isNaN(x))){
+          this.onXMLMinorError("Error on rotate of animation " + anim_id);
+          continue;
+        }
+
+        // y
+        let y = this.reader.getFloat(node, 'angle_y');
+        if (!(y != null && !isNaN(y))){
+          this.onXMLMinorError("Error on rotate of animation " + anim_id);
+          continue;
+        }
+
+        // z
+        let z = this.reader.getFloat(node, 'angle_z');
+        if (!(z != null && !isNaN(z))){
+          this.onXMLMinorError("Error on rotate of animation " + anim_id);
+          continue;
+        }
+
+        rotate.push(...[x, y, z]);
+
+        // scale
+        if(grandgrandChildren[2].nodeName != "scale"){
+          this.onXMLMinorError("Scale out of order on animation:" + anim_id);
+          continue;
+        }
+        let scale = this.parseCoordinates3D(grandChildren[j], 'translate transformation for animation ID ' + anim_id);
+
+
+
+      }
+
+
+
+
+    }
+
   }
 
   /**

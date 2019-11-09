@@ -6,7 +6,7 @@
             <from x="150" y="50" z="150" />
             <to x="0" y="20" z="0" />
         </perspective>
-        
+
         <perspective id="perspective_view_2" near="0.1" far="500" angle="45">
             <from x="-150" y="100" z="300" />
             <to x="0" y="20" z="0" />
@@ -106,6 +106,16 @@
         </transformation>
     </transformations>
 
+    <animations>
+        <animation id="omnidroid">
+            <keyframe instant="10">
+                <translate x="1" y="1" z="1" />
+                <rotate angle_x="1" angle_y="1" angle_z="1" />
+                <translate x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <primitives>
         <primitive id="square">
             <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
@@ -184,6 +194,7 @@
             <transformation>
                 <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
+            <animationref id="omnidroid">
             <materials>
                 <material id="omnidroid_mate" />
                 <material id="f_in_the_chat" />
