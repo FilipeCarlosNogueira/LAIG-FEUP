@@ -1215,8 +1215,7 @@ class MySceneGraph {
               else
                 return 'Unvalid axis fot rotation';
 
-              mat4.rotate(
-                transfMatrix, transfMatrix, angle * DEGREE_TO_RAD, axisAux);
+              mat4.rotate(transfMatrix, transfMatrix, angle * DEGREE_TO_RAD, axisAux);
 
               break;
           }
