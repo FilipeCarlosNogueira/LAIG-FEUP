@@ -1013,8 +1013,9 @@ class MySceneGraph {
           grandChildren[0].nodeName != 'triangle' &&
           grandChildren[0].nodeName != 'cylinder' &&
           grandChildren[0].nodeName != 'sphere' &&
-          grandChildren[0].nodeName != 'torus')) {
-        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)';
+          grandChildren[0].nodeName != 'torus' &&
+          grandChildren[0].nodeName != 'plane')) {
+        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus or plane)';
       }
 
       // Specifications for the current primitive.
@@ -1220,6 +1221,21 @@ class MySceneGraph {
           new MyTorus(this.scene, primitiveId, inner, outer, slices, loops);
 
         this.primitives[primitiveId] = torus;
+      } else if(primitiveType == 'plane'){
+        // npartsU
+        var npartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
+        if (!(npartsU != null && !isNaN(npartsU)))
+          return ('unable to parse npartsU of the primitive coordinates for ID = ' + primitiveId);
+
+        // npartsV
+        var npartsV = this.reader.getFloat(grandChildren[0], 'npartsV');
+        if (!(npartsV != null && !isNaN(npartsV)))
+          return ('unable to parse npartsU of the primitive coordinates for ID = ' + primitiveId);
+
+        var plane = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
+
+        this.primitives[primitiveId] = plane;
+
       } else {
         console.warn('To do: Parse other primitives.');
       }
