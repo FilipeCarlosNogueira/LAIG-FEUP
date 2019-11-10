@@ -177,6 +177,22 @@
         <primitive id="plane">
             <plane npartsU="5" npartsV="8" />
         </primitive>
+
+        <primitive id="patch">
+            <patch npointsU="3" npointsV="3" npartsU="20" npartsV="20">
+                <controlpoint xx="0" yy="1" zz="-2"/>
+                <controlpoint xx="2" yy="0" zz="0"/>
+                <controlpoint xx="0" yy="1" zz="2"/>
+                
+                <controlpoint xx="0" yy="-3" zz="-2"/>
+                <controlpoint xx="0" yy="-3" zz="0"/>
+                <controlpoint xx="0" yy="-3" zz="2"/>
+
+                <controlpoint xx="0" yy="1" zz="-2"/>
+                <controlpoint xx="-2" yy="0" zz="0"/>
+                <controlpoint xx="0" yy="1" zz="2"/> 
+            </patch>
+        </primitive>
     </primitives>
 
     <components>

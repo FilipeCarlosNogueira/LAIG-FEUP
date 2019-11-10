@@ -17,14 +17,14 @@ class MyPlane extends CGFobject {
 		this.controlVertexes = [	
 			/* U = 0 */
 			[ /* V = 0..1 */
-				[-0.5, 0.0, 0.5, 1 ],
-				[-0.5, 0.0, -0.5, 1 ]
+				[-0.5, 0.0, 0.5, 1 ],	// [x, y, z, CurveDegree]
+				[-0.5, 0.0, -0.5, 1 ]	// [x, y, z, CurveDegree]
 			], 
 
 			/* U = 1 */ 
 			[ /* V = 0..1 */
-				[ 0.5, 0.0, 0.5, 1 ], 
-				[ 0.5,  0.0, -0.5, 1 ] 
+				[ 0.5, 0.0, 0.5, 1 ],	// [x, y, z, CurveDegree]
+				[ 0.5,  0.0, -0.5, 1 ]	// [x, y, z, CurveDegree]
 			]
 		];
 
@@ -39,7 +39,6 @@ class MyPlane extends CGFobject {
 		// must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
 		this.obj = new CGFnurbsObject(this.scene, uDivs, vDivs, nurbsSurface);
 	}
-
 
 	display() { 
 		this.obj.display(); 

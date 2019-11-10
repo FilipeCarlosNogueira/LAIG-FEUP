@@ -412,7 +412,6 @@ class MySceneGraph {
         // up
         var up = childrenView[i].getElementsByTagName('up');
         var upX, upY, upZ;
-        console.log("up:");console.log(up);
         if (up.length == 0){ // Create default value
           upX = 0;
           upY = 1;
@@ -1014,8 +1013,9 @@ class MySceneGraph {
           grandChildren[0].nodeName != 'cylinder' &&
           grandChildren[0].nodeName != 'sphere' &&
           grandChildren[0].nodeName != 'torus' &&
-          grandChildren[0].nodeName != 'plane')) {
-        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus or plane)';
+          grandChildren[0].nodeName != 'plane' &&
+          grandChildren[0].nodeName != 'patch')) {
+        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane or patch)';
       }
 
       // Specifications for the current primitive.
@@ -1224,18 +1224,66 @@ class MySceneGraph {
       } else if(primitiveType == 'plane'){
         // npartsU
         var npartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
-        if (!(npartsU != null && !isNaN(npartsU)))
+        if (!(npartsU != null && !isNaN(npartsU) && npartsU > 0))
           return ('unable to parse npartsU of the primitive coordinates for ID = ' + primitiveId);
 
         // npartsV
         var npartsV = this.reader.getFloat(grandChildren[0], 'npartsV');
-        if (!(npartsV != null && !isNaN(npartsV)))
-          return ('unable to parse npartsU of the primitive coordinates for ID = ' + primitiveId);
+        if (!(npartsV != null && !isNaN(npartsV) && npartsV > 0))
+          return ('unable to parse npartsV of the primitive coordinates for ID = ' + primitiveId);
 
         var plane = new MyPlane(this.scene, primitiveId, npartsU, npartsV);
 
         this.primitives[primitiveId] = plane;
 
+      } else if(primitiveType == 'patch'){
+        // npointsU
+        var npointsU = this.reader.getFloat(grandChildren[0], 'npointsU');
+        if (!(npointsU != null && !isNaN(npointsU) && npointsU > 0))
+          return ('unable to parse npointsU of the primitive coordinates for ID = ' + primitiveId);
+        
+        // npointsV
+        var npointsV = this.reader.getFloat(grandChildren[0], 'npointsV');
+        if (!(npointsV != null && !isNaN(npointsV) && npointsV > 0))
+          return ('unable to parse npointsV of the primitive coordinates for ID = ' + primitiveId);
+
+        // npartsU
+        var npartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
+        if (!(npartsU != null && !isNaN(npartsU) && npartsU > 0))
+          return ('unable to parse npartsU of the primitive coordinates for ID = ' + primitiveId);
+
+        // npartsV
+        var npartsV = this.reader.getFloat(grandChildren[0], 'npartsV');
+        if (!(npartsV != null && !isNaN(npartsV) && npartsV > 0))
+          return ('unable to parse npartsV of the primitive coordinates for ID = ' + primitiveId);
+
+        // O número de pontos de controlo dentro da primitiva patch é npointsU * npointsV.
+        var controlpointsNodes = grandChildren[0].children;
+        var controlpointsIndex = 0;
+        var controlpoints = [];
+        for(let i = 0; i < npointsU; ++i){
+
+          var controlpoint = [];
+
+          for(let j = 0; j < npointsV; ++j){
+            var xx = this.reader.getFloat(controlpointsNodes[controlpointsIndex], 'xx');
+            var yy = this.reader.getFloat(controlpointsNodes[controlpointsIndex], 'yy');
+            var zz = this.reader.getFloat(controlpointsNodes[controlpointsIndex], 'zz');
+
+            if(!(xx != null && !isNaN(xx) && yy != null && !isNaN(yy) && zz != null && !isNaN(zz)))
+              return ('unable to parse controlpoint ' + i + ' of the primitive coordinates for ID = ' + primitiveId);
+
+            controlpoint.push([xx, yy, zz, 1]);
+            ++controlpointsIndex;
+          }
+
+          controlpoints.push(controlpoint);
+        }
+
+        var patch = new MyPatch(this.scene, primitiveId, npartsU, npartsV, npointsU-1, npointsV-1, controlpoints);
+
+        this.primitives[primitiveId] = patch;
+        
       } else {
         console.warn('To do: Parse other primitives.');
       }
