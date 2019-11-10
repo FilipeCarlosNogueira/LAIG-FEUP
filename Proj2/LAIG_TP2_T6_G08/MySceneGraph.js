@@ -881,13 +881,17 @@ class MySceneGraph {
     return null;
   }
 
+  /**
+   * Parses the <animations> block.
+   * @param {animations block element} animationsNode
+   */
   parseAnimations(animationsNode){
     this.animations = [];
 
     // parse each animation
     let children = animationsNode.children;
     for(let i = 0; i < children.length; i++){
-      let anim = [];
+
       if(children[i].nodeName != "animation"){
         this.onXMLMinorError("Error on animation number:" + i);
         continue;
@@ -907,14 +911,16 @@ class MySceneGraph {
       // parse each keyframe
       let grandChildren = children[i].children;
       for(let j = 0; j < grandChildren.length; j++){
-        let key;
+
+        var animation = [];
 
         // instant
-        key.time = this.reader.getString(grandChildren[j], 'instant');
-        if(key.time == null){
+        let instant = this.reader.getString(grandChildren[j], 'instant');
+        if(instant == null){
           this.onXMLMinorError("Invalid instant on animation:" + anim_id);
           continue;
         }
+        animation.push(instant);
 
         let grandgrandChildren = grandChildren[j].children;
 
@@ -924,39 +930,37 @@ class MySceneGraph {
           continue;
         }
         let translate = this.parseCoordinates3D(grandChildren[j], 'translate transformation for animation ID ' + anim_id);
-
-
-
+        
+        animation.push(translate);
 
         // rotate
         if(grandgrandChildren[1].nodeName != "rotate"){
           this.onXMLMinorError("Rotate out of order on animation:" + anim_id);
           continue;
         }
-        let rotate;
 
         // x
-        let x = this.reader.getFloat(node, 'angle_x');
+        let x = this.reader.getFloat(grandgrandChildren[1], 'angle_x');
         if (!(x != null && !isNaN(x))){
           this.onXMLMinorError("Error on rotate of animation " + anim_id);
           continue;
         }
 
         // y
-        let y = this.reader.getFloat(node, 'angle_y');
+        let y = this.reader.getFloat(grandgrandChildren[1], 'angle_y');
         if (!(y != null && !isNaN(y))){
           this.onXMLMinorError("Error on rotate of animation " + anim_id);
           continue;
         }
 
         // z
-        let z = this.reader.getFloat(node, 'angle_z');
+        let z = this.reader.getFloat(grandgrandChildren[1], 'angle_z');
         if (!(z != null && !isNaN(z))){
           this.onXMLMinorError("Error on rotate of animation " + anim_id);
           continue;
         }
 
-        rotate.push(...[x, y, z]);
+        animation.push(...[x, y, z]);
 
         // scale
         if(grandgrandChildren[2].nodeName != "scale"){
@@ -965,15 +969,14 @@ class MySceneGraph {
         }
         let scale = this.parseCoordinates3D(grandChildren[j], 'translate transformation for animation ID ' + anim_id);
 
-
-
+        animation.push(scale);
       }
 
-
-
-
+      this.animations[anim_id] = animation;
     }
 
+    this.log('Parsed animations');
+    return null;
   }
 
   /**

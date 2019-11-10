@@ -111,7 +111,7 @@
             <keyframe instant="10">
                 <translate x="1" y="1" z="1" />
                 <rotate angle_x="1" angle_y="1" angle_z="1" />
-                <translate x="1" y="1" z="1" />
+                <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
     </animations>
@@ -194,7 +194,7 @@
             <transformation>
                 <scale x="0.5" y="0.5" z="0.5" />
             </transformation>
-            <animationref id="omnidroid">
+            <animationref id="omnidroid" />
             <materials>
                 <material id="omnidroid_mate" />
                 <material id="f_in_the_chat" />
@@ -936,6 +936,7 @@
             </children>
         </component>
 <!-- SKYBOX END -->
+
         <component id="cylinder">
             <transformation>
             </transformation>
