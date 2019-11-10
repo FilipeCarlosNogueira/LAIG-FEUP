@@ -1265,12 +1265,13 @@ class MySceneGraph {
       }
 
       var transformationIndex = nodeNames.indexOf('transformation');
+      var animationIndex = nodeNames.indexOf('animationref');
       var materialsIndex = nodeNames.indexOf('materials');
       var textureIndex = nodeNames.indexOf('texture');
       var childrenIndex = nodeNames.indexOf('children');
 
 
-      // Transformations
+      /* --- Transformations --- */
       var tranformationChildren = grandChildren[transformationIndex].children;
       var transfMatrix = mat4.create();
 
@@ -1333,7 +1334,12 @@ class MySceneGraph {
         }
       }
 
-      // Materials
+      /* --- Animations --- */
+      if(animationIndex != -1){
+        var animationNodeId = this.reader.getString(grandChildren[animationIndex], 'id');
+      }
+
+      /* --- Materials --- */
       var materialChildren = grandChildren[materialsIndex].children;
       let materialArray = [];
 
@@ -1357,7 +1363,7 @@ class MySceneGraph {
         materialArray.push(materialID);
       }
 
-      // Texture
+      /* --- Texture --- */
       let textureInfo = grandChildren[textureIndex];
 
       let textureID = this.reader.getString(textureInfo, 'id');
@@ -1388,7 +1394,7 @@ class MySceneGraph {
       }
 
 
-      // Children
+      /* --- Children --- */
       let childVec = grandChildren[childrenIndex].children;
       let componentChild = [];
       let primitiveChild = [];
@@ -1411,7 +1417,7 @@ class MySceneGraph {
       }
 
       // Parsing component properties
-      this.components[componentID] = new MyComponent(componentID, materialArray, transfMatrix, textureID, length_s, length_t, componentChild, primitiveChild);
+      this.components[componentID] = new MyComponent(componentID, materialArray, transfMatrix, textureID, length_s, length_t, componentChild, primitiveChild, animationNodeId);
     }
 
     this.log("Parsed components");

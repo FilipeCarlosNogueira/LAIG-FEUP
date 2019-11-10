@@ -1,5 +1,5 @@
 class MyComponent{
-    constructor(id, material, transformationMatrix, textureID, length_s, length_t, componentChild, primitiveChild){
+    constructor(id, material, transformationMatrix, textureID, length_s, length_t, componentChild, primitiveChild, animationNodeId){
         this.id = id;
         this.material = material;
         this.transformationMatrix = transformationMatrix;
@@ -8,5 +8,6 @@ class MyComponent{
         this.length_t = length_t;
         this.componentChild = componentChild;
         this.primitiveChild = primitiveChild;
+        this.animationNodeId = animationNodeId;
     }
 }
