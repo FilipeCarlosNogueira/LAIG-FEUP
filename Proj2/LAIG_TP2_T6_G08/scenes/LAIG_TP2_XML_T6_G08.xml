@@ -113,9 +113,9 @@
 
     <animations>
         <animation id="omnidroid">
-            <keyframe instant="10">
-                <translate x="1" y="1" z="1" />
-                <rotate angle_x="1" angle_y="1" angle_z="1" />
+            <keyframe instant="1000">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
                 <scale x="1" y="1" z="1" />
             </keyframe>
         </animation>
@@ -183,14 +183,14 @@
                 <controlpoint xx="0" yy="1" zz="-2"/>
                 <controlpoint xx="2" yy="0" zz="0"/>
                 <controlpoint xx="0" yy="1" zz="2"/>
-                
+
                 <controlpoint xx="0" yy="-3" zz="-2"/>
                 <controlpoint xx="0" yy="-3" zz="0"/>
                 <controlpoint xx="0" yy="-3" zz="2"/>
 
                 <controlpoint xx="0" yy="1" zz="-2"/>
                 <controlpoint xx="-2" yy="0" zz="0"/>
-                <controlpoint xx="0" yy="1" zz="2"/> 
+                <controlpoint xx="0" yy="1" zz="2"/>
             </patch>
         </primitive>
 
@@ -200,7 +200,7 @@
     </primitives>
 
     <components>
-        <!-- ROOT START -->
+<!-- ROOT START -->
         <component id="demoRoot">
             <transformation>
                 <transformationref id="scale_down" />
@@ -216,9 +216,9 @@
                 <componentref id="skybox" />
             </children>
         </component>
-        <!-- ROOT END -->
+<!-- ROOT END -->
 
-        <!-- OMNIDROID START -->
+<!-- OMNIDROID START -->
         <component id="omnidroid">
             <transformation>
                 <scale x="0.5" y="0.5" z="0.5" />
@@ -240,7 +240,7 @@
             </children>
         </component>
 
-        <!-- OMNIDROID LEG-->
+    <!-- OMNIDROID LEG-->
         <component id="omnidroid_leg_p0">
             <transformation>
                 <translate x="8" y="20" z="0" />
@@ -368,9 +368,9 @@
                 <componentref id="omnidroid_claw_p3" />
             </children>
         </component>
-        <!-- OMNIDROID LEG-->
+    <!-- OMNIDROID LEG-->
 
-        <!-- OMNIDROID LEGS-->
+    <!-- OMNIDROID LEGS-->
         <component id="omnidroid_leg0">
             <transformation>
                 <translate x="0" y="0" z="0" />
@@ -435,7 +435,7 @@
                 <componentref id="omnidroid_leg_f" />
             </children>
         </component>
-        <!-- OMNIDROID LEGS-->
+    <!-- OMNIDROID LEGS-->
 
         <component id="omnidroid_body">
             <transformation>
@@ -466,9 +466,9 @@
                 <primitiveref id="omni_torus" />
             </children>
         </component>
-        <!-- OMNIDROID END -->
+<!-- OMNIDROID END -->
 
-        <!-- CITY START -->
+<!-- CITY START -->
         <component id="city">
             <transformation>
             </transformation>
@@ -498,9 +498,9 @@
                 <componentref id="billboard_temp" />
             </children>
         </component>
-        <!-- CITY END -->
+<!-- CITY END -->
 
-        <!-- BILLBOARD START -->
+<!-- BILLBOARD START -->
         <component id="billboard_temp">
             <transformation>
             </transformation>
@@ -583,9 +583,9 @@
                 <componentref id="cube" />
             </children>
         </component>
-        <!-- BILLBOARD END -->
+<!-- BILLBOARD END -->
 
-        <!-- BUILDING START -->
+<!-- BUILDING START -->
         <component id="building0">
             <transformation>
                 <translate x="0" y="0" z="-40" />
@@ -668,9 +668,9 @@
                 <componentref id="cube" />
             </children>
         </component>
-        <!-- BUILDING END -->
+<!-- BUILDING END -->
 
-        <!-- TABLE START -->
+<!-- TABLE START -->
         <component id="table">
             <transformation>
                 <scale x="0.2" y="0.2" z="0.2" />
@@ -758,9 +758,9 @@
                 <componentref id="cube" />
             </children>
         </component>
-        <!-- TABLE END -->
+<!-- TABLE END -->
 
-        <!-- CUBE START -->
+<!-- CUBE START -->
         <component id="cube">
             <transformation>
             </transformation>
@@ -859,9 +859,9 @@
                 <primitiveref id="square" />
             </children>
         </component>
-        <!-- CUBE END -->
+<!-- CUBE END -->
 
-        <!-- SKYBOX START -->
+<!-- SKYBOX START -->
         <component id="skybox">
             <transformation>
                 <scale x="120" y="100" z="120" />
@@ -964,7 +964,7 @@
                 <primitiveref id="square" />
             </children>
         </component>
-        <!-- SKYBOX END -->
+<!-- SKYBOX END -->
 
         <component id="cylinder">
             <transformation>

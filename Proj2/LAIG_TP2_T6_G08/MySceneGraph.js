@@ -886,6 +886,7 @@ class MySceneGraph {
    */
   parseAnimations(animationsNode){
     this.animations = [];
+    let animation, keyframes = [];
 
     // parse each animation
     let children = animationsNode.children;
@@ -907,19 +908,20 @@ class MySceneGraph {
         continue;
       }
 
+      keyframes.push([0,[0,0,0],[0,0,0],[1,1,1]]);
+
       // parse each keyframe
       let grandChildren = children[i].children;
       for(let j = 0; j < grandChildren.length; j++){
-
-        var animation = [];
+        let keyframe = [];
 
         // instant
-        let instant = this.reader.getString(grandChildren[j], 'instant');
+        let instant = this.reader.getFloat(grandChildren[j], 'instant');
         if(instant == null){
           this.onXMLMinorError("Invalid instant on animation:" + anim_id);
           continue;
         }
-        animation.push(instant);
+        keyframe.push(instant);
 
         let grandgrandChildren = grandChildren[j].children;
 
@@ -928,9 +930,8 @@ class MySceneGraph {
           this.onXMLMinorError("Translate out of order on animation:" + anim_id);
           continue;
         }
-        let translate = this.parseCoordinates3D(grandChildren[j], 'translate transformation for animation ID ' + anim_id);
-        
-        animation.push(translate);
+        let translate = this.parseCoordinates3D(grandgrandChildren[0], 'translate transformation for animation ID ' + anim_id);
+        keyframe.push(translate);
 
         // rotate
         if(grandgrandChildren[1].nodeName != "rotate"){
@@ -959,18 +960,20 @@ class MySceneGraph {
           continue;
         }
 
-        animation.push(...[x, y, z]);
+        keyframe.push([x, y, z]);
 
         // scale
         if(grandgrandChildren[2].nodeName != "scale"){
           this.onXMLMinorError("Scale out of order on animation:" + anim_id);
           continue;
         }
-        let scale = this.parseCoordinates3D(grandChildren[j], 'translate transformation for animation ID ' + anim_id);
+        let scale = this.parseCoordinates3D(grandgrandChildren[2], 'translate transformation for animation ID ' + anim_id);
+        keyframe.push(scale);
 
-        animation.push(scale);
+        keyframes.push(keyframe);
       }
 
+      animation = new MyKeyframeAnimation(this.scene, keyframes);
       this.animations[anim_id] = animation;
     }
 
@@ -1245,7 +1248,7 @@ class MySceneGraph {
         var npointsU = this.reader.getFloat(grandChildren[0], 'npointsU');
         if (!(npointsU != null && !isNaN(npointsU) && npointsU > 0))
           return ('unable to parse npointsU of the primitive coordinates for ID = ' + primitiveId);
-        
+
         // npointsV
         var npointsV = this.reader.getFloat(grandChildren[0], 'npointsV');
         if (!(npointsV != null && !isNaN(npointsV) && npointsV > 0))
@@ -1287,7 +1290,7 @@ class MySceneGraph {
         var patch = new MyPatch(this.scene, primitiveId, npartsU, npartsV, npointsU-1, npointsV-1, controlpoints);
 
         this.primitives[primitiveId] = patch;
-        
+
       } else {
         console.warn('To do: Parse other primitives.');
       }
@@ -1403,8 +1406,9 @@ class MySceneGraph {
       }
 
       /* --- Animations --- */
+      let animationNodeId = null;
       if(animationIndex != -1){
-        var animationNodeId = this.reader.getString(grandChildren[animationIndex], 'id');
+        animationNodeId = this.reader.getString(grandChildren[animationIndex], 'id');
       }
 
       /* --- Materials --- */
@@ -1616,25 +1620,28 @@ class MySceneGraph {
     }
 
     this.scene.pushMatrix();
+    let animation = this.animations[comp.animationNodeId];
+    if(animation != null) animation.apply();
+
     this.scene.multMatrix(comp.transformationMatrix);
 
 
     let apply_material = "none", apply_texture = "none",
-      apply_length_t = 1, apply_length_s = 1, apply_mat_id = this.matID % comp.material.length;
+        apply_length_t = 1, apply_length_s = 1, apply_mat_id = this.matID % comp.material.length;
 
-    // Display materials
+    // Choose materials
     if (comp.material[apply_mat_id] == "inherit") {
       apply_material = parentMaterial;
     } else {
       apply_material = comp.material[apply_mat_id];
     }
 
+    // Apply material
     if (apply_material != "none") {
-      // Display textures
-      // Null texture
+      // None texture
       if (comp.textureID == "none") {
         this.materials[apply_material].setTexture(null);
-        // Inherit texture
+      // Inherit texture
       } else if (comp.textureID == "inherit") {
         if (parentTexture == "none") {
           apply_texture = "none";
@@ -1645,7 +1652,7 @@ class MySceneGraph {
           apply_texture = parentTexture;
           this.materials[apply_material].setTexture(this.textures[apply_texture]);
         }
-        // Defined texture
+      // Defined texture
       } else {
         apply_length_t = comp.length_t;
         apply_length_s = comp.length_s;
@@ -1668,11 +1675,17 @@ class MySceneGraph {
       this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
     }
 
-
     this.scene.popMatrix();
   }
 
   nextMaterial() {
     this.matID++;
+  }
+
+  update(t){
+    for(let id in this.animations){
+      let anim = this.animations[id];
+      anim.update(t);
+    }
   }
 }
