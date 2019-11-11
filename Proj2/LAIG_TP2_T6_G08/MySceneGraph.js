@@ -1014,8 +1014,9 @@ class MySceneGraph {
           grandChildren[0].nodeName != 'sphere' &&
           grandChildren[0].nodeName != 'torus' &&
           grandChildren[0].nodeName != 'plane' &&
-          grandChildren[0].nodeName != 'patch')) {
-        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane or patch)';
+          grandChildren[0].nodeName != 'patch' &&
+          grandChildren[0].nodeName != 'cylinder2')) {
+        return 'There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane, patch or cylinder2)';
       }
 
       // Specifications for the current primitive.
@@ -1122,7 +1123,7 @@ class MySceneGraph {
           this.scene, primitiveId, x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
         this.primitives[primitiveId] = rectTriangle;
-      } else if (primitiveType == 'cylinder') {
+      } else if (primitiveType == 'cylinder' || primitiveType == 'cylinder2') {
         // slices
         var slices = this.reader.getFloat(grandChildren[0], 'slices');
         if (!(slices != null && !isNaN(slices) && slices >= 3))
@@ -1158,10 +1159,13 @@ class MySceneGraph {
             'unable to parse height of the primitive coordinates for ID = ' +
             primitiveId);
 
-        var cylinder = new MyCylinder(
-          this.scene, primitiveId, slices, stacks, top, base, height);
-
-        this.primitives[primitiveId] = cylinder;
+        if(primitiveType == 'cylinder'){
+          var cylinder = new MyCylinder(this.scene, primitiveId, slices, stacks, top, base, height);
+          this.primitives[primitiveId] = cylinder;
+        } else {
+          var cylinder2 = new MyCylinder2(this.scene, primitiveId, slices, stacks, top, base, height);
+          this.primitives[primitiveId] = cylinder2;
+        }
       } else if (primitiveType == 'sphere') {
         // radius
         var radius = this.reader.getFloat(grandChildren[0], 'radius');
@@ -1221,7 +1225,7 @@ class MySceneGraph {
           new MyTorus(this.scene, primitiveId, inner, outer, slices, loops);
 
         this.primitives[primitiveId] = torus;
-      } else if(primitiveType == 'plane'){
+      } else if(primitiveType == 'plane') {
         // npartsU
         var npartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
         if (!(npartsU != null && !isNaN(npartsU) && npartsU > 0))
@@ -1236,7 +1240,7 @@ class MySceneGraph {
 
         this.primitives[primitiveId] = plane;
 
-      } else if(primitiveType == 'patch'){
+      } else if(primitiveType == 'patch') {
         // npointsU
         var npointsU = this.reader.getFloat(grandChildren[0], 'npointsU');
         if (!(npointsU != null && !isNaN(npointsU) && npointsU > 0))

@@ -149,7 +149,7 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
-        //this.axis.display();
+        this.axis.display();
 
         // Lights interface drop-down manager
         var i = 0;

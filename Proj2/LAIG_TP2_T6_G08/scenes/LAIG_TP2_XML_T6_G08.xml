@@ -193,6 +193,10 @@
                 <controlpoint xx="0" yy="1" zz="2"/> 
             </patch>
         </primitive>
+
+        <primitive id="cylinder2">
+            <cylinder2 base="3.0" top="3.0" height="10.0" slices="100.0" stacks="100.0" />
+        </primitive>
     </primitives>
 
     <components>
