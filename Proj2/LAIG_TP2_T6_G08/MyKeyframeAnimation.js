@@ -6,16 +6,23 @@ class MyKeyframeAnimation extends MyAnimation{
     }
 
     update(t_ms){
-        super.update(t_ms);
+        if(this.finished) return;
 
         // get previous and next frame to interpolate position
-        let t = t_ms/1000000000000;
         let i;
-        for(i = this.current_frame; i < this.keyframes.length; i++) if(t <= this.keyframes[i].time) break;
+        let t = t_ms/1000;
+        for(i = this.current_frame; i < this.keyframes.length; i++) if(t <= this.keyframes[i][0]) break;
         this.current_frame = i;
 
-        let prev_frame = this.keyframes[i-2], curr_frame = this.keyframes[i-1],
-            fraction_c = (t-prev_frame.time)/(curr_frame.time-prev_frame.time),
+        let prev_frame = this.keyframes[i-1], curr_frame = this.keyframes[i];
+
+        if(prev_frame == undefined || curr_frame == undefined){
+            this.finished = 1;
+            return;
+        }
+        super.update(t_ms);
+
+        let fraction_c = (t-prev_frame[0])/(curr_frame[0]-prev_frame[0]),
             fraction_p = 1 - fraction_c;
 
         // scale

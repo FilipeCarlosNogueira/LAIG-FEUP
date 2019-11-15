@@ -13,7 +13,7 @@ class XMLscene extends CGFscene {
 
         // New lights array
         this.lightValues = [];
-
+        this.first_update = 1;
         this.interface = myinterface;
     }
 
@@ -156,14 +156,10 @@ class XMLscene extends CGFscene {
         for (var key in this.graph.lights) {
 
             if (this.graph.lights.hasOwnProperty(key)) {
-                if (this.lightValues[key])
-                    this.lights[i].enable();
-                else
-                    this.lights[i].disable();
-
+                if (this.lightValues[key]) this.lights[i].enable();
+                else this.lights[i].disable();
                 this.lights[i].update();
             }
-
             ++i;
         }
 
@@ -184,7 +180,12 @@ class XMLscene extends CGFscene {
     }
 
     update(t){
-        this.graph.update(t);
+        if(this.first_update){
+            this.start_time = t;
+            this.first_update = 0;
+        }
+        let delta_time = t - this.start_time;
+        this.graph.update(delta_time);
     }
 
     updateCamera(){
