@@ -26,6 +26,7 @@ serialInclude([ '../lib/CGF.js',
                 'primitives/MyPlane.js',
                 'primitives/MyPatch.js',
                 'primitives/MyCylinder2.js',
+                'primitives/MySecurityCamera.js',
 
 main=function()
 {

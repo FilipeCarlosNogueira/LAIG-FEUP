@@ -37,6 +37,9 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
+
+        this.securityCamera = new MySecurityCamera(this);
+        this.textureRTT = new CGFtextureRTT(this, 0.5, 0.5);
     }
 
     /**
@@ -132,7 +135,7 @@ class XMLscene extends CGFscene {
     /**
      * Displays the scene.
      */
-    display() {
+    render() {
         this.checkKeys();
 
         // ---- BEGIN Background, camera and axis setup
@@ -190,5 +193,12 @@ class XMLscene extends CGFscene {
     updateCamera(){
         this.camera = this.graph.views[this.view].camera;
         this.interface.setActiveCamera(this.camera);
+    }
+
+    display(){
+        this.render();
+        this.gl.disable(this.gl.DEPTH_TEST)
+        this.securityCamera.display();
+        this.gl.enable(this.gl.DEPTH_TEST)
     }
 }
