@@ -908,6 +908,7 @@ class MySceneGraph {
         continue;
       }
 
+      keyframes = [];
       keyframes.push([0,[0,0,0],[0,0,0],[1,1,1]]);
 
       // parse each keyframe
@@ -960,7 +961,7 @@ class MySceneGraph {
           continue;
         }
 
-        keyframe.push([x, y, z]);
+        keyframe.push([x*DEGREE_TO_RAD, y*DEGREE_TO_RAD, z*DEGREE_TO_RAD]);
 
         // scale
         if(grandgrandChildren[2].nodeName != "scale"){
@@ -974,6 +975,7 @@ class MySceneGraph {
       }
 
       animation = new MyKeyframeAnimation(this.scene, keyframes);
+
       this.animations[anim_id] = animation;
     }
 
@@ -1620,10 +1622,10 @@ class MySceneGraph {
     }
 
     this.scene.pushMatrix();
-    let animation = this.animations[comp.animationNodeId];
-    if(animation != null) animation.apply();
 
     this.scene.multMatrix(comp.transformationMatrix);
+    let animation = this.animations[comp.animationNodeId];
+    if(animation != null) animation.apply();
 
 
     let apply_material = "none", apply_texture = "none",
