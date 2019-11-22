@@ -113,10 +113,10 @@
 
     <animations>
         <animation id="omnidroid">
-            <keyframe instant="1000">
+            <keyframe instant="10">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
-                <scale x="1" y="1" z="1" />
+                <scale x="10" y="10" z="10" />
             </keyframe>
         </animation>
     </animations>
