@@ -16,7 +16,28 @@ class MyKeyframeAnimation extends MyAnimation{
 
         let prev_frame = this.keyframes[i-1], curr_frame = this.keyframes[i];
 
-        if(prev_frame == undefined || curr_frame == undefined){
+        if(curr_frame == undefined){
+            mat4.identity(this.matrix);
+
+            let scale = [];
+            scale[0] = prev_frame[3][0];
+            scale[1] = prev_frame[3][1];
+            scale[2] = prev_frame[3][2];
+            let rotate = [];
+            rotate[0] = prev_frame[2][0];
+            rotate[1] = prev_frame[2][1];
+            rotate[2] = prev_frame[2][2];
+            let translate = [];
+            translate[0] = prev_frame[1][0];
+            translate[1] = prev_frame[1][1];
+            translate[2] = prev_frame[1][2];
+
+            mat4.scale(this.matrix, this.matrix, scale);
+            mat4.rotate(this.matrix, this.matrix, rotate[2], [0,0,1]);
+            mat4.rotate(this.matrix, this.matrix, rotate[1], [0,1,0]);
+            mat4.rotate(this.matrix, this.matrix, rotate[0], [1,0,0]);
+            mat4.translate(this.matrix, this.matrix, translate);
+
             this.finished = 1;
             return;
         }
