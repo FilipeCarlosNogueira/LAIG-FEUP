@@ -21,7 +21,6 @@ class MySecurityCamera{
     }
 
     update(time){
-        //var factor = (Math.sin((time * 3.0) % 3141 * 0.002)+1.0)*.5;
         this.shader.setUniformsValues({ timeFactor: time });
     }
 
