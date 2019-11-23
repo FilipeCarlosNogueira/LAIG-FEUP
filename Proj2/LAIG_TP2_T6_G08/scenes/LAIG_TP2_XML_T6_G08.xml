@@ -68,6 +68,10 @@
 
         <texture id="explosion_text"    file="scenes/images/explosion.bmp" />
 
+        <texture id="t-zone_head_text"  file="scenes/images/frozone_head.bmp" />
+        <texture id="t-zone_arm_text"   file="scenes/images/frozone_arm.bmp" />
+        <texture id="t-zone_leg_text"   file="scenes/images/frozone_leg.bmp" />
+        <texture id="icecube"           file="scenes/images/icecube.bmp" />
     </textures>
 
     <materials>
@@ -227,6 +231,68 @@
                 <scale x="0.01" y="0.01" z="0.01" />
             </keyframe>
         </animation>
+
+        <animation id="t-zone">
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="-3600" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="move_t">
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="9">
+                <translate x="30" y="-10" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="10">
+                <translate x="70" y="-40" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="NP">
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.01" y="0.01" z="0.01" />
+            </keyframe>
+            <keyframe instant="10.000000001">
+                <translate x="0" y="0" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="35" y="35" z="35" />
+            </keyframe>
+        </animation>
+
+        <animation id="explosion">
+            <keyframe instant="0.5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="30" y="20" z="30" />
+            </keyframe>
+            <keyframe instant="7.000000001">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.01" y="0.01" z="0.01" />
+            </keyframe>
+        </animation>
     </animations>
 
     <primitives>
@@ -322,6 +388,8 @@
             </materials>
             <texture id="none" />
             <children>
+                <componentref id="move_t" />
+                <componentref id="icecube" />
                 <componentref id="omnidroid" />
                 <componentref id="skybox" />
                 <componentref id="billboard" />
@@ -865,6 +933,141 @@
             </children>
         </component>
 <!-- BUILDING END -->
+
+<!-- t-zone START -->
+    <component id="move_t">
+        <transformation>
+            <translate x="-40" y="43" z="10" />
+        </transformation>
+        <animationref id="move_t" />
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="none" length_s="1" length_t="1" />
+        <children>
+            <componentref id="t-zone" />
+        </children>
+    </component>
+
+    <component id="t-zone">
+        <transformation>
+        </transformation>
+        <animationref id="t-zone" />
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="none" length_s="1" length_t="1" />
+        <children>
+            <componentref id="t-zone_body" />
+            <componentref id="t-zone_head" />
+            <componentref id="t-zone_arm1" />
+            <componentref id="t-zone_arm2" />
+            <componentref id="t-zone_leg1" />
+            <componentref id="t-zone_leg2" />
+        </children>
+    </component>
+
+    <component id="t-zone_body">
+        <transformation>
+            <scale x="0.7" y="2" z="0.7" />
+        </transformation>
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="none" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_head">
+        <transformation>
+            <translate x="0" y="2" z="0" />
+            <scale x="0.5" y="1" z="0.5" />
+        </transformation>
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="t-zone_head_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_arm1">
+        <transformation>
+            <translate x="0" y="1.5" z="1" />
+            <scale x="0.2" y="0.2" z="1.5" />
+        </transformation>
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="t-zone_arm_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_arm2">
+        <transformation>
+            <translate x="0" y="1.5" z="-1" />
+            <rotate axis="y" angle="180" />
+            <scale x="0.2" y="0.2" z="1.5" />
+        </transformation>
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="t-zone_arm_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_leg1">
+        <transformation>
+            <translate x="0" y="-2" z="0.3" />
+            <scale x="0.2" y="1.5" z="0.2" />
+        </transformation>
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="t-zone_leg_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_leg2">
+        <transformation>
+            <translate x="0" y="-2" z="-0.3" />
+            <rotate axis="y" angle="180" />
+            <scale x="0.2" y="1.5" z="0.2" />
+        </transformation>
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="t-zone_leg_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+<!-- t-zone END -->
+
+<!-- icecube START -->
+    <component id="icecube">
+        <transformation>
+            <translate x="0" y="10" z="-0.5" />
+        </transformation>
+        <animationref id="NP" />
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="icecube" length_s="1" length_t="1" />
+        <children>
+            <componentref id="cube" />
+        </children>
+    </component>
+<!-- icecube END -->
 
 <!-- TABLE START -->
         <component id="table">
