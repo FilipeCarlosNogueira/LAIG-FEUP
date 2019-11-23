@@ -136,7 +136,7 @@ class XMLscene extends CGFscene {
     /**
      * Displays the scene.
      */
-    render() {
+    render(Camera) {
         this.checkKeys();
 
         // ---- BEGIN Background, camera and axis setup
@@ -154,6 +154,9 @@ class XMLscene extends CGFscene {
 
         this.pushMatrix();
         this.axis.display();
+
+        //Set requested camera
+        this.interface.setActiveCamera(Camera);
 
         // Lights interface drop-down manager
         var i = 0;
@@ -199,10 +202,18 @@ class XMLscene extends CGFscene {
 
     display(){
         this.textureRTT.attachToFrameBuffer();
-        this.render();
+        //Call render() with RTT camera
+        for(var key in this.graph.views){
+            if(key == 'securityCamera'){
+                console.log(key);
+                this.render(this.graph.views[key].camera);
+                break;
+            }
+        }
         this.textureRTT.detachFromFrameBuffer();
 
-        this.render();
+        //Call render() with scene camera
+        this.render(this.camera);
 
         this.gl.disable(this.gl.DEPTH_TEST);
         this.securityCamera.display();
