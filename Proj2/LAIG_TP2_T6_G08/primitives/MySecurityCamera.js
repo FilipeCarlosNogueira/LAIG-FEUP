@@ -3,14 +3,14 @@
  * @constructor
  * @param scene - Reference to MyScene object
  */
-class MySecurityCamera{
-    
+class MySecurityCamera extends CGFobject{
+
     constructor(scene){
-        this.scene = scene;
+        super(scene);
         this.rectangle = new MyRectangle(this.scene, 0, 0.5, 1, -1, -0.5);
         this.shader = new CGFshader(this.scene.gl, "shaders/securityCam.vert", "shaders/securityCam.frag");
         this.shader.setUniformsValues({ uSampler: 1})
-        
+
         this.rectangle.texCoords = [
             0,0,
             1,0,

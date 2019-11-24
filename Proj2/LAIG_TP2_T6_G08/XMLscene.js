@@ -39,7 +39,7 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
 
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-        
+
         this.securityCamera = new MySecurityCamera(this);
     }
 
@@ -47,7 +47,8 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+        this.cameraView = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+        this.securityView = this.cameraView;
     }
 
     /**
@@ -103,7 +104,9 @@ class XMLscene extends CGFscene {
      */
     initViews(){
         this.view = 0;
-        this.camera = this.graph.views[this.graph.default].camera;
+        this.security = 0;
+        this.cameraView = this.graph.views[this.graph.default].camera;
+        this.securityView = this.cameraView;
         this.interface.addViewsGroup();
     }
 
@@ -130,7 +133,7 @@ class XMLscene extends CGFscene {
 
         this.sceneInited = true;
 
-        this.interface.setActiveCamera(this.camera);
+        this.interface.setActiveCamera(this.cameraView);
     }
 
     /**
@@ -192,29 +195,26 @@ class XMLscene extends CGFscene {
         }
         let delta_time = t - this.start_time;
         this.graph.update(delta_time);
+        this.securityCamera.update(delta_time);
     }
 
     updateCamera(){
-        this.camera = this.graph.views[this.view].camera;
-        this.interface.setActiveCamera(this.camera);
+        this.cameraView = this.graph.views[this.view].camera;
+        this.interface.setActiveCamera(this.cameraView);
+    }
+
+    updateSecurity(){
+        this.securityView = this.graph.views[this.security].camera;
     }
 
     display(){
-        var scene_camera = this.camera;
-
         this.textureRTT.attachToFrameBuffer();
         //Call render() with RTT camera
-        for(var key in this.graph.views){
-            if(key == 'securityCamera'){
-                this.render(this.graph.views[key].camera);
-                break;
-            }
-        }
+        this.render(this.securityView);
         this.textureRTT.detachFromFrameBuffer();
 
         //Call render() with scene camera
-        this.render(scene_camera);
-        this.interface.setActiveCamera(this.camera);
+        this.render(this.cameraView);
 
         this.gl.disable(this.gl.DEPTH_TEST);
         this.securityCamera.display();

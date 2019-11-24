@@ -237,6 +237,7 @@ class MySceneGraph {
     // Views Array
     this.views = [];
     this.scene.viewsSelect = [];
+    this.scene.securitySelect = [];
 
     //check if defaultCamera is defined
     this.default = this.reader.getString(viewsNode, 'default');
@@ -439,6 +440,7 @@ class MySceneGraph {
         this.views[id].camera = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ), vec3.fromValues(upX, upY, upZ));
       }
       this.scene.viewsSelect[i] = id;
+      this.scene.securitySelect[i] = id;
     }
 
     this.log('Parsed Views');

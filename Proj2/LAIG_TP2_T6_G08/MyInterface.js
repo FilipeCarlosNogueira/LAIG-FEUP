@@ -68,6 +68,7 @@ class MyInterface extends CGFinterface {
 
     // Views Group
     addViewsGroup() {
-        this.gui.add(this.scene, 'view', this.scene.viewsSelect).onChange(this.scene.updateCamera.bind(this.scene)).name('Views');
+        this.gui.add(this.scene, 'view', this.scene.viewsSelect).onChange(this.scene.updateCamera.bind(this.scene)).name('Camera');
+        this.gui.add(this.scene, 'security', this.scene.securitySelect).onChange(this.scene.updateSecurity.bind(this.scene)).name('Security');
     }
 }
