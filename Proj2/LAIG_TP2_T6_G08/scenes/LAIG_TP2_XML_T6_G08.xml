@@ -3,30 +3,36 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="150" y="70" z="150" />
-            <to x="0" y="40" z="0" />
-        </perspective>
-
-        <perspective id="perspective_view_2" near="0.1" far="500" angle="45">
-            <from x="-150" y="100" z="300" />
+            <from x="50" y="40" z="50" />
             <to x="0" y="20" z="0" />
         </perspective>
 
-        <ortho id="ortho_view_1" near="0.1" far="500" left="-20" right="20" top="10" bottom="-10">
+        <perspective id="perspective_view_2" near="0.1" far="500" angle="45">
+            <from x="-50" y="100" z="100" />
+            <to x="0" y="20" z="0" />
+        </perspective>
+
+        <ortho id="omnidroid_ortho" near="0.1" far="500" left="-20" right="20" top="10" bottom="-10">
             <from x="30" y="35" z="40" />
             <to x="1" y="5" z="0" />
             <up x="0" y="1" z="0" />
         </ortho>
 
-        <perspective id="perspective_view_nurbs" near="0.1" far="500" angle="45">
+        <perspective id="nurbs_view" near="0.1" far="500" angle="45">
             <from x="5" y="5" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
 
-        <perspective id="securityCamera" near="0.1" far="500" angle="45">
-            <from x="50" y="50" z="50" />
+        <perspective id="securityCam" near="0.1" far="500" angle="45">
+            <from x="-40" y="40" z="40" />
             <to x="0" y="20" z="0" />
         </perspective>
+
+        <ortho id="frozone_ortho" near="0.1" far="500" left="-20" right="20" top="10" bottom="-10">
+            <from x="100" y="40" z="100" />
+            <to x="40" y="35" z="55" />
+            <up x="0" y="2" z="0" />
+        </ortho>
 
     </views>
 
@@ -47,6 +53,15 @@
         <spot id="spot_light" enabled="0" angle="10" exponent="1">
             <location x="10" y="30" z="10" w="1" />
             <target x="-5.0" y="-10.0" z="-5.0" />
+            <ambient r="0.0" g="0,0" b="0.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="1.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
+
+        <spot id="fro_light" enabled="0" angle="10" exponent="1">
+            <location x="10" y="30" z="10" w="1" />
+            <target x="5.0" y="-10.0" z="5.0" />
             <ambient r="0.0" g="0,0" b="0.0" a="1.0" />
             <diffuse r="0.0" g="0.0" b="1.0" a="1.0" />
             <specular r="0.0" g="0.0" b="1.0" a="1.0" />
@@ -75,6 +90,7 @@
         <texture id="explosion_text"    file="scenes/images/explosion.bmp" />
 
         <texture id="t-zone_head_text"  file="scenes/images/frozone_head.bmp" />
+        <texture id="t-zone_bod_text"   file="scenes/images/frozone_bod.bmp" />
         <texture id="t-zone_arm_text"   file="scenes/images/frozone_arm.bmp" />
         <texture id="t-zone_leg_text"   file="scenes/images/frozone_leg.bmp" />
         <texture id="icecube"           file="scenes/images/icecube.bmp" />
@@ -962,7 +978,7 @@
         <materials>
             <material id="inherit" />
         </materials>
-        <texture id="t-zone_arm_text" length_s="1" length_t="1" />
+        <texture id="t-zone_bod_text" length_s="1" length_t="1" />
         <children>
             <primitiveref id="sphere" />
         </children>
