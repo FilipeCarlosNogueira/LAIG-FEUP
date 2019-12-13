@@ -158,7 +158,7 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
 
         this.pushMatrix();
-        this.axis.display();
+        /* this.axis.display(); */
 
         // Lights interface drop-down manager
         var i = 0;
@@ -208,16 +208,16 @@ class XMLscene extends CGFscene {
     }
 
     display(){
-        this.textureRTT.attachToFrameBuffer();
+        /* this.textureRTT.attachToFrameBuffer();
         //Call render() with RTT camera
         this.render(this.securityView);
-        this.textureRTT.detachFromFrameBuffer();
+        this.textureRTT.detachFromFrameBuffer(); */
 
         //Call render() with scene camera
         this.render(this.cameraView);
 
-        this.gl.disable(this.gl.DEPTH_TEST);
+        /* this.gl.disable(this.gl.DEPTH_TEST);
         this.securityCamera.display();
-        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.enable(this.gl.DEPTH_TEST); */
     }
 }
