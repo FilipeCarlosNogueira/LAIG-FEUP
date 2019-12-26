@@ -45,145 +45,51 @@
     </animations>
 
     <primitives>
-        <primitive id="piece_bottom">
-            <plane npartsU="10" npartsV="10" />
-        </primitive>
-
-        <primitive id="piece_side">
-            <triangle x1="-0.5" y1="0" z1="0" x2="0.5" y2="0" z2="0" x3="0" y3="2" z3="0" />
-        </primitive>
-
-        <primitive id="tile">
-            <plane npartsU="10" npartsV="10" />
+        <primitive id="piece">
+            <piece />
         </primitive>
     </primitives>
 
     <components>
-        <component id="piece_side0">
-            <transformation>
-                <translate x="0" y="0" z="0.5" />
-                <rotate axis="x" angle="-14.5" />
-            </transformation>
-            <materials>
-                <material id="white"/>
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="piece_side" />
-            </children>
-        </component>
-        <component id="piece_side1">
-            <transformation>
-                <rotate axis="y" angle="90" />
-                <translate x="0" y="0" z="0.5" />
-                <rotate axis="x" angle="-14.5" />
-            </transformation>
-            <materials>
-                <material id="white"/>
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="piece_side" />
-            </children>
-        </component>
-        <component id="piece_side2">
-            <transformation>
-                <rotate axis="y" angle="180" />
-                <translate x="0" y="0" z="0.5" />
-                <rotate axis="x" angle="-14.5" />
-            </transformation>
-            <materials>
-                <material id="white"/>
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="piece_side" />
-            </children>
-        </component>
-        <component id="piece_side3">
-            <transformation>
-                <rotate axis="y" angle="-90" />
-                <translate x="0" y="0" z="0.5" />
-                <rotate axis="x" angle="-14.5" />
-            </transformation>
-            <materials>
-                <material id="white"/>
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="piece_side" />
-            </children>
-        </component>
-        <component id="piece_bottom">
-            <transformation>
-                <rotate axis="x" angle="180" />
-            </transformation>
-            <materials>
-                <material id="white"/>
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="piece_bottom" />
-            </children>
-        </component>
-
-        <component id="piece">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="white"/>
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <componentref id="piece_side0" />
-                <componentref id="piece_side1" />
-                <componentref id="piece_side2" />
-                <componentref id="piece_side3" />
-                <componentref id="piece_bottom" />
-            </children>
-        </component>
-
         <component id="sml_piece">
             <transformation>
                 <scale x="0.8" y="0.8" z="0.8" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="white"/>
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="piece" />
+                <primitiveref id="piece" />
             </children>
         </component>
         <component id="med_piece">
             <transformation>
                 <scale x="1" y="1" z="1" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="white"/>
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="piece" />
+                <primitiveref id="piece" />
             </children>
         </component>
         <component id="big_piece">
             <transformation>
                 <scale x="1.2" y="1.2" z="1.2" />
+                <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
                 <material id="white"/>
             </materials>
             <texture id="inherit" />
             <children>
-                <componentref id="piece" />
+                <primitiveref id="piece" />
             </children>
         </component>
-
-
-
-
-
 
         <component id="demoRoot">
             <transformation>
