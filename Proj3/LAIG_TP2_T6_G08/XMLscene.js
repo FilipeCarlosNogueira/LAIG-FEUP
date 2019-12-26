@@ -18,11 +18,11 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-        this.securityCamera = new MySecurityCamera(this);
+
+        this.board = new MyBoard(this);
     }
     initCameras() {
         this.cameraView = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
-        this.securityView = this.cameraView;
     }
     initLights() {
         let i = 0;
@@ -58,9 +58,7 @@ class XMLscene extends CGFscene {
     }
     initViews(){
         this.view = 0;
-        this.security = 0;
         this.cameraView = this.graph.views[this.graph.default].camera;
-        this.securityView = this.cameraView;
         this.interface.addViewsGroup();
     }
     setDefaultAppearance() {
@@ -99,6 +97,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             this.setDefaultAppearance();
             this.graph.displayScene();
+            this.board.display();
         }
         this.popMatrix();
     }
@@ -112,16 +111,29 @@ class XMLscene extends CGFscene {
         }
         let delta_time = t - this.start_time;
         this.graph.update(delta_time);
-        this.securityCamera.update(delta_time);
     }
     updateCamera(){
         this.cameraView = this.graph.views[this.view].camera;
         this.interface.setActiveCamera(this.cameraView);
     }
-    updateSecurity(){
-        this.securityView = this.graph.views[this.security].camera;
-    }
     display(){
+        //this.managePick(false, this.pickResults);
+        this.clearPickRegistration();
         this.render(this.cameraView);
+    }
+    managePick(mode, results) {
+        if (mode == false) {
+            if (results != null && results.length> 0) {
+                for (let i=0; i< results.length; i++) {
+                    let obj= pickResults[i][0];
+                    if (obj) {
+                        let uniqueId= pickResults[i][1]
+                        console.log('pick this obj -> ' + uniqueId);
+                        /* this.OnObjectSelected(obj, uniqueId); */
+                    }
+                }
+                pickResults.splice(0, pickResults.length);
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ serialInclude([ '../lib/CGF.js',
                 'XMLscene.js',
                 'MySceneGraph.js',
                 'MyAnimation.js',
+                'MyBoard.js',
                 'MyKeyframeAnimation.js',
                 'MyInterface.js',
                 'MyComponent.js',
@@ -23,7 +24,8 @@ serialInclude([ '../lib/CGF.js',
                 'primitives/MyPlane.js',
                 'primitives/MyPatch.js',
                 'primitives/MyCylinder2.js',
-                'primitives/MySecurityCamera.js',
+                'primitives/MyPiece.js',
+                'primitives/MyTile.js',
 main=function()
 {
     var app = new CGFapplication(document.body);
