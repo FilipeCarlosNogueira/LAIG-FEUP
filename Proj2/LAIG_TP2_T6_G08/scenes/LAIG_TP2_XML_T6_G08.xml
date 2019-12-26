@@ -3,9 +3,37 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="9" y="7" z="7" />
-            <to x="0" y="2" z="0" />
+            <from x="50" y="40" z="50" />
+            <to x="0" y="20" z="0" />
         </perspective>
+
+        <perspective id="perspective_view_2" near="0.1" far="500" angle="45">
+            <from x="-50" y="100" z="100" />
+            <to x="0" y="20" z="0" />
+        </perspective>
+
+        <ortho id="omnidroid_ortho" near="0.1" far="500" left="-20" right="20" top="10" bottom="-10">
+            <from x="30" y="35" z="40" />
+            <to x="1" y="5" z="0" />
+            <up x="0" y="1" z="0" />
+        </ortho>
+
+        <perspective id="nurbs_view" near="0.1" far="500" angle="45">
+            <from x="5" y="5" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+
+        <perspective id="securityCam" near="0.1" far="500" angle="45">
+            <from x="-40" y="40" z="40" />
+            <to x="0" y="20" z="0" />
+        </perspective>
+
+        <ortho id="frozone_ortho" near="0.1" far="500" left="-20" right="20" top="10" bottom="-10">
+            <from x="100" y="40" z="100" />
+            <to x="40" y="35" z="55" />
+            <up x="0" y="2" z="0" />
+        </ortho>
+
     </views>
 
     <globals>
@@ -21,9 +49,51 @@
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </omni>
+
+        <spot id="spot_light" enabled="0" angle="10" exponent="1">
+            <location x="10" y="30" z="10" w="1" />
+            <target x="-5.0" y="-10.0" z="-5.0" />
+            <ambient r="0.0" g="0,0" b="0.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="1.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
+
+        <spot id="fro_light" enabled="0" angle="10" exponent="1">
+            <location x="10" y="30" z="10" w="1" />
+            <target x="5.0" y="-10.0" z="5.0" />
+            <ambient r="0.0" g="0,0" b="0.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="1.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
     </lights>
 
     <textures>
+        <texture id="omnidroid_legs_text" file="scenes/images/robot_leg.jpg" />
+        <texture id="omnidroid_body_text" file="scenes/images/robot_body.jpg" />
+        <texture id="omnidroid_head_text" file="scenes/images/robot_head.jpg" />
+
+        <texture id="building0_text"    file="scenes/images/building_side_0.jpg" />
+        <texture id="building1_text"    file="scenes/images/building_side_1.jpg" />
+        <texture id="building2_text"    file="scenes/images/building_side_2.jpg" />
+        <texture id="building3_text"    file="scenes/images/building_side_3.jpg" />
+        <texture id="building4_text"    file="scenes/images/building_side_4.jpg" />
+
+        <texture id="skybox_down_text"  file="scenes/images/city_down.png" />
+        <texture id="skybox_up_text"    file="scenes/images/city_up.png" />
+        <texture id="skybox_back_text"  file="scenes/images/city_back.png" />
+        <texture id="skybox_right_text" file="scenes/images/city_right.png" />
+        <texture id="skybox_front_text" file="scenes/images/city_front.png" />
+        <texture id="skybox_left_text"  file="scenes/images/city_left.png" />
+
+        <texture id="explosion_text"    file="scenes/images/explosion.bmp" />
+
+        <texture id="t-zone_head_text"  file="scenes/images/frozone_head.bmp" />
+        <texture id="t-zone_bod_text"   file="scenes/images/frozone_bod.bmp" />
+        <texture id="t-zone_arm_text"   file="scenes/images/frozone_arm.bmp" />
+        <texture id="t-zone_leg_text"   file="scenes/images/frozone_leg.bmp" />
+        <texture id="icecube"           file="scenes/images/icecube.bmp" />
     </textures>
 
     <materials>
@@ -33,15 +103,200 @@
             <diffuse  r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </material>
+
+        <material id="red" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient  r="1.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse  r="1.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="1.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="skybox_mate" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+
+        <material id="omnidroid_mate" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.2" g="0.3" b="0.2" a="1.0" />
+            <diffuse r="0.6" g="0.5" b="0.4" a="1.0" />
+            <specular r="0.6" g="0.5" b="0.4" a="1.0" />
+        </material>
+
+        <material id="building_mate" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+        </material>
+
+        <material id="f_in_the_chat" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.6" g="0.3" b="0.2" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
+        </material>
     </materials>
 
     <transformations>
         <transformation id="scale_root">
-            <scale x="1" y="1" z="1" />
+            <scale x="0.7" y="0.7" z="0.7" />
         </transformation>
     </transformations>
 
     <animations>
+        <animation id="l4z0r">
+            <keyframe instant="1.4">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="1.5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="50" />
+            </keyframe>
+            <keyframe instant="2.3">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="50" />
+            </keyframe>
+            <keyframe instant="2.301">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="omnidroid">
+            <keyframe instant="0.7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="3.7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="360" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="building">
+            <keyframe instant="3">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="3.5">
+                <translate x="-1" y="-3.125" z="-1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="4">
+                <translate x="1" y="-6.25" z="1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="4.5">
+                <translate x="-1" y="-9.375" z="-1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="5">
+                <translate x="1" y="-12.5" z="1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="5.5">
+                <translate x="-1" y="-15.625" z="-1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="6">
+                <translate x="1" y="-18.75" z="1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="6.5">
+                <translate x="-1" y="-21.875" z="-1" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="7">
+                <translate x="0" y="-25" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="7.000000001">
+                <translate x="0" y="-30" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.01" y="0.01" z="0.01" />
+            </keyframe>
+        </animation>
+
+        <animation id="explosion">
+            <keyframe instant="0.5">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="7">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="30" y="20" z="30" />
+            </keyframe>
+            <keyframe instant="7.000000001">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.01" y="0.01" z="0.01" />
+            </keyframe>
+        </animation>
+
+        <animation id="t-zone">
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="-3600" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="move_t">
+            <keyframe instant="8">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="9">
+                <translate x="30" y="-10" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="10">
+                <translate x="70" y="-40" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+
+        <animation id="NP">
+            <keyframe instant="10">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0.01" y="0.01" z="0.01" />
+            </keyframe>
+            <keyframe instant="10.000000001">
+                <translate x="0" y="0" z="-0.5" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="35" y="35" z="35" />
+            </keyframe>
+        </animation>
     </animations>
 
     <primitives>
@@ -57,33 +312,35 @@
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <material id="white"/>
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
                 <primitiveref id="piece" />
             </children>
         </component>
-        <component id="med_piece">
+
+        <component id="omnidroid_leg3">
             <transformation>
                 <scale x="1" y="1" z="1" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <material id="white"/>
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
                 <primitiveref id="piece" />
             </children>
         </component>
-        <component id="big_piece">
+
+        <component id="omnidroid_leg4">
             <transformation>
                 <scale x="1.2" y="1.2" z="1.2" />
                 <rotate axis="x" angle="-90" />
             </transformation>
             <materials>
-                <material id="white"/>
+                <material id="inherit" />
             </materials>
             <texture id="inherit" />
             <children>
@@ -93,15 +350,693 @@
 
         <component id="demoRoot">
             <transformation>
-                <transformationref id="scale_root" />
+                <translate x="-40" y="50" z="15" />
+                <scale x="10" y="10" z="10" />
             </transformation>
             <materials>
-                <material id="white"/>
+                <material id="skybox_mate" />
             </materials>
             <texture id="none" />
             <children>
-                <componentref id="big_piece" />
+                <componentref id="billboard_temp" />
+            </children>
+        </component>
+
+        <component id="explosion1">
+            <transformation>
+                <translate x="0" y="15" z="-40" />
+            </transformation>
+            <animationref id="explosion" />
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="explosion_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="explosion2">
+            <transformation>
+                <translate x="-10" y="15" z="-40" />
+            </transformation>
+            <animationref id="explosion" />
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="explosion_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="explosion3">
+            <transformation>
+                <translate x="-40" y="15" z="-40" />
+            </transformation>
+            <animationref id="explosion" />
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="explosion_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+
+        <component id="explosion4">
+            <transformation>
+                <translate x="-40" y="15" z="-10" />
+            </transformation>
+            <animationref id="explosion" />
+            <materials>
+                <material id="red" />
+            </materials>
+            <texture id="explosion_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="sphere" />
+            </children>
+        </component>
+<!-- CITY END -->
+
+<!-- BILLBOARD START -->
+        <component id="billboard_temp">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="billboard_p0" />
+                <componentref id="billboard_p1" />
+                <componentref id="billboard_p2" />
+                <componentref id="billboard_p3" />
+                <componentref id="billboard_p4" />
+            </children>
+        </component>
+
+        <component id="billboard_p0">
+            <transformation>
+                <translate x="0" y="0" z="0.575" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="billboard_p1">
+            <transformation>
+                <rotate axis="y" angle="120" />
+                <translate x="0" y="0" z="0.575" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="billboard_p2">
+            <transformation>
+                <rotate axis="y" angle="-120" />
+                <translate x="0" y="0" z="0.575" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="triangle" />
+            </children>
+        </component>
+
+        <component id="billboard_p3">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="base" />
+            </children>
+        </component>
+
+        <component id="billboard_p4">
+            <transformation>
+                <scale x="0.2" y="1" z="0.2" />
+                <translate x="0" y="-0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+<!-- BILLBOARD END -->
+
+<!-- BUILDING START -->
+        <component id="building0">
+            <transformation>
+                <translate x="0" y="0" z="-40" />
+            </transformation>
+            <animationref id="building" />
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="building0_text" length_s="2" length_t="0.3" />
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building1">
+            <transformation>
+                <translate x="-10" y="0" z="-40" />
+                <scale x="1.5" y="1.2" z="1.5" />
+            </transformation>
+            <animationref id="building" />
+            <materials>
+                <material id="white" />
+            </materials>
+            <texture id="building1_text" length_s="1" length_t="0.3" />
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building2">
+            <transformation>
+                <translate x="-40" y="0" z="-40" />
+                <scale x="1.5" y="1.2" z="1.5" />
+            </transformation>
+            <animationref id="building" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="building2_text" length_s="1" length_t="0.1" />
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building3">
+            <transformation>
+                <translate x="-40" y="0" z="-15" />
+                <scale x="1.5" y="1.7" z="3" />
+            </transformation>
+            <animationref id="building" />
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="building3_text" length_s="0.5" length_t="0.1" />
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building4">
+            <transformation>
+                <translate x="-40" y="0" z="15" />
+                <scale x="2" y="1" z="2" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="building4_text" length_s="1" length_t="0.1" />
+            <children>
+                <componentref id="building_temp" />
+            </children>
+        </component>
+
+        <component id="building_temp">
+            <transformation>
+                <scale x="10" y="40" z="10" />
+                <translate x="0" y="0.5" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="building_mate" />
+            </materials>
+            <texture id="inherit" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+<!-- BUILDING END -->
+
+<!-- t-zone START -->
+    <component id="move_t">
+        <transformation>
+            <translate x="-40" y="43" z="10" />
+        </transformation>
+        <animationref id="move_t" />
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="none" length_s="1" length_t="1" />
+        <children>
+            <componentref id="t-zone" />
+        </children>
+    </component>
+
+    <component id="t-zone">
+        <transformation>
+        </transformation>
+        <animationref id="t-zone" />
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="none" length_s="1" length_t="1" />
+        <children>
+            <componentref id="t-zone_body" />
+            <componentref id="t-zone_head" />
+            <componentref id="t-zone_arm1" />
+            <componentref id="t-zone_arm2" />
+            <componentref id="t-zone_leg1" />
+            <componentref id="t-zone_leg2" />
+        </children>
+    </component>
+
+    <component id="t-zone_body">
+        <transformation>
+            <scale x="0.7" y="2" z="0.7" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="t-zone_bod_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_head">
+        <transformation>
+            <translate x="0" y="2" z="0" />
+            <scale x="0.5" y="1" z="0.5" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="t-zone_head_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_arm1">
+        <transformation>
+            <translate x="0" y="1.5" z="1" />
+            <scale x="0.2" y="0.2" z="1.5" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="t-zone_arm_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_arm2">
+        <transformation>
+            <translate x="0" y="1.5" z="-1" />
+            <rotate axis="y" angle="180" />
+            <scale x="0.2" y="0.2" z="1.5" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="t-zone_arm_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_leg1">
+        <transformation>
+            <translate x="0" y="-2" z="0.3" />
+            <scale x="0.2" y="1.5" z="0.2" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="t-zone_leg_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+
+    <component id="t-zone_leg2">
+        <transformation>
+            <translate x="0" y="-2" z="-0.3" />
+            <rotate axis="y" angle="180" />
+            <scale x="0.2" y="1.5" z="0.2" />
+        </transformation>
+        <materials>
+            <material id="inherit" />
+        </materials>
+        <texture id="t-zone_leg_text" length_s="1" length_t="1" />
+        <children>
+            <primitiveref id="sphere" />
+        </children>
+    </component>
+<!-- t-zone END -->
+
+<!-- icecube START -->
+    <component id="icecube">
+        <transformation>
+            <translate x="0" y="10" z="-0.5" />
+        </transformation>
+        <animationref id="NP" />
+        <materials>
+            <material id="white" />
+        </materials>
+        <texture id="icecube" length_s="1" length_t="1" />
+        <children>
+            <componentref id="cube" />
+        </children>
+    </component>
+<!-- icecube END -->
+
+<!-- TABLE START -->
+        <component id="table">
+            <transformation>
+                <scale x="0.2" y="0.2" z="0.2" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="table_leg0" />
+                <componentref id="table_leg1" />
+                <componentref id="table_leg2" />
+                <componentref id="table_leg3" />
+                <componentref id="table_top" />
+            </children>
+        </component>
+
+        <component id="table_leg0">
+            <transformation>
+                <translate x="3.5" y="0" z="-3.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_leg1">
+            <transformation>
+                <translate x="-3.5" y="0" z="-3.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_leg2">
+            <transformation>
+                <translate x="-3.5" y="0" z="3.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_leg3">
+            <transformation>
+                <translate x="3.5" y="0" z="3.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="leg_cylinder" />
+            </children>
+        </component>
+
+        <component id="table_top">
+            <transformation>
+                <scale x="10" y="1" z="10" />
+                <translate x="0" y="5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="omnidroid_legs_text" length_s="1" length_t="1" />
+            <children>
+                <componentref id="cube" />
+            </children>
+        </component>
+<!-- TABLE END -->
+
+<!-- CUBE START -->
+        <component id="cube">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="cube_side0" />
+                <componentref id="cube_side1" />
+                <componentref id="cube_side2" />
+                <componentref id="cube_side3" />
+                <componentref id="cube_top" />
+                <componentref id="cube_bot" />
+            </children>
+        </component>
+
+        <component id="cube_side0">
+            <transformation>
+                <translate x="0" y="0.5" z="0.5" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_side1">
+            <transformation>
+                <translate x="0" y="-0.5" z="0.5" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_side2">
+            <transformation>
+                <translate x="0.5" y="0" z="0.5" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_side3">
+            <transformation>
+                <translate x="-0.5" y="0" z="0.5" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_top">
+            <transformation>
+                <rotate axis="x" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="cube_bot">
+            <transformation>
+                <translate x="0" y="0" z="1" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+<!-- CUBE END -->
+
+<!-- SKYBOX START -->
+        <component id="skybox">
+            <transformation>
+                <scale x="120" y="100" z="120" />
+                <translate x="0" y="0.5" z="0"/>
+            </transformation>
+            <materials>
+                <material id="skybox_mate" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="sky_side0" />
+                <componentref id="sky_side1" />
+                <componentref id="sky_side2" />
+                <componentref id="sky_side3" />
+                <componentref id="sky_top" />
+                <componentref id="sky_bot" />
+            </children>
+        </component>
+
+        <component id="sky_bot">
+            <transformation>
+                <translate x="0" y="-0.5" z="0" />
+                <rotate axis="x" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skybox_down_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_top">
+            <transformation>
+                <translate x="0" y="0.5" z="0" />
+                <rotate axis="y" angle="180" />
+                <rotate axis="x" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skybox_up_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side2">
+            <transformation>
+                <translate x="-0.5" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skybox_front_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side3">
+            <transformation>
+                <translate x="0.5" y="0" z="0" />
+                <rotate axis="y" angle="-90" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skybox_back_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side1">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skybox_right_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+
+        <component id="sky_side0">
+            <transformation>
+                <translate x="0" y="0" z="-0.5" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="skybox_left_text" length_s="1" length_t="1" />
+            <children>
+                <primitiveref id="square" />
+            </children>
+        </component>
+<!-- SKYBOX END -->
+
+        <component id="cylinder">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="omnidroid_mate" />
+            </materials>
+            <texture id="omnidroid_legs_text" length_s="4" length_t="4" />
+            <children>
+                <primitiveref id="triangle" />
             </children>
         </component>
     </components>
+
+
+
 </lxs>

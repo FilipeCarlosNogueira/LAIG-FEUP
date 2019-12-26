@@ -1,0 +1,201 @@
+<lxs>
+    <scene root="demoRoot" axis_length="5"/>
+
+    <views default="defaultCamera">
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="9" y="7" z="7" />
+            <to x="0" y="2" z="0" />
+        </perspective>
+    </views>
+
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.0" g="0.0" b="0.0" a="1.0" />
+    </globals>
+
+    <lights>
+        <omni id="demoLight" enabled="1">
+            <location x="10" y="50" z="30" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </omni>
+    </lights>
+
+    <textures>
+    </textures>
+
+    <materials>
+        <material id="white" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient  r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse  r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="scale_root">
+            <scale x="1" y="1" z="1" />
+        </transformation>
+    </transformations>
+
+    <animations>
+    </animations>
+
+    <primitives>
+        <primitive id="piece_bottom">
+            <plane npartsU="10" npartsV="10" />
+        </primitive>
+
+        <primitive id="piece_side">
+            <triangle x1="-0.5" y1="0" z1="0" x2="0.5" y2="0" z2="0" x3="0" y3="2" z3="0" />
+        </primitive>
+
+        <primitive id="tile">
+            <plane npartsU="10" npartsV="10" />
+        </primitive>
+    </primitives>
+
+    <components>
+        <component id="piece_side0">
+            <transformation>
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="x" angle="-14.5" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="piece_side" />
+            </children>
+        </component>
+        <component id="piece_side1">
+            <transformation>
+                <rotate axis="y" angle="90" />
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="x" angle="-14.5" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="piece_side" />
+            </children>
+        </component>
+        <component id="piece_side2">
+            <transformation>
+                <rotate axis="y" angle="180" />
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="x" angle="-14.5" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="piece_side" />
+            </children>
+        </component>
+        <component id="piece_side3">
+            <transformation>
+                <rotate axis="y" angle="-90" />
+                <translate x="0" y="0" z="0.5" />
+                <rotate axis="x" angle="-14.5" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="piece_side" />
+            </children>
+        </component>
+        <component id="piece_bottom">
+            <transformation>
+                <rotate axis="x" angle="180" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <primitiveref id="piece_bottom" />
+            </children>
+        </component>
+
+        <component id="piece">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="piece_side0" />
+                <componentref id="piece_side1" />
+                <componentref id="piece_side2" />
+                <componentref id="piece_side3" />
+                <componentref id="piece_bottom" />
+            </children>
+        </component>
+
+        <component id="sml_piece">
+            <transformation>
+                <scale x="0.8" y="0.8" z="0.8" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="piece" />
+            </children>
+        </component>
+        <component id="med_piece">
+            <transformation>
+                <scale x="1" y="1" z="1" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="piece" />
+            </children>
+        </component>
+        <component id="big_piece">
+            <transformation>
+                <scale x="1.2" y="1.2" z="1.2" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="inherit" />
+            <children>
+                <componentref id="piece" />
+            </children>
+        </component>
+
+
+
+
+
+
+        <component id="demoRoot">
+            <transformation>
+                <transformationref id="scale_root" />
+            </transformation>
+            <materials>
+                <material id="white"/>
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="big_piece" />
+            </children>
+        </component>
+    </components>
+</lxs>
