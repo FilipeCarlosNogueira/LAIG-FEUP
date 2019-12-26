@@ -19,7 +19,7 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
 
-        this.board = new MyBoard(this);
+        this.gameController = new MyGameController(this);
     }
     initCameras() {
         this.cameraView = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
@@ -97,7 +97,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             this.setDefaultAppearance();
             this.graph.displayScene();
-            this.board.display();
+            this.gameController.display();
         }
         this.popMatrix();
     }
@@ -117,7 +117,7 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(this.cameraView);
     }
     display(){
-        this.board.managePick(false, this.pickResults);
+        this.gameController.managePick(false, this.pickResults);
         this.clearPickRegistration();
 
         this.render(this.cameraView);
