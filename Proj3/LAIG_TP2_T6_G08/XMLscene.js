@@ -117,23 +117,9 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(this.cameraView);
     }
     display(){
-        //this.managePick(false, this.pickResults);
+        this.board.managePick(false, this.pickResults);
         this.clearPickRegistration();
+
         this.render(this.cameraView);
-    }
-    managePick(mode, results) {
-        if (mode == false) {
-            if (results != null && results.length> 0) {
-                for (let i=0; i< results.length; i++) {
-                    let obj= pickResults[i][0];
-                    if (obj) {
-                        let uniqueId= pickResults[i][1]
-                        console.log('pick this obj -> ' + uniqueId);
-                        /* this.OnObjectSelected(obj, uniqueId); */
-                    }
-                }
-                pickResults.splice(0, pickResults.length);
-            }
-        }
     }
 }
