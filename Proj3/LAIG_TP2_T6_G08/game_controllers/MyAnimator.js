@@ -4,4 +4,13 @@ class MyAnimator {
     this.gameController = gameController;
 
   }
+  play(){
+    this.start_time = Date.now();
+  }
+  reset(){
+
+  }
+  update(t){
+  	
+  }
 }

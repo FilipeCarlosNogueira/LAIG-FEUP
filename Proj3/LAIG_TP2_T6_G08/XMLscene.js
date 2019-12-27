@@ -3,7 +3,6 @@ class XMLscene extends CGFscene {
     constructor(myinterface) {
         super();
         this.lightValues = [];
-        this.first_update = 1;
         this.interface = myinterface;
     }
     init(application) {
@@ -18,6 +17,7 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
+        this.last_update = Date.now();
 
         this.gameController = new MyGameController(this);
     }
@@ -105,11 +105,7 @@ class XMLscene extends CGFscene {
         if (this.gui.isKeyPressed("KeyM")) this.graph.nextMaterial();
     }
     update(t){
-        if(this.first_update){
-            this.start_time = t;
-            this.first_update = 0;
-        }
-        let delta_time = t - this.start_time;
+        let delta_time = t - this.last_update;
         this.graph.update(delta_time);
     }
     updateCamera(){

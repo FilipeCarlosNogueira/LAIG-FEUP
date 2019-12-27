@@ -29,17 +29,14 @@ serialInclude([ '../lib/CGF.js',
                 'primitives/MyCylinder2.js',
                 'primitives/MyPiece.js',
                 'primitives/MyTile.js',
-main=function()
-{
-    var app = new CGFapplication(document.body);
-    var myInterface = new MyInterface();
-    var myScene = new XMLscene(myInterface);
+main=function() {
+    let app         = new CGFapplication(document.body);
+    let myInterface = new MyInterface();
+    let myScene     = new XMLscene(myInterface);
     app.init();
     app.setScene(myScene);
     app.setInterface(myInterface);
     myInterface.setActiveCamera(myScene.camera);
-    var filename=getUrlVars()['file'] || "LAIG_TP2_XML_T6_G08.xml";
-	var myGraph = new MySceneGraph(filename, myScene);
     app.run();
 }
 ]);

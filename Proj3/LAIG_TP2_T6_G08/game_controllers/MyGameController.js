@@ -2,6 +2,14 @@ class MyGameController {
   constructor(scene) {
     this.scene = scene;
     this.board = new MyBoard(scene, this);
+    this.themes = {
+          'normal': 'normal.xml',
+          'normal1': 'normal1.xml',
+        };
+    this.currentTheme = new MySceneGraph(this.themes['normal'], this.scene);
+  }
+  changeTheme(id){
+    this.currentTheme = new MySceneGraph(this.themes[id], this.scene);
   }
   display() {
     this.board.display();
@@ -22,6 +30,5 @@ class MyGameController {
   }
   OnObjectSelected(obj, id) {
     console.log('PICKING: ' + id);
-    console.log(obj);
   }
 }
