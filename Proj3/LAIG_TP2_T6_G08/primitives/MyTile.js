@@ -1,10 +1,11 @@
 class MyTile extends CGFobject {
-	constructor(scene, id, uDivs, vDivs, gameController) {
+	constructor(scene, id, gameController, x, y) {
 		super(scene);
     this.uniqueID = id;
     this.gameController = gameController;
-		this.uDivs = uDivs;
-		this.vDivs = vDivs;
+    this.piece = null;
+		this.x = x;
+		this.y = y;
 		this.degree1 = 1;
 		this.degree2 = 1;
 		this.controlVertexes = [
@@ -12,13 +13,24 @@ class MyTile extends CGFobject {
 			[[ 0.5, 0.0, 0.5, 1 ], [ 0.5,  0.0, -0.5, 1 ]]
 		];
 		this.obj;
-		this.makeSurface(this.degree1, this.degree2, this.uDivs, this.vDivs, this.controlVertexes);
+		this.makeSurface(this.degree1, this.degree2, 10, 10, this.controlVertexes);
 	}
 	makeSurface(degree1, degree2, uDivs, vDivs, controlvertexes) {
 		let nurbsSurface = new CGFnurbsSurface(degree1, degree2, controlvertexes);
 		this.obj = new CGFnurbsObject(this.scene, uDivs, vDivs, nurbsSurface);
 	}
 	display() {
+		this.scene.registerForPick(this.uniqueID, this);
+    this.scene.pushMatrix();
+    this.scene.translate(this.y, 1, this.x);
 		this.obj.display();
+		this.scene.popMatrix();
+		this.scene.clearPickRegistration();
 	}
+	setPiece(piece){
+		this.piece = piece;
+	}
+  OnSelect(){
+    console.log(this.uniqueID);
+  }
 }

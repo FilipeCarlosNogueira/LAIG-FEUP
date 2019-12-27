@@ -12,7 +12,9 @@ class MyGameController {
     this.currentTheme = new MySceneGraph(this.themes[id], this.scene);
   }
   display() {
+    this.scene.clearPickRegistration();
     this.board.display();
+    this.scene.clearPickRegistration();
   }
   managePick(mode, results) {
     if (mode == false) {
@@ -29,6 +31,13 @@ class MyGameController {
     }
   }
   OnObjectSelected(obj, id) {
-    console.log('PICKING: ' + id);
+    if(obj instanceof MyPiece){
+      obj.OnSelect();
+    } else if(obj instanceof MyTile){
+      obj.OnSelect();
+    } else {
+      console.log('ERROR with picking');
+      console.log(obj);
+    }
   }
 }

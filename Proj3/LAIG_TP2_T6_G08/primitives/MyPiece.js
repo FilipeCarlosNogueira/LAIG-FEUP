@@ -1,9 +1,10 @@
 class MyPiece extends CGFobject {
-  constructor(scene, id, gameController) {
+  constructor(scene, id, gameController, tile) {
     super(scene);
     this.initBuffers();
     this.uniqueID = id;
     this.gameController = gameController;
+    this.tile = tile;
   }
   initBuffers() {
     this.vertices = [
@@ -58,4 +59,19 @@ class MyPiece extends CGFobject {
     this.enable
   }
   updateTexCoords(length_t, length_s){}
+  setTile(tile){
+    this.tile = tile;
+    this.tile.setPiece(this);
+  }
+  display(){
+    this.scene.registerForPick(this.uniqueID, this);
+    this.scene.pushMatrix();
+    this.scene.translate(this.tile.y, 1, this.tile.x);
+    super.display();
+    this.scene.popMatrix();
+    this.scene.clearPickRegistration();
+  }
+  OnSelect(){
+    console.log(this.uniqueID);
+  }
 }

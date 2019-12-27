@@ -18,6 +18,7 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(100);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
         this.last_update = Date.now();
+        this.axis = new CGFaxis(this);
 
         this.gameController = new MyGameController(this);
     }
@@ -98,6 +99,7 @@ class XMLscene extends CGFscene {
             this.setDefaultAppearance();
             this.graph.displayScene();
             this.gameController.display();
+            this.axis.display();
         }
         this.popMatrix();
     }
