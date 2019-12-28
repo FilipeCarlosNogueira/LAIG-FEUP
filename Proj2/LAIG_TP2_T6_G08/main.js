@@ -3,8 +3,8 @@ include=function(){function f(){var a=this.readyState;(!a||/ded|te/.test(a))&&(c
 serialInclude=function(a){var b=console,c=serialInclude.l;if(a.length>0)c.splice(0,0,a);/* else b.log("Done!"); */if(c.length>0){if(c[0].length>1){var d=c[0].splice(0,1);/* b.log("Loading "+d+"..."); */include(d,function(){serialInclude([]);});}else{var e=c[0][0];c.splice(0,1);e.call();};}else b.log("Finished.");};serialInclude.l=new Array();
 
 function getUrlVars() {
-    let vars = {};
-    let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
     function(m,key,value) {
       vars[decodeURIComponent(key)] = decodeURIComponent(value);
     });
@@ -26,19 +26,33 @@ serialInclude([ '../lib/CGF.js',
                 'primitives/MyPlane.js',
                 'primitives/MyPatch.js',
                 'primitives/MyCylinder2.js',
-                'primitives/MyPiece.js',
+                'primitives/MySecurityCamera.js',
 
-main=function() {
+main=function()
+{
 	// Standard application, scene and interface setup
-    let app = new CGFapplication(document.body);
-    let interface = new MyInterface();
-    let scene = new XMLscene(interface);
+    var app = new CGFapplication(document.body);
+    var myInterface = new MyInterface();
+    var myScene = new XMLscene(myInterface);
+
     app.init();
-    app.setScene(scene);
-    app.setInterface(interface);
-    interface.setActiveCamera(scene.camera);
-    let filename=getUrlVars()['file'] || "LAIG_TP2_XML_T6_G08.xml";
-	let graph = new MySceneGraph(filename, scene);
+
+    app.setScene(myScene);
+    app.setInterface(myInterface);
+
+    myInterface.setActiveCamera(myScene.camera);
+
+	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
+	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
+
+    var filename=getUrlVars()['file'] || "LAIG_TP2_XML_T6_G08.xml";
+
+	// create and load graph, and associate it to scene.
+	// Check console for loading errors
+	var myGraph = new MySceneGraph(filename, myScene);
+
+	// start
     app.run();
 }
+
 ]);
