@@ -25,7 +25,7 @@ class MySceneGraph {
     this.reader.open('scenes/' + filename, this);
   }
   onXMLReady() {
-    this.log('XML Loading finished.');
+    console.log('XML Loading finished.');
     let rootElement = this.reader.xmlDoc.documentElement;
     let error = this.parseXMLFile(rootElement);
     if (error != null) {
@@ -116,7 +116,7 @@ class MySceneGraph {
         this.onXMLMinorError('tag <components> out of order');
       if ((error = this.parseComponents(nodes[index])) != null) return error;
     }
-    this.log('all parsed');
+    console.log('XML parsed');
   }
   parseScene(sceneNode) {
     let root = this.reader.getString(sceneNode, 'root');
@@ -127,7 +127,6 @@ class MySceneGraph {
       this.onXMLMinorError(
         'no axis_length defined for scene; assuming \'length = 1\'');
     this.referenceLength = axis_length || 1;
-    this.log('Parsed scene');
     return null;
   }
   parseView(viewsNode) {
@@ -152,7 +151,6 @@ class MySceneGraph {
       this.views[id].toX = 0;
       this.views[id].toY = 20;
       this.views[id].toZ = 0;
-      this.log('Parsed Views');
       return null;
     }
     let nodeName;
@@ -252,7 +250,6 @@ class MySceneGraph {
       }
       this.scene.viewsSelect[i] = id;
     }
-    this.log('Parsed Views');
     return null;
   }
   parseAmbient(ambientsNode) {
@@ -274,7 +271,6 @@ class MySceneGraph {
       return color;
     else
       this.background = color;
-    this.log('Parsed globals');
     return null;
   }
   parseLights(lightsNode) {
@@ -368,7 +364,6 @@ class MySceneGraph {
     else if (numLights > 8)
       this.onXMLMinorError(
         'too many lights defined; WebGL imposes a limit of 8 lights');
-    this.log('Parsed lights');
     return null;
   }
   parseTextures(texturesNode) {
@@ -392,7 +387,6 @@ class MySceneGraph {
       }
       this.textures[textID] = new CGFtexture(this.scene, file);
     }
-    this.log('Parsed textures');
     return;
   }
   parseMaterials(materialsNode) {
@@ -468,7 +462,6 @@ class MySceneGraph {
       newMaterial.setTextureWrap('REPEAT', 'REPEAT');
       this.materials[materialID] = newMaterial;
     }
-    this.log("Parsed materials");
     return null;
   }
   parseTransformations(transformationsNode) {
@@ -520,7 +513,6 @@ class MySceneGraph {
       }
       this.transformations[transformationID] = transfMatrix;
     }
-    this.log('Parsed transformations');
     return null;
   }
   parseAnimations(animationsNode){
@@ -590,7 +582,6 @@ class MySceneGraph {
       animation = new MyKeyframeAnimation(this.scene, keyframes);
       this.animations[anim_id] = animation;
     }
-    this.log('Parsed animations');
     return null;
   }
   parsePrimitives(primitivesNode) {
@@ -811,7 +802,6 @@ class MySceneGraph {
         console.warn('To do: Parse other primitives.');
       }
     }
-    this.log('Parsed primitives');
     return null;
   }
   parseComponents(componentsNode) {
@@ -954,7 +944,6 @@ class MySceneGraph {
       }
       this.components[componentID] = new MyComponent(componentID, materialArray, transfMatrix, textureID, length_s, length_t, componentChild, primitiveChild, animationNodeId);
     }
-    this.log("Parsed components");
   }
   parseCoordinates3D(node, messageError) {
     let position = [];
@@ -1003,9 +992,6 @@ class MySceneGraph {
   }
   onXMLMinorError(message) {
     console.warn('Warning: ' + message);
-  }
-  log(message) {
-    console.log('   ' + message);
   }
   displayScene() {
     this.processNode(this.idRoot, "none", "none", 1, 1);
