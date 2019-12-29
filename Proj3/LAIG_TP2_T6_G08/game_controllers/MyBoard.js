@@ -12,11 +12,11 @@ class MyBoard extends CGFobject {
       }
     }
     for (let i = 0; i < 6; i++) {
-      this.pieces.push(new MyPiece(scene, uniqueID, this.gameController, this.tiles[i]));
+      this.pieces.push(new MyPiece(scene, uniqueID, this.gameController, this.tiles[i], 2));
       uniqueID += 1;
     }
     for (let i = 35; i > 29; i--) {
-      this.pieces.push(new MyPiece(scene, uniqueID, this.gameController, this.tiles[i]));
+      this.pieces.push(new MyPiece(scene, uniqueID, this.gameController, this.tiles[i], 2));
       uniqueID += 1;
     }
 
@@ -30,7 +30,6 @@ class MyBoard extends CGFobject {
     }*/
     for (let piece of this.pieces) {
       piece.display();
-      break;
     }
   }
 }

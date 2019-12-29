@@ -1,13 +1,25 @@
 class MyPiece extends CGFobject {
-  constructor(scene, id, gameController, tile) {
+  constructor(scene, id, gameController, tile, type) {
     super(scene);
-    this.initBuffers();
     this.uniqueID = id;
     this.gameController = gameController;
     this.tile = tile;
+    this.type = type;
+    this.initBuffers();
   }
   initBuffers() {
-    let x_off = 0.5, y_off = 1.5;
+    let x_off, y_off;
+    if(this.type == 1) {
+      x_off = 0.3; y_off = 1;
+    } else if(this.type == 2) {
+      x_off = 0.4; y_off = 1.2;
+    } else if(this.type == 3) {
+      x_off = 0.5; y_off = 1.5;
+    } else {
+      console.log('Invalid type of piece: ' + this.type);
+    }
+
+
     this.vertices = [
        x_off,  0.0,  x_off, // 0
        x_off,  0.0, -x_off, // 1
