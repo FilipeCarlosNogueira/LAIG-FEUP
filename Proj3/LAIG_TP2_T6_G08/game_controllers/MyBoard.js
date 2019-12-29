@@ -22,16 +22,15 @@ class MyBoard extends CGFobject {
 
   }
   display() {
-    let uniqueID = 1;
     let colunm = 1;
     let row = 1;
 
-    for (let tile of this.tiles) {
+    /*for (let tile of this.tiles) {
       tile.display();
-      uniqueID += 1;
-    }
+    }*/
     for (let piece of this.pieces) {
       piece.display();
+      break;
     }
   }
 }

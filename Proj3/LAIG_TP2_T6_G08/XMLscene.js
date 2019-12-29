@@ -99,7 +99,7 @@ class XMLscene extends CGFscene {
             this.setDefaultAppearance();
             this.graph.displayScene();
             this.gameController.display();
-            this.axis.display();
+            //this.axis.display();
         }
         this.popMatrix();
     }

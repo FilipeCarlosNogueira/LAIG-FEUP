@@ -14,7 +14,6 @@ class MyGameController {
   display() {
     this.scene.clearPickRegistration();
     this.board.display();
-    this.scene.clearPickRegistration();
   }
   managePick(mode, results) {
     if (mode == false) {

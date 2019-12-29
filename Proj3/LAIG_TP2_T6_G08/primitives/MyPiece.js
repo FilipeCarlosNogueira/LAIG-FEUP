@@ -7,27 +7,28 @@ class MyPiece extends CGFobject {
     this.tile = tile;
   }
   initBuffers() {
+    let x_off = 0.5, y_off = 1.5;
     this.vertices = [
-       0.5,  0.0,  0.5, // 0
-       0.5,  0.0, -0.5, // 1
-      -0.5,  0.0, -0.5, // 2
-      -0.5,  0.0,  0.5, // 3
+       x_off,  0.0,  x_off, // 0
+       x_off,  0.0, -x_off, // 1
+      -x_off,  0.0, -x_off, // 2
+      -x_off,  0.0,  x_off, // 3
 
-       0.5,  0.0,  0.5, // 4
-       0.5,  0.0, -0.5, // 5
-       0.0,  1.5,  0.0, // 6
+       x_off,  0.0,  x_off, // 4
+       x_off,  0.0, -x_off, // 5
+       0.0,  y_off,  0.0, // 6
 
-       0.5,  0.0, -0.5, // 7
-      -0.5,  0.0, -0.5, // 8
-       0.0,  1.5,  0.0, // 9
+       x_off,  0.0, -x_off, // 7
+      -x_off,  0.0, -x_off, // 8
+       0.0,  y_off,  0.0, // 9
 
-      -0.5,  0.0, -0.5, // 10
-      -0.5,  0.0,  0.5, // 11
-       0.0,  1.5,  0.0, // 12
+      -x_off,  0.0, -x_off, // 10
+      -x_off,  0.0,  x_off, // 11
+       0.0,  y_off,  0.0, // 12
 
-      -0.5,  0.0,  0.5, // 13
-       0.5,  0.0,  0.5, // 14
-       0.0,  1.5,  0.0, // 15
+      -x_off,  0.0,  x_off, // 13
+       x_off,  0.0,  x_off, // 14
+       0.0,  y_off,  0.0, // 15
     ];
     this.indices = [];
     this.indices.push( 0, 2, 1);
@@ -37,22 +38,26 @@ class MyPiece extends CGFobject {
     this.indices.push(11,12,10);
     this.indices.push(14,15,13);
     this.normals = [
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
+      0, -y_off, 0,
+      0, -y_off, 0,
+      0, -y_off, 0,
+      0, -y_off, 0,
 
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
+      x_off, y_off, 0,
+      x_off, y_off, 0,
+      x_off, y_off, 0,
 
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
+      0, y_off, -x_off,
+      0, y_off, -x_off,
+      0, y_off, -x_off,
 
-      0, 1, 0,
-      0, 1, 0,
-      0, 1, 0,
+      -x_off, y_off, 0,
+      -x_off, y_off, 0,
+      -x_off, y_off, 0,
+
+      0, y_off, x_off,
+      0, y_off, x_off,
+      0, y_off, x_off,
     ]
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();

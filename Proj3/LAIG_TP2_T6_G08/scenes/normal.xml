@@ -36,9 +36,6 @@
     </materials>
 
     <transformations>
-        <transformation id="scale_root">
-            <scale x="1" y="1" z="1" />
-        </transformation>
     </transformations>
 
     <animations>
@@ -50,10 +47,9 @@
     <components>
         <component id="demoRoot">
             <transformation>
-                <transformationref id="scale_root" />
             </transformation>
             <materials>
-                <material id="white"/>
+                <material id="white" />
             </materials>
             <texture id="none" />
             <children>
