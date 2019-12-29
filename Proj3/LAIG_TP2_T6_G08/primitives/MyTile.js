@@ -30,7 +30,4 @@ class MyTile extends CGFobject {
 	setPiece(piece){
 		this.piece = piece;
 	}
-  OnSelect(){
-    console.log(this.uniqueID);
-  }
 }

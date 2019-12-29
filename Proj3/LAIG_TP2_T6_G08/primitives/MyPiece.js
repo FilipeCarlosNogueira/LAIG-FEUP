@@ -1,12 +1,14 @@
 class MyPiece extends CGFobject {
-  constructor(scene, id, gameController, tile, type) {
+  constructor(scene, id, gameController, tile, type, player) {
     super(scene);
     this.uniqueID = id;
     this.gameController = gameController;
-    this.tile = tile;
+    this.setTile(tile);
     this.type = type;
+    this.player = player;
     this.initBuffers();
   }
+  /* Build the primitive */
   initBuffers() {
     let x_off, y_off;
     if(this.type == 1) {
@@ -18,26 +20,20 @@ class MyPiece extends CGFobject {
     } else {
       console.log('Invalid type of piece: ' + this.type);
     }
-
-
     this.vertices = [
        x_off,  0.0,  x_off, // 0
        x_off,  0.0, -x_off, // 1
       -x_off,  0.0, -x_off, // 2
       -x_off,  0.0,  x_off, // 3
-
        x_off,  0.0,  x_off, // 4
        x_off,  0.0, -x_off, // 5
        0.0,  y_off,  0.0, // 6
-
        x_off,  0.0, -x_off, // 7
       -x_off,  0.0, -x_off, // 8
        0.0,  y_off,  0.0, // 9
-
       -x_off,  0.0, -x_off, // 10
       -x_off,  0.0,  x_off, // 11
        0.0,  y_off,  0.0, // 12
-
       -x_off,  0.0,  x_off, // 13
        x_off,  0.0,  x_off, // 14
        0.0,  y_off,  0.0, // 15
@@ -54,19 +50,15 @@ class MyPiece extends CGFobject {
       0, -y_off, 0,
       0, -y_off, 0,
       0, -y_off, 0,
-
       x_off, y_off, 0,
       x_off, y_off, 0,
       x_off, y_off, 0,
-
       0, y_off, -x_off,
       0, y_off, -x_off,
       0, y_off, -x_off,
-
       -x_off, y_off, 0,
       -x_off, y_off, 0,
       -x_off, y_off, 0,
-
       0, y_off, x_off,
       0, y_off, x_off,
       0, y_off, x_off,
@@ -75,11 +67,15 @@ class MyPiece extends CGFobject {
     this.initGLBuffers();
     this.enable
   }
+  /* Update texture coords according to texture */
+  /* TODO WIP */
   updateTexCoords(length_t, length_s){}
+  /* Set the tile the piece is on currently */
   setTile(tile){
     this.tile = tile;
     this.tile.setPiece(this);
   }
+  /* Set piece id, set its position and display the piece */
   display(){
     this.scene.registerForPick(this.uniqueID, this);
     this.scene.pushMatrix();
@@ -87,8 +83,5 @@ class MyPiece extends CGFobject {
     super.display();
     this.scene.popMatrix();
     this.scene.clearPickRegistration();
-  }
-  OnSelect(){
-    console.log(this.uniqueID);
   }
 }
