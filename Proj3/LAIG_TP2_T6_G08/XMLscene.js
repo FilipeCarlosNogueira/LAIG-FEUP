@@ -104,7 +104,7 @@ class XMLscene extends CGFscene {
         this.popMatrix();
     }
     checkKeys() {
-        if (this.gui.isKeyPressed("KeyM")) this.graph.nextMaterial();
+        /* WIP maybe add key to change theme */
     }
     update(t){
         let delta_time = t - this.last_update;

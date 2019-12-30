@@ -11,7 +11,8 @@ class MyGameController {
     // theme selected
     this.currentTheme = new MySceneGraph(this.themes['normal'], this.scene);
     // 0 for player A, 1 for player B
-    this.player_turn = 0;
+    this.player_turn = 1;
+    this.selected_piece = null;
   }
   /* Select different theme */
   changeTheme(id){
@@ -52,10 +53,9 @@ class MyGameController {
   pieceSelected(piece){
     // if it is the turn of this player
     if(piece.player == this.player_turn){
-      // animate piece moving up
-      // function()
-
-
+      piece.selected = true;
+      if(this.selected_piece) this.selected_piece.selected = false;
+      this.selected_piece = piece;
     }
   }
 }

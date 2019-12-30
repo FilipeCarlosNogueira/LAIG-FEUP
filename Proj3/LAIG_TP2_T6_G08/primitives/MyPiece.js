@@ -6,6 +6,7 @@ class MyPiece extends CGFobject {
     this.setTile(tile);
     this.type = type;
     this.player = player;
+    this.selected = false;
     this.initBuffers();
   }
   /* Build the primitive */

@@ -16,7 +16,6 @@ class MySceneGraph {
     scene.graph = this;
     this.nodes = [];
     this.idRoot = null;
-    this.matID = 0;
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
@@ -1007,7 +1006,7 @@ class MySceneGraph {
     let animation = this.animations[comp.animationNodeId];
     if(animation != null) animation.apply();
     let apply_material = "none", apply_texture = "none",
-        apply_length_t = 1, apply_length_s = 1, apply_mat_id = this.matID % comp.material.length;
+        apply_length_t = 1, apply_length_s = 1, apply_mat_id = 0;
     if (comp.material[apply_mat_id] == "inherit") {
       apply_material = parentMaterial;
     } else {
@@ -1044,9 +1043,6 @@ class MySceneGraph {
       this.processNode(childComp, apply_material, apply_texture, apply_length_t, apply_length_s);
     }
     this.scene.popMatrix();
-  }
-  nextMaterial() {
-    this.matID++;
   }
   update(t){
     for(let id in this.animations){
