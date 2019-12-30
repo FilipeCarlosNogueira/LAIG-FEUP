@@ -8,6 +8,7 @@ class MyPiece extends CGFobject {
     this.player = player;
     this.selected = false;
     this.initBuffers();
+    this.animations = [];
   }
   /* Build the primitive */
   initBuffers() {
@@ -80,6 +81,7 @@ class MyPiece extends CGFobject {
   display(){
     this.scene.registerForPick(this.uniqueID, this);
     this.scene.pushMatrix();
+    for(let anim of this.animations)       anim.apply();
     this.scene.translate(this.tile.y, 1, this.tile.x);
     super.display();
     this.scene.popMatrix();
