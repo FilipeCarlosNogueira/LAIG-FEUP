@@ -109,6 +109,7 @@ class XMLscene extends CGFscene {
     update(t){
         let delta_time = t - this.last_update;
         this.graph.update(delta_time);
+        this.gameController.update(delta_time);
     }
     updateCamera(){
         this.cameraView = this.graph.views[this.view].camera;

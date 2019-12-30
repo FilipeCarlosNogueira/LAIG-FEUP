@@ -61,6 +61,8 @@ class MyBoard extends CGFobject {
       this.pieces.push(new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], 3, 1));
       uniqueID += 1;
     }
-
+  }
+  update(t){
+    
   }
 }

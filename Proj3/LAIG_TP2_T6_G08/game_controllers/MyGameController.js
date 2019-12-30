@@ -51,11 +51,26 @@ class MyGameController {
   }
   /* When piece is selected */
   pieceSelected(piece){
+    if(piece == this.selected_piece) {
+      piece.selected = false;
+      piece.animations = [];
+      this.selected_piece = null;
+    } else
     // if it is the turn of this player
     if(piece.player == this.player_turn){
       piece.selected = true;
-      if(this.selected_piece) this.selected_piece.selected = false;
+      if(this.selected_piece) {
+        this.selected_piece.selected = false;
+        this.selected_piece.animations = [];
+      }
       this.selected_piece = piece;
+      this.selected_piece.animations.push(new MyPieceAnimation(this.scene, 2, 0, 1, 0));
     }
+  }
+  update(t){
+    this.board.update(t);
+    if(this.selected_piece)
+      for(let anim of this.selected_piece.animations)
+        anim.update(t);
   }
 }
