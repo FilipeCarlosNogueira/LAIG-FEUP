@@ -42,7 +42,7 @@ get_piece_possible_destinations(X, Y, P, B, MoveList):-
 */
 
 /* CellValue = 1 */
-get_destination_coords(Chain_move, X1, Y1, X2, Y2, Board, Player, CellValue, BackTrackingList, BackTrackingList_new):-
+get_destination_coords(_, X1, Y1, X2, Y2, _, _, CellValue, BackTrackingList, BackTrackingList_new):-
     CellValue =:= 1,
     display_destination_coords_instructions(1),
     /* Iteration 1 */
@@ -151,7 +151,7 @@ validate_increment_move(X, Y):-
     X >= 0, X =< 7,
     Y >= 0, Y =< 5.
 
-validate_BackTracking_list(BackTrackingList, X1, Y1, X2, Y2):-
+validate_BackTracking_list(BackTrackingList, _, _, _, _):-
     length(BackTrackingList, Length),
     Length =:= 0.
     

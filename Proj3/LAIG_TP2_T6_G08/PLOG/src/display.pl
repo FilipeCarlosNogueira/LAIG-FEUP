@@ -77,7 +77,7 @@ display_player(P):-
     P =:= 2,
     write('Player 2').
 
-display_player(P):- 
+display_player(_):- 
     write('Player 1').
 
 /*
@@ -111,7 +111,7 @@ display_matrix([H|T], Nrow, Homerow):-
 * Displays the cell values of each row.
 * @param [H|T], Nrow
 */
-display_row([], Nrow).
+display_row([], _).
 display_row([H|T], Nrow):-
     display_cell(H),
     write(' | '),
