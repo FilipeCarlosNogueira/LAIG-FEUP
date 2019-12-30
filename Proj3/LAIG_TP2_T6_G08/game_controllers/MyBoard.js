@@ -14,6 +14,9 @@ class MyBoard extends CGFobject {
     let row = 1;
 
     for (let tile of this.tiles) {
+      if(tile.highlight) { this.highlight_mat.apply(); }
+      else if((tile.x+tile.y)%2) { this.even_mat.apply(); }
+      else { this.odd_mat.apply(); }
       tile.display();
     }
     for (let piece of this.pieces) {
@@ -29,6 +32,24 @@ class MyBoard extends CGFobject {
     this.selected_mat.setDiffuse(1, 0.2, 0.2, 1);
     this.selected_mat.setSpecular(0, 0, 0, 0);
     this.selected_mat.setShininess(10.0);
+
+    this.highlight_mat = new CGFappearance(this.scene);
+    this.highlight_mat.setAmbient(0, 0, 0, 1);
+    this.highlight_mat.setDiffuse(0, 1, 0.6, 1);
+    this.highlight_mat.setSpecular(0, 0, 0, 0);
+    this.highlight_mat.setShininess(10.0);
+
+    this.even_mat = new CGFappearance(this.scene);
+    this.even_mat.setAmbient(0, 0, 0, 1);
+    this.even_mat.setDiffuse(0.2, 0.2, 0.2, 1);
+    this.even_mat.setSpecular(0, 0, 0, 0);
+    this.even_mat.setShininess(10.0);
+
+    this.odd_mat = new CGFappearance(this.scene);
+    this.odd_mat.setAmbient(0, 0, 0, 1);
+    this.odd_mat.setDiffuse(0.8, 0.8, 0.8, 1);
+    this.odd_mat.setSpecular(0, 0, 0, 0);
+    this.odd_mat.setShininess(10.0);
 
     this.player0_mat = new CGFappearance(this.scene);
     this.player0_mat.setAmbient(0, 0, 0, 1);
@@ -63,6 +84,6 @@ class MyBoard extends CGFobject {
     }
   }
   update(t){
-    
+
   }
 }

@@ -13,6 +13,7 @@ class MyGameController {
     // 0 for player A, 1 for player B
     this.player_turn = 1;
     this.selected_piece = null;
+    this.highlighted = [];
   }
   /* Select different theme */
   changeTheme(id){
@@ -41,31 +42,59 @@ class MyGameController {
   /* When object is selected check if it is a piece or a tile */
   OnObjectSelected(obj, id) {
     if(obj instanceof MyPiece){
-      this.pieceSelected(obj);
+      this.SelectPiece(obj);
     } else if(obj instanceof MyTile){
-      if(obj.piece) this.pieceSelected(obj.piece);
+      if(obj.piece) { // if tile has a piece select it
+        this.SelectPiece(obj.piece);
+      } else if(this.selected_piece) {  // if tile does not have a piece than move selected piece
+        this.MovePiece(obj);
+      }
     } else {
       console.log('ERROR with picking');
       console.log(obj);
     }
   }
   /* When piece is selected */
-  pieceSelected(piece){
-    if(piece == this.selected_piece) {
+  SelectPiece(piece){
+    if(piece == this.selected_piece) {  // deselect piece if double-click
       piece.selected = false;
       piece.animations = [];
       this.selected_piece = null;
-    } else
-    // if it is the turn of this player
-    if(piece.player == this.player_turn){
+      this.UnhightlightTiles();
+    } else if(piece.player == this.player_turn){  // select piece if it is player turn
       piece.selected = true;
       if(this.selected_piece) {
         this.selected_piece.selected = false;
         this.selected_piece.animations = [];
       }
       this.selected_piece = piece;
-      this.selected_piece.animations.push(new MyPieceAnimation(this.scene, 2, 0, 1, 0));
+      piece.animations.push(new MyPieceAnimation(this.scene, 3, 0, 1, 0));
+      this.HightlightTiles(piece.tile.x, piece.tile.y);
     }
+  }
+  /* Move selected piece */
+  MovePiece(tile){
+    let x = tile.x, y= tile.y;
+    // WIP ask prolog server if valid move
+    // assyncronous request, at the end should animate piece towards cell
+    // since movements are up, down, left, right its is simple changing the x and z accordingly
+    // this.selected_piece.animations.push(new MyPieceAnimation(this.scene, 3, 0, 0, 0));
+  }
+  HightlightTiles(x, y){
+    // WIP ask prolog server possible moves
+    // for now all adjacent are possible
+    for(let tile of this.board.tiles){
+      if(tile.x == x && tile.y == (y - 1)) { tile.highlight = true; this.highlighted.push(tile); }
+      else if(tile.x == x && tile.y == (y + 1)) { tile.highlight = true; this.highlighted.push(tile); }
+      else if(tile.y == y && tile.x == (x - 1)) { tile.highlight = true; this.highlighted.push(tile); }
+      else if(tile.y == y && tile.x == (x + 1)) { tile.highlight = true; this.highlighted.push(tile); }
+    }
+  }
+  UnhightlightTiles(){
+    for(let tile of this.highlighted){
+      tile.highlight = false;
+    }
+    this.highlighted = [];
   }
   update(t){
     this.board.update(t);

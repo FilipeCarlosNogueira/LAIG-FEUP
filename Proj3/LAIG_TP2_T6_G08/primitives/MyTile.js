@@ -6,6 +6,7 @@ class MyTile extends CGFobject {
     this.piece = null;
 		this.x = x;
 		this.y = y;
+		this.highlight = false;
 		this.degree1 = 1;
 		this.degree2 = 1;
 		this.controlVertexes = [
