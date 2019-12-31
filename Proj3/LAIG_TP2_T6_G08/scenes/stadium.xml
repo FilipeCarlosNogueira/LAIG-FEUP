@@ -35,6 +35,11 @@
 
     <textures>
         <texture id="stadium_bot_text"    file="scenes/images/stadium_bot.jpg" />
+        <texture id="stadium_top_text"    file="scenes/images/stadium_top.jpg" />
+        <texture id="stadium_side_text"    file="scenes/images/stadium_side.png" />
+
+        <texture id="lights_text"    file="scenes/images/light.jpg" />
+        <texture id="metal_text"    file="scenes/images/metal.jpg" />
     </textures>
 
     <materials>
@@ -50,6 +55,13 @@
             <ambient r="0.25" g="0.148" b="0.06475" a="1.0" />
             <diffuse  r="0.4" g="0.2368" b="0.1036" a="1.0" />
             <specular  r="0.0774597" g="0.0458561" b="0.0200621" a="1.0" />
+        </material>
+
+        <material id="metal" shininess="51.2">
+            <emission r="0.0" g="0.0" b="0.0" a="0.0" />
+            <ambient r="0.19225" g="0.19225" b="0.19225" a="1.0" />
+            <diffuse  r="0.50754" g="0.50754" b="0.50754" a="1.0" />
+            <specular  r="0.508273" g="0.508273" b="0.508273" a="1.0" />
         </material>
     </materials>
 
@@ -106,213 +118,402 @@
     </primitives>
 
     <components>
-        <component id="skybox">
-            <transformation>
-                <translate x="0" y="45" z="0"/>
-                <scale x="120" y="100" z="180" />
-            </transformation>
-            <materials>
-                <material id="white" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="sky_side0" />
-                <componentref id="sky_side1" />
-                <componentref id="sky_side2" />
-                <componentref id="sky_side3" />
-                <componentref id="sky_top" />
-                <componentref id="sky_bot" />
-            </children>
-        </component>
+        <!-- LIGHT POST -->
+            <component id="light_post_0">
+                <transformation>
+                    <translate x="-55" y="-5" z="-80" />
+                    <rotate axis="y" angle="-30" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="light_post" />
+                    <componentref id="lights" />
+                </children>
+            </component>
+            <component id="light_post_1">
+                <transformation>
+                    <translate x="-55" y="-5" z="80" />
+                    <rotate axis="y" angle="30" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="light_post" />
+                    <componentref id="lights" />
+                </children>
+            </component>
+            <component id="light_post_2">
+                <transformation>
+                    <translate x="55" y="-5" z="80" />
+                    <rotate axis="y" angle="-210" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="light_post" />
+                    <componentref id="lights" />
+                </children>
+            </component>
+            <component id="light_post_3">
+                <transformation>
+                    <translate x="55" y="-5" z="-80" />
+                    <rotate axis="y" angle="210" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="light_post" />
+                    <componentref id="lights" />
+                </children>
+            </component>
 
-        <component id="sky_bot">
-            <transformation>
-                <translate x="0" y="-0.5" z="0" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="stadium_bot_text" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-        
-        <component id="sky_top">
-            <transformation>
-                <translate x="0" y="0.5" z="0" />
-                <rotate axis="y" angle="180" />
-                <rotate axis="x" angle="90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-        
-        <component id="sky_side2">
-            <transformation>
-                <translate x="-0.5" y="0" z="0" />
-                <rotate axis="y" angle="90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-        
-        <component id="sky_side3">
-            <transformation>
-                <translate x="0.5" y="0" z="0" />
-                <rotate axis="y" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-        
-        <component id="sky_side1">
-            <transformation>
-                <translate x="0" y="0" z="0.5" />
-                <rotate axis="y" angle="180" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-        
-        <component id="sky_side0">
-            <transformation>
-                <translate x="0" y="0" z="-0.5" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
+            <component id="light_post">
+                <transformation>
+                    <scale x="0.2" y="0.8" z="0.2" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="metal" />
+                </materials>
+                <texture id="metal_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+            </component>
 
-        <component id="table">
-            <transformation>
-                <translate x="0" y="-5.01" z="0" />
-                <scale x="1" y="1" z="1" />
-            </transformation>
-            <materials>
-                <material id="wood" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="table_leg0" />
-                <componentref id="table_leg1" />
-                <componentref id="table_leg2" />
-                <componentref id="table_leg3" />
-                <componentref id="table_top" />
-            </children>
-        </component>
+            <component id="lights">
+                <transformation>
+                    <translate x="0" y="10" z="0" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="box" />
+                </children>
+            </component>
 
-        <component id="table_leg0">
-            <transformation>
-                <translate x="3.5" y="0" z="-3.5" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="leg_cylinder" />
-            </children>
-        </component>
+            <component id="box">
+                <transformation>
+                    <scale x="1" y="4" z="6" />
+                    <translate x="0" y="0" z="-0.5" />
+                </transformation>
+                <materials>
+                    <material id="metal" />
+                </materials>
+                <texture id="metal_text" length_s="1" length_t="1" />
+                <children>
+                    <componentref id="box_side0" />
+                    <componentref id="box_side1" />
+                    <componentref id="box_side2" />
+                    <componentref id="box_side3" />
+                    <componentref id="box_top" />
+                    <componentref id="box_bot" />
+                </children>
+            </component>
 
-        <component id="table_leg1">
-            <transformation>
-                <translate x="-3.5" y="0" z="-3.5" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="leg_cylinder" />
-            </children>
-        </component>
+            <component id="box_side0">
+                <transformation>
+                    <translate x="0" y="0.5" z="0.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
 
-        <component id="table_leg2">
-            <transformation>
-                <translate x="-3.5" y="0" z="3.5" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="leg_cylinder" />
-            </children>
-        </component>
+            <component id="box_side1">
+                    <transformation>
+                        <translate x="0" y="-0.5" z="0.5" />
+                        <rotate axis="x" angle="90" />
+                    </transformation>
+                    <materials>
+                        <material id="inherit" />
+                    </materials>
+                    <texture id="inherit" />
+                    <children>
+                        <primitiveref id="square" />
+                    </children>
+            </component>
 
-        <component id="table_leg3">
-            <transformation>
-                <translate x="3.5" y="0" z="3.5" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <primitiveref id="leg_cylinder" />
-            </children>
-        </component>
+            <component id="box_side2">
+                <transformation>
+                    <translate x="0.5" y="0" z="0.5" />
+                    <rotate axis="y" angle="90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="lights_text" length_s="3" length_t="2" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
 
-        <component id="table_top">
-            <transformation>
-                <scale x="10" y="1" z="10" />
-                <translate x="0" y="5" z="0" />
-                <rotate axis="x" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" length_s="1" length_t="1" />
-            <children>
-                <componentref id="cube" />
-            </children>
-        </component>
+            <component id="box_side3">
+                <transformation>
+                    <translate x="-0.5" y="0" z="0.5" />
+                    <rotate axis="y" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
 
-        <component id="cube">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <componentref id="cube_side0" />
-                <componentref id="cube_side1" />
-                <componentref id="cube_side2" />
-                <componentref id="cube_side3" />
-                <componentref id="cube_top" />
-                <componentref id="cube_bot" />
-            </children>
+            <component id="box_top">
+                <transformation>
+                    <rotate axis="x" angle="180" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+
+            <component id="box_bot">
+                <transformation>
+                    <translate x="0" y="0" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+
+
+        <!-- SKYBOX -->
+            <component id="skybox">
+                <transformation>
+                    <translate x="0" y="45" z="0"/>
+                    <scale x="120" y="100" z="180" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="sky_side0" />
+                    <componentref id="sky_side1" />
+                    <componentref id="sky_side2" />
+                    <componentref id="sky_side3" />
+                    <componentref id="sky_top" />
+                    <componentref id="sky_bot" />
+                </children>
+            </component>
+
+            <component id="sky_bot">
+                <transformation>
+                    <rotate axis="y" angle="-90" />
+                    <translate x="0" y="-0.5" z="0" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="stadium_bot_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+            
+            <component id="sky_top">
+                <transformation>
+                    <translate x="0" y="0.5" z="0" />
+                    <rotate axis="y" angle="180" />
+                    <rotate axis="x" angle="90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="stadium_top_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+            
+            <component id="sky_side2">
+                <transformation>
+                    <translate x="-0.5" y="0" z="0" />
+                    <rotate axis="y" angle="90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="stadium_side_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+            
+            <component id="sky_side3">
+                <transformation>
+                    <translate x="0.5" y="0" z="0" />
+                    <rotate axis="y" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="stadium_side_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+            
+            <component id="sky_side1">
+                <transformation>
+                    <translate x="0" y="0" z="0.5" />
+                    <rotate axis="y" angle="180" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="stadium_side_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+            
+            <component id="sky_side0">
+                <transformation>
+                    <translate x="0" y="0" z="-0.5" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="stadium_side_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+        <!-- TABLE -->
+            <component id="table">
+                <transformation>
+                    <translate x="0" y="-5.01" z="0" />
+                    <scale x="1" y="1" z="1" />
+                </transformation>
+                <materials>
+                    <material id="wood" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="table_leg0" />
+                    <componentref id="table_leg1" />
+                    <componentref id="table_leg2" />
+                    <componentref id="table_leg3" />
+                    <componentref id="table_top" />
+                </children>
+            </component>
+
+            <component id="table_leg0">
+                <transformation>
+                    <translate x="3.5" y="0" z="-3.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="leg_cylinder" />
+                </children>
+            </component>
+
+            <component id="table_leg1">
+                <transformation>
+                    <translate x="-3.5" y="0" z="-3.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="leg_cylinder" />
+                </children>
+            </component>
+
+            <component id="table_leg2">
+                <transformation>
+                    <translate x="-3.5" y="0" z="3.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="leg_cylinder" />
+                </children>
+            </component>
+
+            <component id="table_leg3">
+                <transformation>
+                    <translate x="3.5" y="0" z="3.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="leg_cylinder" />
+                </children>
+            </component>
+
+            <component id="table_top">
+                <transformation>
+                    <scale x="10" y="1" z="10" />
+                    <translate x="0" y="5" z="0" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" length_s="1" length_t="1" />
+                <children>
+                    <componentref id="cube" />
+                </children>
+            </component>
+        <!-- CUBE -->
+            <component id="cube">
+                <transformation>
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <componentref id="cube_side0" />
+                    <componentref id="cube_side1" />
+                    <componentref id="cube_side2" />
+                    <componentref id="cube_side3" />
+                    <componentref id="cube_top" />
+                    <componentref id="cube_bot" />
+                </children>
             </component>
 
             <component id="cube_side0">
@@ -330,9 +531,23 @@
             </component>
 
             <component id="cube_side1">
+                    <transformation>
+                        <translate x="0" y="-0.5" z="0.5" />
+                        <rotate axis="x" angle="90" />
+                    </transformation>
+                    <materials>
+                        <material id="inherit" />
+                    </materials>
+                    <texture id="inherit" />
+                    <children>
+                        <primitiveref id="square" />
+                    </children>
+            </component>
+
+            <component id="cube_side2">
                 <transformation>
-                    <translate x="0" y="-0.5" z="0.5" />
-                    <rotate axis="x" angle="90" />
+                    <translate x="0.5" y="0" z="0.5" />
+                    <rotate axis="y" angle="90" />
                 </transformation>
                 <materials>
                     <material id="inherit" />
@@ -343,71 +558,61 @@
                 </children>
             </component>
 
-        <component id="cube_side2">
-            <transformation>
-                <translate x="0.5" y="0" z="0.5" />
-                <rotate axis="y" angle="90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
+            <component id="cube_side3">
+                <transformation>
+                    <translate x="-0.5" y="0" z="0.5" />
+                    <rotate axis="y" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
 
-        <component id="cube_side3">
-            <transformation>
-                <translate x="-0.5" y="0" z="0.5" />
-                <rotate axis="y" angle="-90" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
+            <component id="cube_top">
+                <transformation>
+                    <rotate axis="x" angle="180" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
 
-        <component id="cube_top">
-            <transformation>
-                <rotate axis="x" angle="180" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-
-        <component id="cube_bot">
-            <transformation>
-                <translate x="0" y="0" z="1" />
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="inherit" />
-            <children>
-                <primitiveref id="square" />
-            </children>
-        </component>
-
-        <component id="demoRoot">
-            <transformation>
-            </transformation>
-            <materials>
-                <material id="inherit" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="table" />
-                <componentref id="skybox" />
-            </children>
-        </component>
+            <component id="cube_bot">
+                <transformation>
+                    <translate x="0" y="0" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+            </component>
+        <!-- ROOT -->
+            <component id="demoRoot">
+                <transformation>
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="table" />
+                    <componentref id="skybox" />
+                    <componentref id="light_post_0" />
+                    <componentref id="light_post_1" />
+                    <componentref id="light_post_2" />
+                    <componentref id="light_post_3" />
+                </children>
+            </component>
     </components>
 </lxs>
