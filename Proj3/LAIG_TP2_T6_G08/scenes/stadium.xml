@@ -1,5 +1,5 @@
 <lxs>
-    <scene root="demoRoot" axis_length="5"/>
+    <scene root="root" axis_length="5"/>
 
     <views default="free_cam">
         <perspective id="free_cam" near="0.1" far="300" angle="45">
@@ -24,13 +24,49 @@
     </globals>
 
     <lights>
-        <omni id="demoLight" enabled="1">
+        <omni id="sun_light" enabled="0">
             <location x="10" y="50" z="30" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="1" linear="0" quadratic="0" />
         </omni>
+
+        <spot id="spot_light0" enabled="0" angle="10" exponent="1">
+            <location x="55" y="10" z="80" w="1" />
+            <target x="-30" y="-8" z="-60" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
+
+        <spot id="spot_light1" enabled="0" angle="10" exponent="1">
+            <location x="55" y="10" z="-80" w="1" />
+            <target x="-30" y="-8" z="60" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
+
+        <spot id="spot_light2" enabled="0" angle="10" exponent="1">
+            <location x="-55" y="10" z="80" w="1" />
+            <target x="30" y="-8" z="-60" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
+
+        <spot id="spot_light3" enabled="0" angle="10" exponent="1">
+            <location x="-55" y="10" z="-80" w="1" />
+            <target x="30" y="-8" z="60" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1" linear="0" quadratic="0" />
+        </spot>
     </lights>
 
     <textures>
@@ -47,7 +83,7 @@
     <materials>
         <material id="white" shininess="10">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient  r="0.5" g="0.5" b="0.5" a="1.0" />
+            <ambient  r="0.1" g="0.1" b="0.1" a="1.0" />
             <diffuse  r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </material>
@@ -714,7 +750,7 @@
                 </children>
                 </component>
         <!-- ROOT -->
-            <component id="demoRoot">
+            <component id="root">
                 <transformation>
                 </transformation>
                 <materials>
