@@ -68,7 +68,7 @@ class MyGameController {
         this.selected_piece.animations = [];
       }
       this.selected_piece = piece;
-      piece.animations.push(new MyPieceAnimation(this.scene, 3, 0, 1, 0));
+      piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0));
       this.UnhightlightTiles();
       this.HightlightTiles(piece.tile.x, piece.tile.y);
     }

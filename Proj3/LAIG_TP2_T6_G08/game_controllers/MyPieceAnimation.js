@@ -18,12 +18,8 @@ class MyPieceAnimation extends MyAnimation {
       mat4.translate(this.matrix, this.matrix, translate);
       return;
     }
-
-    translate = [
-                  (this.time / this.duration) * this.x,
-                  (this.time / this.duration) * this.y,
-                  (this.time / this.duration) * this.z,
-                ];
+    let ratio = (this.time / this.duration) * (this.time / this.duration);
+    translate = [ratio  * this.x, ratio * this.y, ratio * this.z];
     mat4.translate(this.matrix, this.matrix, translate);
   }
   finish(){
