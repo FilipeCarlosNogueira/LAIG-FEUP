@@ -2,17 +2,17 @@
     <scene root="demoRoot" axis_length="5"/>
 
     <views default="free_cam">
-        <perspective id="free_cam" near="0.1" far="500" angle="45">
+        <perspective id="free_cam" near="0.1" far="300" angle="45">
             <from x="30" y="10" z="0" />
             <to x="0" y="2" z="0" />
         </perspective>
 
-        <perspective id="player_A" near="0.1" far="500" angle="45">
+        <perspective id="player_A" near="0.1" far="300" angle="45">
             <from x="-8" y="8" z="8" />
             <to x="0" y="2" z="0" />
         </perspective>
 
-        <perspective id="player_B" near="0.1" far="500" angle="45">
+        <perspective id="player_B" near="0.1" far="300" angle="45">
             <from x="8" y="8" z="-8" />
             <to x="0" y="2" z="0" />
         </perspective>
@@ -40,6 +40,8 @@
 
         <texture id="lights_text"    file="scenes/images/light.jpg" />
         <texture id="metal_text"    file="scenes/images/metal.jpg" />
+
+        <texture id="goal_net_text"    file="scenes/images/goal_net.png" />
     </textures>
 
     <materials>
@@ -118,6 +120,148 @@
     </primitives>
 
     <components>
+        <!-- GOAL -->
+            <component id="goal_0">
+                <transformation>
+                    <translate x="0" y="-1" z="-80.5" />
+                    <scale x="2.7" y="2" z="2.7" />
+                    <rotate axis="y" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="goal_net" />
+                    <componentref id="goal_post_0" />
+                    <componentref id="goal_post_1" />
+                    <componentref id="goal_post_2" />
+                </children>
+                </component>
+            <component id="goal_1">
+                <transformation>
+                    <translate x="0" y="-1" z="80.5" />
+                    <scale x="2.7" y="2" z="2.7" />
+                    <rotate axis="y" angle="90" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="goal_net" />
+                    <componentref id="goal_post_0" />
+                    <componentref id="goal_post_1" />
+                    <componentref id="goal_post_2" />
+                </children>
+                </component>
+            <component id="goal_net">
+                <transformation>
+                    <scale x="2" y="4" z="6" />
+                    <translate x="0" y="0" z="-0.5" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="goal_net_text" length_s="5" length_t="5" />
+                <children>
+                    <componentref id="goal_net_side0" />
+                    <componentref id="goal_net_side3" />
+                    <componentref id="goal_net_top" />
+                    <componentref id="goal_net_bot" />
+                </children>
+                </component>
+            <component id="goal_net_side0">
+                <transformation>
+                    <translate x="0" y="0.5" z="0.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+                </component>
+            <component id="goal_net_side3">
+                <transformation>
+                    <translate x="-0.5" y="0" z="0.5" />
+                    <rotate axis="y" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+                </component>
+            <component id="goal_net_top">
+                <transformation>
+                    <rotate axis="x" angle="180" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+                </component>
+            <component id="goal_net_bot">
+                <transformation>
+                    <translate x="0" y="0" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+                </component>            
+            <component id="goal_post_0">
+                <transformation>
+                    <translate x="1" y="-2" z="3" />
+                    <scale x="0.05" y="0.4" z="0.05" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="metal_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="goal_post_1">
+                <transformation>
+                    <translate x="1" y="-2" z="-3" />
+                    <scale x="0.05" y="0.4" z="0.05" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="metal_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="goal_post_2">
+                <transformation>
+                    <translate x="1" y="2" z="-3" />
+                    <scale x="0.05" y="0.05" z="0.6" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="metal_text" length_s="1" length_t="1" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
         <!-- LIGHT POST -->
             <component id="light_post_0">
                 <transformation>
@@ -132,7 +276,7 @@
                     <componentref id="light_post" />
                     <componentref id="lights" />
                 </children>
-            </component>
+                    </component>
             <component id="light_post_1">
                 <transformation>
                     <translate x="-55" y="-5" z="80" />
@@ -146,7 +290,7 @@
                     <componentref id="light_post" />
                     <componentref id="lights" />
                 </children>
-            </component>
+                    </component>
             <component id="light_post_2">
                 <transformation>
                     <translate x="55" y="-5" z="80" />
@@ -160,7 +304,7 @@
                     <componentref id="light_post" />
                     <componentref id="lights" />
                 </children>
-            </component>
+                    </component>
             <component id="light_post_3">
                 <transformation>
                     <translate x="55" y="-5" z="-80" />
@@ -174,8 +318,7 @@
                     <componentref id="light_post" />
                     <componentref id="lights" />
                 </children>
-            </component>
-
+                    </component>
             <component id="light_post">
                 <transformation>
                     <scale x="0.2" y="0.8" z="0.2" />
@@ -188,8 +331,7 @@
                 <children>
                     <primitiveref id="cylinder" />
                 </children>
-            </component>
-
+                    </component>
             <component id="lights">
                 <transformation>
                     <translate x="0" y="10" z="0" />
@@ -201,8 +343,7 @@
                 <children>
                     <componentref id="box" />
                 </children>
-            </component>
-
+                    </component>
             <component id="box">
                 <transformation>
                     <scale x="1" y="4" z="6" />
@@ -220,8 +361,7 @@
                     <componentref id="box_top" />
                     <componentref id="box_bot" />
                 </children>
-            </component>
-
+                </component>
             <component id="box_side0">
                 <transformation>
                     <translate x="0" y="0.5" z="0.5" />
@@ -234,22 +374,20 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="box_side1">
-                    <transformation>
-                        <translate x="0" y="-0.5" z="0.5" />
-                        <rotate axis="x" angle="90" />
-                    </transformation>
-                    <materials>
-                        <material id="inherit" />
-                    </materials>
-                    <texture id="inherit" />
-                    <children>
-                        <primitiveref id="square" />
-                    </children>
-            </component>
-
+                <transformation>
+                    <translate x="0" y="-0.5" z="0.5" />
+                    <rotate axis="x" angle="90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+                </component>
             <component id="box_side2">
                 <transformation>
                     <translate x="0.5" y="0" z="0.5" />
@@ -262,8 +400,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="box_side3">
                 <transformation>
                     <translate x="-0.5" y="0" z="0.5" />
@@ -276,8 +413,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="box_top">
                 <transformation>
                     <rotate axis="x" angle="180" />
@@ -289,8 +425,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="box_bot">
                 <transformation>
                     <translate x="0" y="0" z="1" />
@@ -302,9 +437,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
-
+                </component>
         <!-- SKYBOX -->
             <component id="skybox">
                 <transformation>
@@ -323,8 +456,7 @@
                     <componentref id="sky_top" />
                     <componentref id="sky_bot" />
                 </children>
-            </component>
-
+                </component>
             <component id="sky_bot">
                 <transformation>
                     <rotate axis="y" angle="-90" />
@@ -338,8 +470,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-            
+                </component>        
             <component id="sky_top">
                 <transformation>
                     <translate x="0" y="0.5" z="0" />
@@ -353,8 +484,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-            
+                </component>            
             <component id="sky_side2">
                 <transformation>
                     <translate x="-0.5" y="0" z="0" />
@@ -367,8 +497,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-            
+                </component>            
             <component id="sky_side3">
                 <transformation>
                     <translate x="0.5" y="0" z="0" />
@@ -381,8 +510,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-            
+                </component>            
             <component id="sky_side1">
                 <transformation>
                     <translate x="0" y="0" z="0.5" />
@@ -395,8 +523,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-            
+                </component>            
             <component id="sky_side0">
                 <transformation>
                     <translate x="0" y="0" z="-0.5" />
@@ -408,7 +535,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
+                </component>
         <!-- TABLE -->
             <component id="table">
                 <transformation>
@@ -426,8 +553,7 @@
                     <componentref id="table_leg3" />
                     <componentref id="table_top" />
                 </children>
-            </component>
-
+                </component>
             <component id="table_leg0">
                 <transformation>
                     <translate x="3.5" y="0" z="-3.5" />
@@ -440,8 +566,7 @@
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
-            </component>
-
+                </component>
             <component id="table_leg1">
                 <transformation>
                     <translate x="-3.5" y="0" z="-3.5" />
@@ -454,8 +579,7 @@
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
-            </component>
-
+                </component>
             <component id="table_leg2">
                 <transformation>
                     <translate x="-3.5" y="0" z="3.5" />
@@ -468,8 +592,7 @@
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
-            </component>
-
+                </component>
             <component id="table_leg3">
                 <transformation>
                     <translate x="3.5" y="0" z="3.5" />
@@ -482,8 +605,7 @@
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
-            </component>
-
+                </component>
             <component id="table_top">
                 <transformation>
                     <scale x="10" y="1" z="10" />
@@ -497,7 +619,7 @@
                 <children>
                     <componentref id="cube" />
                 </children>
-            </component>
+                </component>
         <!-- CUBE -->
             <component id="cube">
                 <transformation>
@@ -514,8 +636,7 @@
                     <componentref id="cube_top" />
                     <componentref id="cube_bot" />
                 </children>
-            </component>
-
+                </component>
             <component id="cube_side0">
                 <transformation>
                     <translate x="0" y="0.5" z="0.5" />
@@ -528,22 +649,20 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="cube_side1">
-                    <transformation>
-                        <translate x="0" y="-0.5" z="0.5" />
-                        <rotate axis="x" angle="90" />
-                    </transformation>
-                    <materials>
-                        <material id="inherit" />
-                    </materials>
-                    <texture id="inherit" />
-                    <children>
-                        <primitiveref id="square" />
-                    </children>
-            </component>
-
+                <transformation>
+                    <translate x="0" y="-0.5" z="0.5" />
+                    <rotate axis="x" angle="90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="inherit" />
+                <children>
+                    <primitiveref id="square" />
+                </children>
+                </component>
             <component id="cube_side2">
                 <transformation>
                     <translate x="0.5" y="0" z="0.5" />
@@ -556,8 +675,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="cube_side3">
                 <transformation>
                     <translate x="-0.5" y="0" z="0.5" />
@@ -570,8 +688,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="cube_top">
                 <transformation>
                     <rotate axis="x" angle="180" />
@@ -583,8 +700,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
-
+                </component>
             <component id="cube_bot">
                 <transformation>
                     <translate x="0" y="0" z="1" />
@@ -596,7 +712,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-            </component>
+                </component>
         <!-- ROOT -->
             <component id="demoRoot">
                 <transformation>
@@ -612,7 +728,9 @@
                     <componentref id="light_post_1" />
                     <componentref id="light_post_2" />
                     <componentref id="light_post_3" />
+                    <componentref id="goal_0" />
+                    <componentref id="goal_1" />
                 </children>
-            </component>
+                </component>
     </components>
 </lxs>
