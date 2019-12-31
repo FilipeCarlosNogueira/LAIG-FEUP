@@ -5,13 +5,13 @@ class MyGameController {
     this.board = new MyBoard(scene, this);
     // list of themes
     this.themes = {
-                    'normal':   'normal.xml',
-                    'normal1':  'normal1.xml',
+                    'default':  'basic.xml',
+                    'stadium':  'stadium.xml',
                   };
     // theme selected
-    this.currentTheme = new MySceneGraph(this.themes['normal'], this.scene);
-    // 0 for player A, 1 for player B
-    this.player_turn = 1;
+    this.currentTheme = new MySceneGraph(this.themes['stadium'], this.scene);
+    // 0 for player B, 1 for player A
+    this.player_turn = 0;
     this.selected_piece = null;
     this.highlighted = [];
   }
@@ -58,7 +58,8 @@ class MyGameController {
   SelectPiece(piece){
     if(piece == this.selected_piece) {  // deselect piece if double-click
       piece.selected = false;
-      piece.animations = [];
+      this.selected_piece.animations = [];
+      //for(let anim of piece.animations) anim.reverse();
       this.selected_piece = null;
       this.UnhightlightTiles();
     } else if(piece.player == this.player_turn){  // select piece if it is player turn
@@ -66,8 +67,10 @@ class MyGameController {
       if(this.selected_piece) {
         this.selected_piece.selected = false;
         this.selected_piece.animations = [];
+      //for(let anim of this.selected_piece.animations) anim.reverse();
       }
       this.selected_piece = piece;
+      piece.animations = [];
       piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0));
       this.UnhightlightTiles();
       this.HightlightTiles(piece.tile.x, piece.tile.y);
@@ -99,8 +102,5 @@ class MyGameController {
   }
   update(t){
     this.board.update(t);
-    if(this.selected_piece)
-      for(let anim of this.selected_piece.animations)
-        anim.update(t);
   }
 }

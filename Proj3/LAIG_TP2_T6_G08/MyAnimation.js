@@ -1,7 +1,7 @@
 class MyAnimation{
     constructor(scene){
         this.scene = scene;
-        this.finished = 0;
+        this.finished = false;
         this.matrix = mat4.create();
     }
     update(t){
