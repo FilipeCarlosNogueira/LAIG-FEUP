@@ -998,7 +998,7 @@ class MySceneGraph {
   processNode(id, parentMaterial, parentTexture, parent_length_t, parent_length_s) {
     let comp = this.components[id];
     if (comp == null || comp == undefined) {
-      this.onXMLError('Undefined component');
+      this.onXMLError('Undefined component with id ' + id);
       return;
     }
     this.scene.pushMatrix();

@@ -81,8 +81,8 @@ class MyPiece extends CGFobject {
   display(){
     this.scene.registerForPick(this.uniqueID, this);
     this.scene.pushMatrix();
-    for(let anim of this.animations)       anim.apply();
-    this.scene.translate(this.tile.y, 1, this.tile.x);
+    for(let anim of this.animations) anim.apply();
+    this.scene.translate(-2.5 + this.tile.y, 1, -2.5 + this.tile.x);
     super.display();
     this.scene.popMatrix();
     this.scene.clearPickRegistration();
