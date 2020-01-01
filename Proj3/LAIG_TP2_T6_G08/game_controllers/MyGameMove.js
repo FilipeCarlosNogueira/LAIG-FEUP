@@ -1,12 +1,9 @@
 class MyGameMove {
-  constructor(scene, gameController, orig, dest) {
+  constructor(scene, gameController, orig, dest, piece) {
     this.scene = scene;
     this.gameController = gameController;
     this.orig = orig;
     this.dest = dest;
-
-  }
-  animate(){
-
+    this.piece = piece;
   }
 }

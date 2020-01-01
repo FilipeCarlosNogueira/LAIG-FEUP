@@ -1,5 +1,5 @@
 class MyPieceAnimation extends MyAnimation {
-  constructor(scene, duration, x, y, z, chain, autoplay=true) {
+  constructor(scene, duration, x, y, z, chain=null, autoplay=true) {
     super(scene);
     this.sx = 0;
     this.sy = 0;

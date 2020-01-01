@@ -78,7 +78,7 @@ class MyPiece extends CGFobject {
     this.tile = tile;
     this.tile.setPiece(this);
   }
-  /* Move piece to xy */
+  /* Move piece to tile */
   move(tile){
     this.setTile(tile);
     this.animations.pop();
