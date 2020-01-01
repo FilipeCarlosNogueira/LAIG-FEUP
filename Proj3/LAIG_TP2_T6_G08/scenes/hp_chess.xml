@@ -3,7 +3,7 @@
 
     <views default="free_cam">
         <perspective id="free_cam" near="0.1" far="300" angle="45">
-            <from x="30" y="10" z="0" />
+            <from x="90" y="50" z="90" />
             <to x="0" y="2" z="0" />
         </perspective>
 
@@ -66,18 +66,18 @@
             <specular  r="0.508273" g="0.508273" b="0.508273" a="1.0" />
         </material>
 
-        <material id="black_piece" shininess="51.2">
+        <material id="white_piece" shininess="11.264">
             <emission r="0.0" g="0.0" b="0.0" a="0.0" />
-            <ambient r="0.19225" g="0.19225" b="0.19225" a="1.0" />
-            <diffuse  r="0.50754" g="0.50754" b="0.50754" a="1.0" />
-            <specular  r="0.508273" g="0.508273" b="0.508273" a="1.0" />
+            <ambient r="0.25" g="0.20725" b="0.20725" a="0.922" />
+            <diffuse  r="1.0" g="0.829" b="0.829" a="0.922" />
+            <specular  r="0.296648" g="0.296648" b="0.296648" a="0.922" />
         </material>
 
-        <material id="white_piece" shininess="71.2">
+        <material id="black_piece" shininess="38.4">
             <emission r="0.0" g="0.0" b="0.0" a="0.0" />
-            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-            <diffuse  r="0.8" g="0.8" b="0.8" a="1.0" />
-            <specular  r="0.05" g="0.05" b="0.05" a="1.0" />
+            <ambient r="0.05375" g="0.05" b="0.06625" a="0.82" />
+            <diffuse  r="0.18275" g="0.17" b="0.22525" a="0.82" />
+            <specular  r="0.332741" g="0.328634" b="0.346435" a="0.82" />
         </material>
     </materials>
 
@@ -209,7 +209,7 @@
                     <rotate axis="x" angle="-90" />
                 </transformation>
                 <materials>
-                    <material id="white_piece" />
+                    <material id="inherit" />
                 </materials>
                 <texture id="none" />
                 <children>
@@ -443,6 +443,130 @@
                 </children>
                 </component>
         <!-- KNIGHT -->
+            <component id="knight">
+                <transformation>
+                    <translate x="0" y="1.5" z="0" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="knight_head0" />
+                    <componentref id="knight_head1" />
+                    <componentref id="knight_body" />
+                    <componentref id="knight_leg0" />
+                    <componentref id="knight_leg1" />
+                    <componentref id="knight_leg2" />
+                    <componentref id="knight_leg3" />
+                    <componentref id="base" />
+                </children>
+                </component>
+            <component id="knight_body">
+                <transformation>
+                    <translate x="0" y="1" z="-1" />
+                    <rotate axis="x" angle="60" />
+                    <scale x="0.5" y="3" z="0.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="knight_head0">
+                <transformation>
+                    <translate x="0" y="2.5" z="1" />
+                    <rotate axis="x" angle="-30" />
+                    <scale x="0.5" y="1.25" z="0.5" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="knight_head1">
+                <transformation>
+                    <translate x="0" y="4" z="0.5" />
+                    <rotate axis="x" angle="60" />
+                    <scale x="0.3" y="1.25" z="0.3" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="knight_leg0">
+                <transformation>
+                    <translate x="0.4" y="0" z="-0.1" />
+                    <rotate axis="x" angle="-20" />
+                    <scale x="0.2" y="1" z="0.2" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="knight_leg1">
+                <transformation>
+                    <translate x="-0.4" y="0" z="-0.1" />
+                    <rotate axis="x" angle="-20" />
+                    <scale x="0.2" y="1" z="0.2" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="knight_leg2">
+                <transformation>
+                    <translate x="0.4" y="1" z="1.4" />
+                    <rotate axis="x" angle="-20" />
+                    <scale x="0.2" y="1" z="0.2" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>
+            <component id="knight_leg3">
+                <transformation>
+                    <translate x="-0.4" y="1" z="1.4" />
+                    <rotate axis="x" angle="-20" />
+                    <scale x="0.2" y="1" z="0.2" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="cylinder" />
+                </children>
+                </component>    
         <!-- BISHOP -->
             <component id="bishop">
                 <transformation>
@@ -1080,9 +1204,115 @@
                     <primitiveref id="square" />
                 </children>
                 </component>
-        <!-- ROOT -->
-            <component id="root">
+        <!-- WHITE -->
+            <component id="white_pawn0">
                 <transformation>
+                    <translate x="-52" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn1">
+                <transformation>
+                    <translate x="-38" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn2">
+                <transformation>
+                    <translate x="-23" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn3">
+                <transformation>
+                    <translate x="-8" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn4">
+                <transformation>
+                    <translate x="7" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn5">
+                <transformation>
+                    <translate x="22" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn6">
+                <transformation>
+                    <translate x="37" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_pawn7">
+                <transformation>
+                    <translate x="51" y="-5" z="-37" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="white_rook0">
+                <transformation>
+                    <translate x="-52" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
                 </transformation>
                 <materials>
                     <material id="white_piece" />
@@ -1090,6 +1320,369 @@
                 <texture id="none" />
                 <children>
                     <componentref id="rook" />
+                </children>
+                </component>
+            <component id="white_knight0">
+                <transformation>
+                    <translate x="-37" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="knight" />
+                </children>
+                </component>
+            <component id="white_bishop0">
+                <transformation>
+                    <translate x="-23" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="bishop" />
+                </children>
+                </component>
+            <component id="white_queen">
+                <transformation>
+                    <translate x="-8" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="queen" />
+                </children>
+                </component>
+            <component id="white_king">
+                <transformation>
+                    <translate x="7" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="king" />
+                </children>
+                </component>
+            <component id="white_bishop1">
+                <transformation>
+                    <translate x="22" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="bishop" />
+                </children>
+                </component>
+            <component id="white_knight1">
+                <transformation>
+                    <translate x="37" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="knight" />
+                </children>
+                </component>
+            <component id="white_rook1">
+                <transformation>
+                    <translate x="51" y="-5" z="-53" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="white_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="rook" />
+                </children>
+                </component>
+        
+        <!-- BALCK -->
+            <component id="black_pawn0">
+                <transformation>
+                    <translate x="-52" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn1">
+                <transformation>
+                    <translate x="-38" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn2">
+                <transformation>
+                    <translate x="-23" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn3">
+                <transformation>
+                    <translate x="-8" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn4">
+                <transformation>
+                    <translate x="7" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn5">
+                <transformation>
+                    <translate x="22" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn6">
+                <transformation>
+                    <translate x="37" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_pawn7">
+                <transformation>
+                    <translate x="51" y="-5" z="37" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="pawn" />
+                </children>
+                </component>
+            <component id="black_rook0">
+                <transformation>
+                    <translate x="-52" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="rook" />
+                </children>
+                </component>
+            <component id="black_knight0">
+                <transformation>
+                    <translate x="-37" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="knight" />
+                </children>
+                </component>
+            <component id="black_bishop0">
+                <transformation>
+                    <translate x="-23" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="bishop" />
+                </children>
+                </component>
+            <component id="black_queen">
+                <transformation>
+                    <translate x="-8" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="queen" />
+                </children>
+                </component>
+            <component id="black_king">
+                <transformation>
+                    <translate x="7" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="king" />
+                </children>
+                </component>
+            <component id="black_bishop1">
+                <transformation>
+                    <translate x="22" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="bishop" />
+                </children>
+                </component>
+            <component id="black_knight1">
+                <transformation>
+                    <translate x="37" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="knight" />
+                </children>
+                </component>
+            <component id="black_rook1">
+                <transformation>
+                    <translate x="51" y="-5" z="53" />
+                    <rotate axis="y" angle="180" />
+                    <scale x="3" y="3" z="3" />
+                </transformation>
+                <materials>
+                    <material id="black_piece" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="rook" />
+                </children>
+                </component>
+        <!-- ROOT -->
+            <component id="root">
+                <transformation>
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="skybox" />
+                    <componentref id="table" />
+                    <componentref id="white_pawn0" />
+                    <componentref id="white_pawn1" />
+                    <componentref id="white_pawn2" />
+                    <componentref id="white_pawn3" />
+                    <componentref id="white_pawn4" />
+                    <componentref id="white_pawn5" />
+                    <componentref id="white_pawn6" />
+                    <componentref id="white_pawn7" />
+                    <componentref id="white_rook0" />
+                    <componentref id="white_knight0" />
+                    <componentref id="white_bishop0" />
+                    <componentref id="white_queen" />
+                    <componentref id="white_king" />
+                    <componentref id="white_bishop1" />
+                    <componentref id="white_knight1" />
+                    <componentref id="white_rook1" />
+
+                    <componentref id="black_pawn0" />
+                    <componentref id="black_pawn1" />
+                    <componentref id="black_pawn2" />
+                    <componentref id="black_pawn3" />
+                    <componentref id="black_pawn4" />
+                    <componentref id="black_pawn5" />
+                    <componentref id="black_pawn6" />
+                    <componentref id="black_pawn7" />
+                    <componentref id="black_rook0" />
+                    <componentref id="black_knight0" />
+                    <componentref id="black_bishop0" />
+                    <componentref id="black_queen" />
+                    <componentref id="black_king" />
+                    <componentref id="black_bishop1" />
+                    <componentref id="black_knight1" />
+                    <componentref id="black_rook1" />
                 </children>
                 </component>
     </components>
