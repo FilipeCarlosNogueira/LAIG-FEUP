@@ -74,8 +74,23 @@ class MyPiece extends CGFobject {
   updateTexCoords(length_t, length_s){}
   /* Set the tile the piece is on currently */
   setTile(tile){
+    if(this.tile) this.tile.unset();
     this.tile = tile;
     this.tile.setPiece(this);
+  }
+  /* Move piece to xy */
+  move(tile){
+    this.setTile(tile);
+    this.animations.pop();
+  }
+  clearAnimations(){ 
+    this.animations = [];
+  }
+  isMoving(){
+    for(let anim of this.animations)
+      if(!anim.finished)
+        return true;
+    return false;
   }
   /* Set piece id, set its position and display the piece */
   display(){

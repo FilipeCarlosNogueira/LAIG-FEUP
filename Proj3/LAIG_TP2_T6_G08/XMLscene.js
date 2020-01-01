@@ -14,24 +14,28 @@ class XMLscene extends CGFscene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
-        this.axis = new CGFaxis(this);
         this.setUpdatePeriod(20);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
         this.last_update = Date.now();
         this.axis = new CGFaxis(this);
-
-        this.gameController = new MyGameController(this);
+        this.initGame();
     }
     initCameras() {
         this.cameraView = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
     }
+    initGame() {
+        this.gameController = new MyGameController(this);
+        //this.theme = 0;
+        //this.themeSelect = this.gameController.themes;
+        //this.interface.addThemeGroup();
+    }
     initLights() {
         let i = 0;
-        for (let key in this.graph.lights) {
+        for (let key in this.gameController.currentTheme.lights) {
             if (i >= 8)
                 break;
-            if (this.graph.lights.hasOwnProperty(key)) {
-                let light = this.graph.lights[key];
+            if (this.gameController.currentTheme.lights.hasOwnProperty(key)) {
+                let light = this.gameController.currentTheme.lights[key];
                 this.lights[i].setPosition(light[2][0], light[2][1], light[2][2], light[2][3]);
                 this.lights[i].setAmbient(light[3][0], light[3][1], light[3][2], light[3][3]);
                 this.lights[i].setDiffuse(light[4][0], light[4][1], light[4][2], light[4][3]);
@@ -59,7 +63,7 @@ class XMLscene extends CGFscene {
     }
     initViews(){
         this.view = 0;
-        this.cameraView = this.graph.views[this.graph.default].camera;
+        this.cameraView = this.gameController.currentTheme.views[this.gameController.currentTheme.default].camera;
         this.interface.addViewsGroup();
     }
     setDefaultAppearance() {
@@ -69,9 +73,9 @@ class XMLscene extends CGFscene {
         this.setShininess(10.0);
     }
     onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
-        this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-        this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
+        this.axis = new CGFaxis(this, this.gameController.currentTheme.referenceLength);
+        this.gl.clearColor(this.gameController.currentTheme.background[0], this.gameController.currentTheme.background[1], this.gameController.currentTheme.background[2], this.gameController.currentTheme.background[3]);
+        this.setGlobalAmbientLight(this.gameController.currentTheme.ambient[0], this.gameController.currentTheme.ambient[1], this.gameController.currentTheme.ambient[2], this.gameController.currentTheme.ambient[3]);
         this.initLights();
         this.initViews();
         this.sceneInited = true;
@@ -87,8 +91,8 @@ class XMLscene extends CGFscene {
         this.applyViewMatrix();
         this.pushMatrix();
         let i = 0;
-        for (let key in this.graph.lights) {
-            if (this.graph.lights.hasOwnProperty(key)) {
+        for (let key in this.gameController.currentTheme.lights) {
+            if (this.gameController.currentTheme.lights.hasOwnProperty(key)) {
                 if (this.lightValues[key]) this.lights[i].enable();
                 else this.lights[i].disable();
                 this.lights[i].update();
@@ -97,7 +101,6 @@ class XMLscene extends CGFscene {
         }
         if (this.sceneInited) {
             this.setDefaultAppearance();
-            this.graph.displayScene();
             this.gameController.display();
             this.axis.display();
         }
@@ -109,12 +112,15 @@ class XMLscene extends CGFscene {
     update(t){
         let delta_time = t - this.last_update;
         this.last_update = t;
-        this.graph.update(delta_time);
+        this.gameController.currentTheme.update(delta_time);
         this.gameController.update(delta_time);
     }
     updateCamera(){
-        this.cameraView = this.graph.views[this.view].camera;
+        this.cameraView = this.gameController.currentTheme.views[this.view].camera;
         this.interface.setActiveCamera(this.cameraView);
+    }
+    updateTheme(){
+        this.gameController.changeTheme(this.theme);
     }
     display(){
         this.gameController.managePick(false, this.pickResults);
