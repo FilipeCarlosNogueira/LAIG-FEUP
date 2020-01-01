@@ -444,6 +444,125 @@
                 </component>
         <!-- KNIGHT -->
         <!-- BISHOP -->
+            <component id="bishop">
+                <transformation>
+                    <translate x="0" y="1.5" z="0" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="bishop_head" />
+                    <componentref id="bishop_body" />
+                    <componentref id="bishop_arm0_0" />
+                    <componentref id="bishop_arm0_1" />
+                    <componentref id="bishop_arm1_0" />
+                    <componentref id="bishop_arm1_1" />
+                    <componentref id="bishop_staff" />
+                    <componentref id="base" />
+                </children>
+                </component>
+            <component id="bishop_body">
+                <transformation>
+                    <translate x="0" y="0" z="0" />
+                    <scale x="0.8" y="3" z="0.3" />
+                    <rotate axis="y" angle="60" />
+                    <rotate axis="x" angle="-90" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="body" />
+                </children>
+                </component>
+            <component id="bishop_arm0_0">
+                <transformation>
+                    <translate x="-0.8" y="2" z="0" />
+                    <rotate axis="y" angle="45" />
+                    <rotate axis="x" angle="-90" />
+                    <scale x="0.2" y="0.2" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="body" />
+                </children>
+                </component>
+            <component id="bishop_arm0_1">
+                <transformation>
+                    <translate x="-0.8" y="2" z="0" />
+                    <rotate axis="x" angle="-20" />
+                    <rotate axis="y" angle="45" />
+                    <scale x="0.2" y="0.2" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="body" />
+                </children>
+                </component>
+            <component id="bishop_arm1_0">
+                <transformation>
+                    <translate x="0.8" y="2" z="0" />
+                    <rotate axis="y" angle="-45" />
+                    <rotate axis="x" angle="-90" />
+                    <scale x="0.2" y="0.2" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="body" />
+                </children>
+                </component>
+            <component id="bishop_arm1_1">
+                <transformation>
+                    <translate x="0.8" y="2" z="0" />
+                    <rotate axis="x" angle="-20" />
+                    <rotate axis="y" angle="-45" />
+                    <scale x="0.2" y="0.2" z="1" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="body" />
+                </children>
+                </component>
+            <component id="bishop_head">
+                <transformation>
+                    <translate x="0" y="3.5" z="0" />
+                    <scale x="0.6" y="0.6" z="0.6" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <primitiveref id="sphere" />
+                </children>
+                </component>
+            <component id="bishop_staff">
+                <transformation>
+                    <translate x="0" y="0" z="0.8" />
+                </transformation>
+                <materials>
+                    <material id="inherit" />
+                </materials>
+                <texture id="none" />
+                <children>
+                    <componentref id="staff" />
+                </children>
+                </component>
         <!-- QUEEN -->
             <component id="queen">
                 <transformation>
@@ -968,7 +1087,7 @@
                 </materials>
                 <texture id="none" />
                 <children>
-                    <componentref id="queen" />
+                    <componentref id="king" />
                 </children>
                 </component>
     </components>
