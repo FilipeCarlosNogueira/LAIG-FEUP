@@ -98,7 +98,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             this.setDefaultAppearance();
             this.graph.displayScene();
-            this.gameController.display();
+            //this.gameController.display();
             this.axis.display();
         }
         this.popMatrix();

@@ -74,7 +74,7 @@ class MyBoard extends CGFobject {
         uniqueID += 1;
       }
     }
-    for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 6; i++) {
       this.pieces.push(new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], 2, 0));
       uniqueID += 1;
     }
