@@ -5,11 +5,12 @@ class MyGameController {
     this.board = new MyBoard(scene, this);
     // list of themes
     this.themes = {
-                    'default':  'basic.xml',
-                    'stadium':  'stadium.xml',
+                    'default':        'basic.xml',
+                    'stadium':        'stadium.xml',
+                    'harry potter':   'hp_chess.xml',
                   };
     // theme selected
-    this.currentTheme = new MySceneGraph(this.themes['stadium'], this.scene);
+    this.currentTheme = new MySceneGraph(this.themes['harry potter'], this.scene);
     // 0 for player B, 1 for player A
     this.player_turn = 0;
     this.selected_piece = null;

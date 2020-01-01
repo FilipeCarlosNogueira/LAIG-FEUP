@@ -12,17 +12,32 @@ class MyRectangle extends CGFobject {
       this.x1, this.y1, 0,
       this.x2, this.y1, 0,
       this.x1, this.y2, 0,
-      this.x2, this.y2, 0
+      this.x2, this.y2, 0,
+
+      this.x1, this.y1, 0,
+      this.x2, this.y1, 0,
+      this.x1, this.y2, 0,
+      this.x2, this.y2, 0,
     ];
-    this.indices = [0, 1, 2, 1, 3, 2];
-    this.normals = [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1];
-    this.texCoords = [0, 1, 1, 1, 0, 0, 1, 0];
+    this.indices = [0, 1, 2, 1, 3, 2, 
+                    6, 5, 4, 6, 7, 5];
+    this.normals = [
+                    0, 0, 1, 
+                    0, 0, 1, 
+                    0, 0, 1, 
+                    0, 0, 1,
+
+                    0, 0, -1, 
+                    0, 0, -1, 
+                    0, 0, -1, 
+                    0, 0, -1,
+                    ];
+    this.texCoords = [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0];
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
   updateTexCoords(length_t, length_s){
-    this.texCoords = [];
-    this.texCoords = [0, 1/length_t, 1/length_s, 1/length_t, 0, 0, 1/length_s, 0];
+    this.texCoords = [0, length_t, length_s, length_t, 0, 0, length_s, 0, 0, length_t, length_s, length_t, 0, 0, length_s, 0];
     this.updateTexCoordsGLBuffers();
   }
 }

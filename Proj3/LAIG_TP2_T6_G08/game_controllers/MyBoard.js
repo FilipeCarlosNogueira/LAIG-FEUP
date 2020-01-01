@@ -74,12 +74,10 @@ class MyBoard extends CGFobject {
         uniqueID += 1;
       }
     }
-    /* WIP Apply material for player A */
-    for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 6; i++) {
       this.pieces.push(new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], 2, 0));
       uniqueID += 1;
     }
-    /* WIP Apply material for player B  */
     for (let i = 35; i > 29; i--) {
       this.pieces.push(new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], 3, 1));
       uniqueID += 1;
