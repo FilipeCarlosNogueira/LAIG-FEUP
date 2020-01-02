@@ -107,9 +107,7 @@ class MyGameController {
     if(piece.isMoving()) return;
     let x = tile.x, y = tile.y;
     let px = piece.tile.x, py = piece.tile.y;
-    // WIP ask prolog server if valid move
-    // assyncronous request, at the end should animate piece towards cell
-    // since movements are up, down, left, right its is simple changing the x and z accordingly
+    let dx = x-px, dy = y-py;
     let chain = function(){
       piece.move(tile);
       this.unhighlightTiles();
@@ -117,11 +115,12 @@ class MyGameController {
       this.moves.push(new MyGameMove(this.scene, this, piece.tile, tile, piece));
       this.checkGameOver();
     }.bind(this);
+    piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain, false);
 
-    if(px == x && py == (y - 1))      { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  1, 0,  0, chain); }
-    else if(px == x && py == (y + 1)) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -1, 0,  0, chain); }
-    else if(py == y && px == (x - 1)) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  0, 0,  1, chain); }
-    else if(py == y && px == (x + 1)) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  0, 0, -1, chain); }
+    let onReply = function() {
+      piece.animations[1].play();
+    }.bind(this);
+    server.validMove_req(this.boardState, px, py, x, y, this.player_turn, onReply);
   }
   /* Undo previous move */
   undoMove(){
@@ -169,8 +168,7 @@ class MyGameController {
   /* Check if game as reached final state */
   checkGameOver(){
     let onReply = function(data) {
-      console.log('🕹️ Game Over');
-      console.log(data.target.response);
+      if(data.target.response != 'Bad Request') console.log('🕹️ Game Over');
     };
     server.gameOver_req(this.boardState, onReply);
   }
