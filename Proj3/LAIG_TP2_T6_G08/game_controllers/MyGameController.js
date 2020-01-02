@@ -4,13 +4,12 @@ class MyGameController {
     // the board
     this.board = new MyBoard(scene, this);
     // list of themes
-    this.themes = {
-                    'default':        'basic.xml',
-                    'stadium':        'stadium.xml',
-                    'harry potter':   'hp_chess.xml',
-                  };
+    this.themes = [];
+    this.themes.push('basic.xml');
+    this.themes.push('stadium.xml');
+    this.themes.push('hp_chess.xml');
     // theme selected
-    this.currentTheme = new MySceneGraph(this.themes['harry potter'], this.scene);
+    this.currentTheme = new MySceneGraph(this.themes[1], this.scene);
     // 0 for player B, 1 for player A
     this.player_turn = 0;
     this.selected_piece = null;
@@ -28,6 +27,7 @@ class MyGameController {
   /* Display the scene on the screen */
   display() {
     this.scene.clearPickRegistration();
+    this.currentTheme.displayScene();
     this.board.display();
   }
   /* Get results of picking and use them */
@@ -48,12 +48,12 @@ class MyGameController {
   /* When object is selected check if it is a piece or a tile */
   OnObjectSelected(obj, id) {
     if(obj instanceof MyPiece){
-      this.SelectPiece(obj);
+      this.selectPiece(obj);
     } else if(obj instanceof MyTile){
       if(obj.piece) { // if tile has a piece select it
-        this.SelectPiece(obj.piece);
+        this.selectPiece(obj.piece);
       } else if(this.selected_piece) {  // if tile does not have a piece than move selected piece
-        this.MovePiece(obj);
+        this.movePiece(this.selected_piece, obj);
       }
     } else {
       console.log('ERROR with picking');
@@ -61,36 +61,48 @@ class MyGameController {
     }
   }
   /* When piece is selected */
-  SelectPiece(piece){
+  selectPiece(piece){
     if(piece == this.selected_piece) {  // deselect piece if double-click
       piece.selected = false;
-      this.selected_piece.animations = [];
-      //for(let anim of piece.animations) anim.reverse();
+      for(let anim of piece.animations) anim.reverse(piece.clearAnimations);
       this.selected_piece = null;
-      this.UnhightlightTiles();
+      this.unhighlightTiles();
     } else if(piece.player == this.player_turn){  // select piece if it is player turn
       piece.selected = true;
       if(this.selected_piece) {
         this.selected_piece.selected = false;
-        this.selected_piece.animations = [];
+        this.selected_piece.clearAnimations;
       //for(let anim of this.selected_piece.animations) anim.reverse();
       }
       this.selected_piece = piece;
       piece.animations = [];
-      piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0));
-      this.UnhightlightTiles();
-      this.HightlightTiles(piece.tile.x, piece.tile.y);
+      piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0, null));
+      this.unhighlightTiles();
+      this.highlightTiles(piece.tile.x, piece.tile.y);
     }
   }
   /* Move selected piece */
-  MovePiece(tile){
-    let x = tile.x, y= tile.y;
+  movePiece(piece, tile){
+    if(piece.isMoving()) return;
+    let x = tile.x, y = tile.y;
+    let px = piece.tile.x, py = piece.tile.y;
     // WIP ask prolog server if valid move
     // assyncronous request, at the end should animate piece towards cell
     // since movements are up, down, left, right its is simple changing the x and z accordingly
-    // this.selected_piece.animations.push(new MyPieceAnimation(this.scene, 3, 0, 0, 0));
+    let highlight = this.highlightTiles.bind(this);
+    let unhighlight = this.unhighlightTiles.bind(this);
+    let chain = function(){
+      piece.move(tile);
+      unhighlight();
+      highlight(x,y);
+    };
+
+    if(px == x && py == (y - 1)) { piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 1, 0, 0, chain)); }
+    else if(px == x && py == (y + 1)) { piece.animations.push(new MyPieceAnimation(this.scene, 0.5, -1, 0, 0, chain)); }
+    else if(py == y && px == (x - 1)) { piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 0, 0, 1, chain)); }
+    else if(py == y && px == (x + 1)) { piece.animations.push(new MyPieceAnimation(this.scene, 0.5, 0, 0, -1, chain)); }
   }
-  HightlightTiles(x, y){
+  highlightTiles(x, y){
     // WIP ask prolog server possible moves
     // for now all adjacent are possible
     for(let tile of this.board.tiles){
@@ -100,7 +112,7 @@ class MyGameController {
       else if(tile.y == y && tile.x == (x + 1)) { tile.highlight = true; this.highlighted.push(tile); }
     }
   }
-  UnhightlightTiles(){
+  unhighlightTiles(){
     for(let tile of this.highlighted){
       tile.highlight = false;
     }

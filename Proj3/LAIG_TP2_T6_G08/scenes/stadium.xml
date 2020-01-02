@@ -76,6 +76,7 @@
 
         <texture id="lights_text"    file="scenes/images/light.jpg" />
         <texture id="metal_text"    file="scenes/images/metal.jpg" />
+        <texture id="wood_text"    file="scenes/images/wood.jpg" />
 
         <texture id="goal_net_text"    file="scenes/images/goal_net.png" />
     </textures>
@@ -581,7 +582,7 @@
                 <materials>
                     <material id="wood" />
                 </materials>
-                <texture id="none" />
+                <texture id="wood_text" length_s="3" length_t="3" />
                 <children>
                     <componentref id="table_leg0" />
                     <componentref id="table_leg1" />
@@ -598,7 +599,7 @@
                 <materials>
                     <material id="inherit" />
                 </materials>
-                <texture id="none" length_s="1" length_t="1" />
+                <texture id="inherit" length_s="1" length_t="1" />
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
@@ -611,7 +612,7 @@
                 <materials>
                     <material id="inherit" />
                 </materials>
-                <texture id="none" length_s="1" length_t="1" />
+                <texture id="inherit" length_s="1" length_t="1" />
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
@@ -624,7 +625,7 @@
                 <materials>
                     <material id="inherit" />
                 </materials>
-                <texture id="none" length_s="1" length_t="1" />
+                <texture id="inherit" length_s="1" length_t="1" />
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
@@ -637,7 +638,7 @@
                 <materials>
                     <material id="inherit" />
                 </materials>
-                <texture id="none" length_s="1" length_t="1" />
+                <texture id="inherit" length_s="1" length_t="1" />
                 <children>
                     <primitiveref id="leg_cylinder" />
                 </children>
@@ -651,7 +652,7 @@
                 <materials>
                     <material id="inherit" />
                 </materials>
-                <texture id="none" length_s="1" length_t="1" />
+                <texture id="inherit" length_s="1" length_t="1" />
                 <children>
                     <componentref id="cube" />
                 </children>

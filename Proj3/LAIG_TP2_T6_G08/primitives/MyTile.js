@@ -31,4 +31,7 @@ class MyTile extends CGFobject {
 	setPiece(piece){
 		this.piece = piece;
 	}
+	unset(){
+		this.piece = null;
+	}
 }
