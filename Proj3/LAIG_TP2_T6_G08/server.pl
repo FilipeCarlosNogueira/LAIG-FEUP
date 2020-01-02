@@ -118,11 +118,11 @@ parse_input(start_board, [B, P]) :-
 	board_setup(B, P).
 
 /* game over */
-parse_input(gameOver(B), Winner) :-
+parse_input(game_over(B), Winner) :-
 	end_game_A(B),
 	Winner is 1.
 
-parse_input(gameOver(B), Winner) :-
+parse_input(game_over(B), Winner) :-
 	end_game_B(B),
 	Winner is 0.
 

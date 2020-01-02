@@ -17,8 +17,6 @@ class MyGameController {
 
     //Current boardState in PROLOG list
     this.boardState = null;
-
-    makeRequest("start_board", data => this.inicializeBoard(data));
   }
   /* Select different theme */
   changeTheme(id){
@@ -120,14 +118,42 @@ class MyGameController {
   }
   update(t){
     this.board.update(t);
+    // AUX
+    this.testParseInput();
+  }
+
+  // funtion to test the server.pl parse input funtions
+  testParseInput(){
+
+    /* start game */
+    makeRequest("start_board", data => this.inicializeGame(data));
+    //console.log('this.boardState:'); console.log(this.boardState);
+
+    /* game over */
+    gameOver(this.boardState, data => this.gameOverCheck(data));
+
+    /* piece possible destinations */
+
+    /* check valid move */
+
+    /* make move */
+
+    /* valid chain move */
+
+    /* get valid chain moves */
+
+    /* CPU move */
+
   }
 
   /* Gets the initial state of the game */
-  inicializeBoard(data){
+  inicializeGame(data){
     this.boardState = JSON.parse(data.target.response)[0];
-    this.playerTurn = JSON.parse(data.target.response)[2];
+    this.player_turn = JSON.parse(data.target.response)[1];
+  }
 
-    console.log('this.boardState'); console.log(this.boardState);
+  gameOverCheck(data){
+    console.log(data.target.response);
   }
 
 

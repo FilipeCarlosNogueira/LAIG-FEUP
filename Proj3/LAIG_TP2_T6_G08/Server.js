@@ -16,10 +16,12 @@ function makeRequest(requestString, handleReply) {
     getPrologRequest(requestString, handleReply);
 }
 
-function gameOver(b, reply){
-    let request = 'gameOver(' + JSON.stringify(b) + ')';
+function gameOver(board, reply){
+    let request = 'game_over(' + JSON.stringify(board) + ')';
 
-    makeRequest(request, reply);
+    console.log(request);
+
+    //if(b != null) makeRequest(request, reply);
 }
 
 function getPiecePossibleDestinations(x, y, player, board, reply){
