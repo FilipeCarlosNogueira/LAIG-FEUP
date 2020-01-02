@@ -23,7 +23,7 @@ class MySceneGraph {
     this.reader.open('scenes/' + filename, this);
   }
   onXMLReady() {
-    console.log('XML Loading finished.');
+    console.log('👨‍💻 XML Loading finished.');
     let rootElement = this.reader.xmlDoc.documentElement;
     let error = this.parseXMLFile(rootElement);
     if (error != null) {
@@ -114,7 +114,7 @@ class MySceneGraph {
         this.onXMLMinorError('tag <components> out of order');
       if ((error = this.parseComponents(nodes[index])) != null) return error;
     }
-    console.log('XML parsed');
+    console.log('👨‍💻 XML parsed');
   }
   parseScene(sceneNode) {
     let root = this.reader.getString(sceneNode, 'root');

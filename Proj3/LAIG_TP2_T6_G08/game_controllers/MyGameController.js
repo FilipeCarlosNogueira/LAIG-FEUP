@@ -1,19 +1,30 @@
 class MyGameController {
   constructor(scene) {
     this.scene = scene;
+    this.initGameState();
     this.initBoard();
     this.initThemes();
   }
+  /* Gets the initial state of the game */
+  initGameState(){
+    let onReply = function(data) {
+      this.boardState = JSON.parse(data.target.response)[0];
+      this.player_turn = JSON.parse(data.target.response)[1];
+      console.log('🕹️ Game initialized ');
+    }.bind(this);
+    server.request("start_board", onReply);
+  }
   /* Initialize variables used for game logic */
   initBoard(){
-    // the board
+    // Build board from game state
     this.board = new MyBoard(this.scene, this);
+    // Defines current player turn 
     // 0 for player B, 1 for player A
     this.player_turn = 1;
     this.selected_piece = null;
-    // array of highlighted tiles
+    // Array of highlighted tiles
     this.highlighted = [];
-    // array of game moves
+    // Array of game moves
     this.moves = [];
   }
   /* Initialize all themes to be used */
@@ -83,9 +94,7 @@ class MyGameController {
     } else 
     if(piece.player == this.player_turn) {  // select piece if it is player turn
       if(this.selected_piece) { this.selected_piece.selected = false; this.selected_piece.animations[0].reverse(piece.clearAnimations); }
-      console.log(this.moves);
       this.undoMove();
-      console.log(this.moves);
       piece.selected = true;
       this.selected_piece = piece;
       piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0);
@@ -101,15 +110,13 @@ class MyGameController {
     // WIP ask prolog server if valid move
     // assyncronous request, at the end should animate piece towards cell
     // since movements are up, down, left, right its is simple changing the x and z accordingly
-    let highlight = this.highlightTiles.bind(this);
-    let unhighlight = this.unhighlightTiles.bind(this);
-    let gameMove = this.moves.push.bind(this);
     let chain = function(){
       piece.move(tile);
-      unhighlight();
-      highlight(x,y);
-      gameMove(new MyGameMove(this.scene, this, piece.tile, tile, piece));
-    };
+      this.unhighlightTiles();
+      this.highlightTiles(x,y);
+      this.moves.push(new MyGameMove(this.scene, this, piece.tile, tile, piece));
+      this.checkGameOver();
+    }.bind(this);
 
     if(px == x && py == (y - 1))      { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  1, 0,  0, chain); }
     else if(px == x && py == (y + 1)) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -1, 0,  0, chain); }
@@ -158,42 +165,14 @@ class MyGameController {
       If bot playing, do move
       interface will have dropdown
     */
-    // AUX
-    //this.testParseInput();
   }
-
-  // funtion to test the server.pl parse input funtions
-  testParseInput(){
-
-    /* start game */
-    makeRequest("start_board", data => this.inicializeGame(data));
-    //console.log('this.boardState:'); console.log(this.boardState);
-
-    /* game over */
-    gameOver(this.boardState, data => this.gameOverCheck(data));
-
-    /* piece possible destinations */
-
-    /* check valid move */
-
-    /* make move */
-
-    /* valid chain move */
-
-    /* get valid chain moves */
-
-    /* CPU move */
-
-  }
-
-  /* Gets the initial state of the game */
-  inicializeGame(data){
-    this.boardState = JSON.parse(data.target.response)[0];
-    this.player_turn = JSON.parse(data.target.response)[1];
-  }
-
-  gameOverCheck(data){
-    console.log(data.target.response);
+  /* Check if game as reached final state */
+  checkGameOver(){
+    let onReply = function(data) {
+      console.log('🕹️ Game Over');
+      console.log(data.target.response);
+    };
+    server.gameOver_req(this.boardState, onReply);
   }
 
 
