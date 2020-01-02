@@ -88,7 +88,7 @@ class MyPiece extends CGFobject {
   }
   isMoving(){
     for(let anim of this.animations)
-      if(!anim.finished)
+      if(!anim.finished && !anim.chained)
         return true;
     return false;
   }

@@ -87,7 +87,6 @@ class MyGameController {
     } else 
     if(piece.player == this.player_turn) {  // select piece if it is player turn
       if(this.selected_piece) { this.selected_piece.selected = false; this.selected_piece.animations[0].reverse(piece.clearAnimations); }
-      this.undoMove();
       piece.selected = true;
       this.selected_piece = piece;
       piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0);
@@ -111,8 +110,12 @@ class MyGameController {
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain, false);
 
     let onReply = function(data) {
-      piece.animations[1].play();
-      console.log(data.target.response);
+      if(data.target.status == 200){
+        if(data.target.response == 1)
+          piece.animations[1].play();
+        else
+          console.log('🕹️ Invalid move');
+      }
     }.bind(this);
     server.validMove_req(this.boardState, px, py, x, y, this.player_turn, onReply);
   }
@@ -135,6 +138,13 @@ class MyGameController {
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y){
     let onReply = function(data) {
+      if(data.target.status == 200){
+        let list = JSON.parse(data.target.response);
+        if(list.length)
+          console.log(list);
+        else
+          console.log('🕹️ No moves');
+      }
     }.bind(this);
     server.possibleMoves_req(x, y, this.player_turn, this.boardState, onReply);
     for(let tile of this.board.tiles){
@@ -163,7 +173,9 @@ class MyGameController {
   /* Check if game as reached final state */
   checkGameOver(){
     let onReply = function(data) {
-      if(data.target.response != 'Bad Request') console.log('🕹️ Game Over');
+      console.log(data.target.status);
+      console.log(data.target.response);
+      console.log('🕹️ Game Over');
     };
     server.gameOver_req(this.boardState, onReply);
   }

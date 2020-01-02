@@ -114,26 +114,18 @@ test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 parse_input(quit, goodbye).
 
 /* start */
-parse_input(start_board, [B, P]) :- 
-	board_setup(B, P).
+parse_input(start_board, [B, P]) :- board_setup(B, P).
 
 /* game over */
-parse_input(game_over(B), Winner) :-
-	end_game_A(B),
-	Winner is 1.
-
-parse_input(game_over(B), Winner) :-
-	end_game_B(B),
-	Winner is 0.
+parse_input(game_over(B), 1) :- end_game_A(B).
+parse_input(game_over(B), 2) :- end_game_B(B).
+parse_input(game_over(B), 3).
 
 /* piece possible destinations */
-parse_input(get_piece_possible_destinations(X, Y, P, B), MoveList):-
-	get_piece_possible_destinations(X, Y, P, B, MoveList).
+parse_input(get_piece_possible_destinations(X, Y, P, B), MoveList):- get_piece_possible_destinations(X, Y, P, B, MoveList).
 
 /* check valid move */
-parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 1) :-
-	valid_move(X1, Y1, X2, Y2, P, Board).
-
+parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 1) :- valid_move(X1, Y1, X2, Y2, P, Board).
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 0).
 
 /* make move */
@@ -141,17 +133,14 @@ parse_input(make_move(X1, Y1, X2, Y2, Board), NewBoard) :-
 	get_cell(X1, Y1, Board, C1),
 	get_cell(X2, Y2, Board, C2),
 	change_cell(X1, Y1, Board, AuxBoard, C2),
-    change_cell(X2, Y2, AuxBoard, NewBoard, C1).
+  change_cell(X2, Y2, AuxBoard, NewBoard, C1).
 
 /* valid chain move */
-parse_input(valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice), 1) :-
-	valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice).
-
+parse_input(valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice), 1) :- valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice).
 parse_input(valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice), 0).
 
 /* get valid chain moves */
-parse_input(get_valid_chain_moves(X1, Y1, X2, Y2, P, B), MoveList) :-
-	valid_chain_moves(X1, Y1, X2, Y2, P, B, MoveList).
+parse_input(get_valid_chain_moves(X1, Y1, X2, Y2, P, B), MoveList) :- valid_chain_moves(X1, Y1, X2, Y2, P, B, MoveList).
 
 /* CPU move */
 parse_input(cpu_move(Board, P), NewBoard) :-
