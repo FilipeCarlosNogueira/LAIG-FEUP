@@ -15,6 +15,11 @@ class MyGameController {
     this.player_turn = 0;
     this.selected_piece = null;
     this.highlighted = [];
+
+    //Current boardState in PROLOG list
+    this.boardState = null;
+
+    makeRequest("start_board", data => this.inicializeBoard(data));
   }
   /* Select different theme */
   changeTheme(id){
@@ -104,4 +109,14 @@ class MyGameController {
   update(t){
     this.board.update(t);
   }
+
+  /* Gets the initial state of the game */
+  inicializeBoard(data){
+    this.boardState = JSON.parse(data.target.response)[0];
+    this.playerTurn = JSON.parse(data.target.response)[2];
+
+    console.log('this.boardState'); console.log(this.boardState);
+  }
+
+
 }

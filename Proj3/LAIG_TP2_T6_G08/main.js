@@ -28,6 +28,7 @@ serialInclude([ '../lib/CGF.js',
                 'primitives/MyCylinder2.js',
                 'primitives/MyPiece.js',
                 'primitives/MyTile.js',
+                'Server.js',
 main=function() {
     let app         = new CGFapplication(document.body);
     let myInterface = new MyInterface();
