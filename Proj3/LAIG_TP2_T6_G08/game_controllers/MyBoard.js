@@ -1,30 +1,12 @@
 class MyBoard extends CGFobject {
-  constructor(scene, gameController) {
+  constructor(scene, gameController, boardState) {
     super(scene);
     this.gameController = gameController;
     this.tiles = [];
     this.pieces = [];
 
     this.init_materials();
-    this.init_board();
-  }
-  /* Display all the tiles and pieces */
-  display() {
-    let colunm = 1;
-    let row = 1;
-
-    for (let tile of this.tiles) {
-      if(tile.highlight) { this.highlight_mat.apply(); }
-      else if((tile.x+tile.y)%2) { this.even_mat.apply(); }
-      else { this.odd_mat.apply(); }
-      tile.display();
-    }
-    for (let piece of this.pieces) {
-      if(piece.selected) { this.selected_mat.apply(); }
-      else if(piece.player == 0) { this.player0_mat.apply(); }
-      else if(piece.player == 1) { this.player1_mat.apply(); }
-      piece.display();
-    }
+    this.init_board(boardState);
   }
   init_materials(){    
     // TODO WIP make materials come from graph to allow different board for each theme
@@ -53,33 +35,39 @@ class MyBoard extends CGFobject {
     this.odd_mat.setSpecular(0.773911, 0.773911, 0.773911, 1.0);
     this.odd_mat.setShininess(89.6);
 
-    this.player0_mat = new CGFappearance(this.scene);
-    this.player0_mat.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
-    this.player0_mat.setDiffuse(0.07568, 0.61424, 0.07568, 0.55);
-    this.player0_mat.setSpecular(0.633, 0.727811, 0.633, 0.55);
-    this.player0_mat.setShininess(76.8);
+    this.playerB_mat = new CGFappearance(this.scene);
+    this.playerB_mat.setAmbient(0.0215, 0.1745, 0.0215, 0.55);
+    this.playerB_mat.setDiffuse(0.07568, 0.61424, 0.07568, 0.55);
+    this.playerB_mat.setSpecular(0.633, 0.727811, 0.633, 0.55);
+    this.playerB_mat.setShininess(76.8);
 
-    this.player1_mat = new CGFappearance(this.scene);
-    this.player1_mat.setAmbient(0.24725, 0.1995, 0.0745, 1.0);
-    this.player1_mat.setDiffuse(0.75164, 0.60648, 0.22648, 1.0);
-    this.player1_mat.setSpecular(0.628281, 0.555802, 0.366065, 1.0);
-    this.player1_mat.setShininess(51.2);
+    this.playerA_mat = new CGFappearance(this.scene);
+    this.playerA_mat.setAmbient(0.24725, 0.1995, 0.0745, 1.0);
+    this.playerA_mat.setDiffuse(0.75164, 0.60648, 0.22648, 1.0);
+    this.playerA_mat.setSpecular(0.628281, 0.555802, 0.366065, 1.0);
+    this.playerA_mat.setShininess(51.2);
   }
-  init_board(){
+  init_board(boardState){
     let uniqueID = 1;
-    /* In the future board size and types of pieces will be given by prolog server */
-    for (let x = 0; x < 6; x++) {
-      for(let y = 0; y < 6; y++) {
-        this.tiles.push(new MyTile(this.scene, uniqueID, this.gameController, x, y));
+    let x_length = boardState.length - 2;
+    let y_length = boardState[0].length;
+    let tile;
+    for (let x = 0; x < x_length; x++) {
+      for(let y = 0; y < y_length; y++) {
+        tile = new MyTile(this.scene, uniqueID, this.gameController, x, y);
+        this.tiles.push(tile);
         uniqueID += 1;
       }
     }
-      for (let i = 0; i < 6; i++) {
-      this.pieces.push(new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], 2, 0));
+    let piece;
+    for (let i = 0; i < y_length; i++) {
+      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], boardState[1][i], 1);
+      this.pieces.push(piece);
       uniqueID += 1;
     }
-    for (let i = 35; i > 29; i--) {
-      this.pieces.push(new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], 3, 1));
+    for (let i = 0; i < y_length; i++) {
+      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[this.tiles.length - i - 1], boardState[x_length][i], 2);
+      this.pieces.push(piece);
       uniqueID += 1;
     }
   }
@@ -88,6 +76,24 @@ class MyBoard extends CGFobject {
       for(let anim of piece.animations){
         anim.update(t);
       }
+    }
+  }
+  /* Display all the tiles and pieces */
+  display() {
+    let colunm = 1;
+    let row = 1;
+
+    for (let tile of this.tiles) {
+      if(tile.highlight) { this.highlight_mat.apply(); }
+      else if((tile.x+tile.y)%2) { this.even_mat.apply(); }
+      else { this.odd_mat.apply(); }
+      tile.display();
+    }
+    for (let piece of this.pieces) {
+      if(piece.selected) { this.selected_mat.apply(); }
+      else if(piece.player == 2) { this.playerB_mat.apply(); }
+      else if(piece.player == 1) { this.playerA_mat.apply(); }
+      piece.display();
     }
   }
 }

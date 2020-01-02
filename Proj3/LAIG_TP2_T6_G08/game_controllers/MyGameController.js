@@ -2,7 +2,6 @@ class MyGameController {
   constructor(scene) {
     this.scene = scene;
     this.initGameState();
-    this.initBoard();
     this.initThemes();
   }
   /* Gets the initial state of the game */
@@ -10,6 +9,7 @@ class MyGameController {
     let onReply = function(data) {
       this.boardState = JSON.parse(data.target.response)[0];
       this.player_turn = JSON.parse(data.target.response)[1];
+      this.initBoard();
       console.log('🕹️ Game initialized ');
     }.bind(this);
     server.request("start_board", onReply);
@@ -17,9 +17,9 @@ class MyGameController {
   /* Initialize variables used for game logic */
   initBoard(){
     // Build board from game state
-    this.board = new MyBoard(this.scene, this);
+    this.board = new MyBoard(this.scene, this, this.boardState);
     // Defines current player turn 
-    // 0 for player B, 1 for player A
+    // 1 for player A, 2 for player B
     this.player_turn = 1;
     this.selected_piece = null;
     // Array of highlighted tiles
@@ -36,13 +36,6 @@ class MyGameController {
     this.themes.push('hp_chess.xml');
     // theme selected
     this.currentTheme = new MySceneGraph(this.themes[1], this.scene);
-    // 0 for player B, 1 for player A
-    this.player_turn = 0;
-    this.selected_piece = null;
-    this.highlighted = [];
-
-    //Current boardState in PROLOG list
-    this.boardState = null;
   }
   /* Select different theme */
   changeTheme(id){
@@ -52,7 +45,7 @@ class MyGameController {
   display() {
     this.scene.clearPickRegistration();
     this.currentTheme.displayScene();
-    this.board.display();
+    if(this.board) this.board.display();
   }
   /* Get results of picking and use them */
   managePick(mode, results) {
@@ -117,8 +110,9 @@ class MyGameController {
     }.bind(this);
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain, false);
 
-    let onReply = function() {
+    let onReply = function(data) {
       piece.animations[1].play();
+      console.log(data.target.response);
     }.bind(this);
     server.validMove_req(this.boardState, px, py, x, y, this.player_turn, onReply);
   }
@@ -140,8 +134,9 @@ class MyGameController {
   }
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y){
-    // WIP ask prolog server possible moves
-    // for now all adjacent are possible
+    let onReply = function(data) {
+    }.bind(this);
+    server.possibleMoves_req(x, y, this.player_turn, this.boardState, onReply);
     for(let tile of this.board.tiles){
       if(tile.x == x && tile.y == (y - 1)) { tile.highlight = true; this.highlighted.push(tile); }
       else if(tile.x == x && tile.y == (y + 1)) { tile.highlight = true; this.highlighted.push(tile); }
@@ -158,7 +153,7 @@ class MyGameController {
   }
   /* Update game every few ms */
   update(t){
-    this.board.update(t);
+    if(this.board) this.board.update(t);
     /*
       TODO WIP
       If bot playing, do move

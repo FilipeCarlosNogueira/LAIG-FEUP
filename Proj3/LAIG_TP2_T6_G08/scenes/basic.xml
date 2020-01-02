@@ -8,12 +8,12 @@
         </perspective>
 
         <perspective id="player_A" near="0.1" far="500" angle="45">
-            <from x="-8" y="8" z="8" />
+            <from x="8" y="8" z="-8" />
             <to x="0" y="2" z="0" />
         </perspective>
 
         <perspective id="player_B" near="0.1" far="500" angle="45">
-            <from x="8" y="8" z="-8" />
+            <from x="-8" y="8" z="8" />
             <to x="0" y="2" z="0" />
         </perspective>
 	</views>
