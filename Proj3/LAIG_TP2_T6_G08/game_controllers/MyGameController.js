@@ -25,6 +25,17 @@ class MyGameController {
     this.themes.push('hp_chess.xml');
     // theme selected
     this.currentTheme = new MySceneGraph(this.themes[1], this.scene);
+    // 0 for player B, 1 for player A
+    this.player_turn = 0;
+    this.selected_piece = null;
+    this.highlighted = [];
+
+    //Current boardState in PROLOG list
+    this.boardState = null;
+  }
+  /* Select different theme */
+  changeTheme(id){
+    this.currentTheme = new MySceneGraph(this.themes[id], this.scene);
   }
   /* Display the scene on the screen */
   display() {
@@ -147,5 +158,43 @@ class MyGameController {
       If bot playing, do move
       interface will have dropdown
     */
+    // AUX
+    //this.testParseInput();
   }
+
+  // funtion to test the server.pl parse input funtions
+  testParseInput(){
+
+    /* start game */
+    makeRequest("start_board", data => this.inicializeGame(data));
+    //console.log('this.boardState:'); console.log(this.boardState);
+
+    /* game over */
+    gameOver(this.boardState, data => this.gameOverCheck(data));
+
+    /* piece possible destinations */
+
+    /* check valid move */
+
+    /* make move */
+
+    /* valid chain move */
+
+    /* get valid chain moves */
+
+    /* CPU move */
+
+  }
+
+  /* Gets the initial state of the game */
+  inicializeGame(data){
+    this.boardState = JSON.parse(data.target.response)[0];
+    this.player_turn = JSON.parse(data.target.response)[1];
+  }
+
+  gameOverCheck(data){
+    console.log(data.target.response);
+  }
+
+
 }

@@ -1,14 +1,13 @@
-var DEGREE_TO_RAD = Math.PI / 180;
-var SCENE_INDEX = 0;
-var VIEWS_INDEX = 1;
-var AMBIENT_INDEX = 2;
-var LIGHTS_INDEX = 3;
-var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var TRANSFORMATIONS_INDEX = 6;
-var ANIMATIONS_INDEX = 7;
-var PRIMITIVES_INDEX = 8;
-var COMPONENTS_INDEX = 9;
+let SCENE_INDEX = 0;
+let VIEWS_INDEX = 1;
+let AMBIENT_INDEX = 2;
+let LIGHTS_INDEX = 3;
+let TEXTURES_INDEX = 4;
+let MATERIALS_INDEX = 5;
+let TRANSFORMATIONS_INDEX = 6;
+let ANIMATIONS_INDEX = 7;
+let PRIMITIVES_INDEX = 8;
+let COMPONENTS_INDEX = 9;
 class MySceneGraph {
   constructor(filename, scene) {
     this.loadedOk = null;
@@ -278,6 +277,7 @@ class MySceneGraph {
     let numLights = 0;
     let grandChildren = [];
     let nodeNames = [];
+    let aux;
     for (let i = 0; i < children.length; i++) {
       let global = [];
       let attributeNames = [];
@@ -294,7 +294,7 @@ class MySceneGraph {
       if (this.lights[lightId] != null)
         return ('ID must be unique for each light (conflict: ID = ' + lightId + ')');
       let enableLight = true;
-      var aux = this.reader.getBoolean(children[i], 'enabled');
+      aux = this.reader.getBoolean(children[i], 'enabled');
       if (!(aux != null && !isNaN(aux) && (aux == true || aux == false)))
         this.onXMLMinorError(
           'unable to parse value component of the \'enable light\' field for ID = ' +
@@ -311,7 +311,7 @@ class MySceneGraph {
         let attributeIndex = nodeNames.indexOf(attributeNames[j]);
         if (attributeIndex != -1) {
           if (attributeTypes[j] == 'location')
-            var aux = this.parseCoordinates4D(grandChildren[attributeIndex], 'light position for ID' + lightId);
+            aux = this.parseCoordinates4D(grandChildren[attributeIndex], 'light position for ID' + lightId);
           else if (attributeTypes[j] == 'attenuation') {
             let constant = this.reader.getFloat(grandChildren[attributeIndex], 'constant');
             if (!(constant != null && !isNaN(constant)))
@@ -324,11 +324,11 @@ class MySceneGraph {
               return 'unable to parse quadratic-coordinate of the ' + 'light attenuation for ID' + lightId;
             if (constant + linear + quadratic != 1)
               return 'ERROR! Light attenuation values invalid!';
-            var aux = [];
+            aux = [];
             aux.push(...[constant, linear, quadratic]);
           }
           else if (attributeTypes[j] == 'color')
-            var aux = this.parseColor(
+            aux = this.parseColor(
               grandChildren[attributeIndex],
               attributeNames[j] + ' illumination for ID' + lightId);
           if (!Array.isArray(aux)) return aux;
@@ -346,7 +346,7 @@ class MySceneGraph {
         let targetIndex = nodeNames.indexOf('target');
         let targetLight = [];
         if (targetIndex != -1) {
-          var aux = this.parseCoordinates3D(
+          aux = this.parseCoordinates3D(
             grandChildren[targetIndex], 'target light for ID ' + lightId);
           if (!Array.isArray(aux)) return aux;
           targetLight = aux;
@@ -478,15 +478,16 @@ class MySceneGraph {
         return ('ID must be unique for each transformation (conflict: ID = ' + transformationID + ')');
       grandChildren = children[i].children;
       let transfMatrix = mat4.create();
+      let coordinates;
       for (let j = 0; j < grandChildren.length; j++) {
         switch (grandChildren[j].nodeName) {
           case 'translate':
-            var coordinates = this.parseCoordinates3D(grandChildren[j], 'translate transformation for ID ' + transformationID);
+            coordinates = this.parseCoordinates3D(grandChildren[j], 'translate transformation for ID ' + transformationID);
             if (!Array.isArray(coordinates)) return coordinates;
             transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
             break;
           case 'scale':
-            var coordinates = this.parseCoordinates3D(grandChildren[j], 'scale transformation for component for ID' + transformationID);
+            coordinates = this.parseCoordinates3D(grandChildren[j], 'scale transformation for component for ID' + transformationID);
             if (!Array.isArray(coordinates)) return coordinates;
             mat4.scale(transfMatrix, transfMatrix, coordinates);
             break;
@@ -839,9 +840,10 @@ class MySceneGraph {
           transfMatrix = this.transformations[idTrans];
       } else {
         for (let j = 0; j < tranformationChildren.length; j++) {
+          let coordinates;
           switch (tranformationChildren[j].nodeName) {
             case 'translate':
-              var coordinates = this.parseCoordinates3D(
+              coordinates = this.parseCoordinates3D(
                 tranformationChildren[j],
                 'translate transformation for component for ID' +
                 componentID);
@@ -849,7 +851,7 @@ class MySceneGraph {
               mat4.translate(transfMatrix, transfMatrix, coordinates);
               break;
             case 'scale':
-              var coordinates = this.parseCoordinates3D(
+              coordinates = this.parseCoordinates3D(
                 tranformationChildren[j],
                 'scale transformation for component for ID' + componentID);
               if (!Array.isArray(coordinates)) return coordinates;

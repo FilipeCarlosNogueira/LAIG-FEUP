@@ -11,11 +11,11 @@ class MySphere extends CGFobject {
     this.vertices = [];
     this.normals = [];
     this.texCoords = [];
-    var theta = Math.PI / this.stacks;
-    var phi = 2 * Math.PI / this.slices;
-    var r = this.radius;
-    for (var i = 0; i <= this.stacks; i++) {
-      for (var j = 0; j <= this.slices; j++) {
+    let theta = Math.PI / this.stacks;
+    let phi = 2 * Math.PI / this.slices;
+    let r = this.radius;
+    for (let i = 0; i <= this.stacks; i++) {
+      for (let j = 0; j <= this.slices; j++) {
         this.vertices.push(
             r * Math.sin(i * theta) * Math.cos(j * phi),
             r * Math.sin(i * theta) * Math.sin(j * phi),
@@ -26,8 +26,8 @@ class MySphere extends CGFobject {
         this.texCoords.push(j / this.slices, 1 - i / this.stacks);
       }
     }
-    for (var i = 0; i < this.stacks; i++) {
-      for (var j = 0; j < this.slices; j++) {
+    for (let i = 0; i < this.stacks; i++) {
+      for (let j = 0; j < this.slices; j++) {
         this.indices.push(
             i * (this.slices + 1) + j, (i + 1) * (this.slices + 1) + j,
             (i + 1) * (this.slices + 1) + j + 1);
@@ -41,8 +41,8 @@ class MySphere extends CGFobject {
   }
   updateTexCoords(length_t, length_s){
     this.texCoords = [];
-    for (var i = 0; i <= this.stacks; i++) {
-      for (var j = 0; j <= this.slices; j++) {
+    for (let i = 0; i <= this.stacks; i++) {
+      for (let j = 0; j <= this.slices; j++) {
         this.texCoords.push((j / length_s) / this.slices, 1 - (i / length_t) / this.stacks);
       }
     }

@@ -1,8 +1,8 @@
-game_loop(B, P, _):-
+game_loop(B, _, _):-
     end_game_A(B),
     game_over_menu(1).
 
-game_loop(B, P, _):-
+game_loop(B, _, _):-
     end_game_B(B),
     game_over_menu(2).
 
@@ -45,7 +45,7 @@ cpu_move2(X1, Y1, X2, Y2, C1, C2, P, Board, NewBoard):-
     random(1, 3, RandomInt),
     cpu_chain_move(X1, Y1, X2, Y2, C1, C2, P, Board, NewBoard, RandomInt).
 
-cpu_move2(X1, Y1, X2, Y2, C1, C2, P, Board, NewBoard):-
+cpu_move2(X1, Y1, X2, Y2, C1, C2, _, Board, NewBoard):-
     change_cell(X1, Y1, Board, AuxBoard, C2),
     change_cell(X2, Y2, AuxBoard, NewBoard, C1).
 
@@ -66,7 +66,7 @@ cpu_chain_move(X1, Y1, X2, Y2, C1, C2, P, Board, NewBoard, Choice):-
     change_cell(X2, Y2, AuxBoard, AuxBoard2, C1),
     change_cell(X3, Y3, AuxBoard2, NewBoard, C2).
 
-cpu_chain_move(X1, Y1, X2, Y2, C1, C2, P, Board, NewBoard, Choice):-
+cpu_chain_move(X1, Y1, X2, Y2, C1, _, P, Board, NewBoard, Choice):-
     Choice =:= 2,
     write(' - CPU: rocket boost.'),
     valid_chain_moves(X1, Y1, X2, Y2, P, Board, MoveList, Choice),

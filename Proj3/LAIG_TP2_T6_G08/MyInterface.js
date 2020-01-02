@@ -25,7 +25,7 @@ class MyInterface extends CGFinterface {
     addLightsGroup(lights){
         this.groupLights = this.gui.addFolder('Lights');
         this.groupLights.open();
-        for (var key in lights) {
+        for (let key in lights) {
             if (lights.hasOwnProperty(key)) {
                 if (lights[key])
                     this.scene.lightValues[key] = true;

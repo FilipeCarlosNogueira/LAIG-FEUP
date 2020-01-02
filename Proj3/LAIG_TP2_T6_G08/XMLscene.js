@@ -1,4 +1,4 @@
-var DEGREE_TO_RAD = Math.PI / 180;
+let DEGREE_TO_RAD = Math.PI / 180;
 class XMLscene extends CGFscene {
     constructor(myinterface) {
         super();
