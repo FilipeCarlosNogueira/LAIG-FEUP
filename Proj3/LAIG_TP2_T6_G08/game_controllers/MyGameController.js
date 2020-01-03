@@ -88,12 +88,21 @@ class MyGameController {
   /* Treat picking data */
   OnObjectSelected(obj, id) {
     if(obj instanceof MyPiece){ // if pick piece
-      if(this.selected_piece) this.deselectPiece(this.selected_piece);
-      this.selectPiece(obj);
+      if(obj.player != this.player_turn) return;
+      if(this.selected_piece == obj) {
+        this.deselectPiece(this.selected_piece);
+      } else if(this.selected_piece && this.selected_piece.moves_left == this.selected_piece.type) {
+        this.deselectPiece(this.selected_piece);
+        this.selectPiece(obj);
+      } else if(!this.selected_piece){
+        this.selectPiece(obj);
+      }
     } else if(obj instanceof MyTile){ // if pick tile
       if(!this.selected_piece && obj.piece){  // if no piece selected and has piece
         this.selectPiece(obj.piece);
-      } else if(this.selected_piece.moves_left == this.selected_piece.type && obj.piece) {  // if piece did not move and has piece
+      } else if(this.selected_piece == obj.piece) {  // if piece did not move and has piece
+        this.deselectPiece(this.selected_piece);
+      } else if(this.selected_piece && this.selected_piece.moves_left == this.selected_piece.type && obj.piece) {  // if piece did not move and has piece
         this.deselectPiece(this.selected_piece);
         this.selectPiece(obj.piece);
       } else if(this.selected_piece) {  // if does not have piece
@@ -106,8 +115,11 @@ class MyGameController {
   }
   /* Treat selecting pieces */
   selectPiece(piece) {
-    if(piece.player != this.player_turn) return;
-    if(piece == this.selected_piece) this.finalMove(piece);
+    this.unhighlightTiles();
+    if(piece.player != this.player_turn) 
+      return;
+    else if(piece == this.selected_piece) 
+      this.finalMove(piece);
     else {
       piece.selected = true;
       piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0);
@@ -118,10 +130,12 @@ class MyGameController {
   }
   /* Treat deselecting pieces */
   deselectPiece(piece) {
+    if(!piece) return;
     piece.selected = false;
     piece.animations[0].reverse();
     this.selected_piece = null;
     this.selected_orig = null;
+    this.unhighlightTiles();
   }
   /* Treat piece movement */
   movePiece(piece, tile) {
@@ -137,6 +151,7 @@ class MyGameController {
     let x = tile.x, y = tile.y; // destination coords
     let px = piece.tile.x, py = piece.tile.y; // origin coords
     let dx = x-px, dy = y-py; // difference
+    if(Math.abs(dx) + Math.abs(dy) != 1) return; // only adjacent moves
 
     // move piece animation
     let chain = function(){
@@ -154,6 +169,7 @@ class MyGameController {
     let px = piece.tile.x, py = piece.tile.y; // origin coords
     let dx = x-px, dy = y-py; // difference
     let ox = this.selected_orig.x, oy = this.selected_orig.y; // first coords
+    if(Math.abs(dx) + Math.abs(dy) != 1) return; // only adjacent moves
 
     // move piece animation
     let chain = function(){
@@ -170,6 +186,9 @@ class MyGameController {
           this.boardState = JSON.parse(data.target.response);
           this.moves.push(new MyGameMove(this.boardState, this.selected_orig, tile, piece));
           this.checkGameOver();
+          console.log('Player ' + (this.player_turn == 1 ? 'A' : 'B') + 
+                      ' made move: ' + this.selected_orig.x + ',' + this.selected_orig.y + 
+                      ' » '+ tile.x + ',' + tile.y);
           this.switchTurn();
         }
       }
