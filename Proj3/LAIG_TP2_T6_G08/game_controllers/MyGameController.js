@@ -138,15 +138,18 @@ class MyGameController {
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y){
     let onReply = function(data) {
+      console.log(data.target);
       if(data.target.status == 200){
         let list = JSON.parse(data.target.response);
-        if(list.length)
+        console.log(list);
+        if(list.length){
           console.log(list);
-        else
+        } else{
           console.log('🕹️ No moves');
+        }
       }
     }.bind(this);
-    server.possibleMoves_req(x, y, this.player_turn, this.boardState, onReply);
+    server.possibleMoves_req(x + 1, y, this.player_turn, this.boardState, onReply);
     for(let tile of this.board.tiles){
       if(tile.x == x && tile.y == (y - 1)) { tile.highlight = true; this.highlighted.push(tile); }
       else if(tile.x == x && tile.y == (y + 1)) { tile.highlight = true; this.highlighted.push(tile); }

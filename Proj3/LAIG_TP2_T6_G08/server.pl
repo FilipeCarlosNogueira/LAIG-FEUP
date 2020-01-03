@@ -122,7 +122,8 @@ parse_input(game_over(B), 2) :- end_game_B(B).
 parse_input(game_over(B), 3).
 
 /* piece possible destinations */
-parse_input(get_piece_possible_destinations(X, Y, P, B), MoveList):- get_piece_possible_destinations(X, Y, P, B, MoveList).
+parse_input(get_piece_possible_destinations(X, Y, P, B), MoveList) :- get_piece_possible_destinations(X, Y, P, B, MoveList).
+parse_input(get_piece_possible_destinations(X, Y, P, B), []).
 
 /* check valid move */
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 1) :- valid_move(X1, Y1, X2, Y2, P, Board).

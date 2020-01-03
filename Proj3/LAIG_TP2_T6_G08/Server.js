@@ -4,16 +4,16 @@ let server = {
         let request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
         request.onload = function(data) { onSuccess(data); };
-        request.onerror = onError || function(){ console.log("Error waiting for response"); };
+        request.onerror = onError || function(){ console.log('Error waiting for response'); };
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         request.send();
     },
     request: function(requestString, handleReply) {			 
         this.__request(requestString, handleReply);
+        console.log('---' + requestString);
     },
     gameOver_req: function(board, reply){
-        let request = "game_over(" + JSON.stringify(board) + ")";
-        console.log(request);
+        let request = 'game_over(' + JSON.stringify(board) + ')';
         if(board != null) {
             this.request(request, reply);
         }

@@ -277,7 +277,6 @@ valid_move(X1, Y1, X2, Y2, P, B):-
     get_cell(X1, Y1, B, C1),
     cell_with_ship(C1),
     home_row_check(X1, B, P),
-    not(is_base(X2, P)),
     dest_cell_in_reach(X1, Y1, X2, Y2, C1).
 
 /*
@@ -353,10 +352,7 @@ valid_chain_moves(X1, Y1, X2, Y2, P, B, MoveList, Choice):-
     Choice =:= 2,
     findall([X3, Y3], valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice), MoveList).
 
-is_base(X, 1):-
-    X=:=0.
-
-is_base(X, 2):-
-    X=:=7.
+is_base(X, 1):- X =:= 0.
+is_base(X, 2):- X =:= 7.
 
 

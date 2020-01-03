@@ -1,3 +1,4 @@
+:-use_module(library(clpfd)).
 board_setup(B, P):-
     startBoard(B),
     P is 1.
@@ -31,8 +32,16 @@ get_piece_coords(X1, Y1, Board, P):-
 * Get funtion to list containing all possible destinations with the current piece.
 * @param X, Y, P, B, MoveList
 */
-get_piece_possible_destinations(X, Y, P, B, MoveList):-
-    findall([X_dest, Y_dest], valid_move(X, Y, X_dest, Y_dest, P, B), MoveList).
+get_piece_possible_destinations(X, Y, P, B, MoveList):- 
+    get_cell(X1, Y1, B, C1),
+    cell_with_ship(C1),
+    A is 6 * (P - 1),
+    home_row_check_A(X, B, P, A),
+    domain([X_dest],1,6),
+    domain([Y_dest],0,5),
+    D #= abs(X_dest-X) + abs(Y_dest-Y),
+    D #= 1,
+    findall([X_dest,Y_dest], labeling([], [X_dest,Y_dest,D]), MoveList).
 
 
 /* ----------------------------------------------------------------- */
