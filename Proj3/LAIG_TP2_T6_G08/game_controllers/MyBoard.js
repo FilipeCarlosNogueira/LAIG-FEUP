@@ -72,7 +72,9 @@ class MyBoard extends CGFobject {
     }
   }
   getTile(x,y){
-    return this.tiles[x + y * this.y_length];
+    let tile = this.tiles[x + y * this.y_length];
+    if(tile.x = x && tile.y == y) return tile;
+    else return null;
   }
   update(t){
     for(let piece of this.pieces){
@@ -98,5 +100,25 @@ class MyBoard extends CGFobject {
       else if(piece.player == 1) { this.playerA_mat.apply(); }
       piece.display();
     }
+  }
+  isMoving() {
+    for(let piece of this.pieces) {
+      if(piece.isMoving()) return true;
+    }
+  }
+  highlightAdj(x,y){
+    let list = [], bx=x-1, ax=x+1, by=y-1, ay=y+1, tile;
+
+    tile = this.getTile(bx, y);
+    if(tile) { list.push(tile); tile.highlight = true;}
+    tile = this.getTile(ax, y);
+    if(tile) { list.push(tile); tile.highlight = true;}
+    tile = this.getTile(x, by);
+    if(tile) { list.push(tile); tile.highlight = true;}
+    tile = this.getTile(x, ay);
+    if(tile) { list.push(tile); tile.highlight = true;}
+
+
+    return list;
   }
 }

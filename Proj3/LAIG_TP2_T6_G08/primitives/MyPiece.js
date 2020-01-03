@@ -5,6 +5,7 @@ class MyPiece extends CGFobject {
     this.gameController = gameController;
     this.setTile(tile);
     this.type = type;
+    this.moves_left = type;
     this.player = player;
     this.selected = false;
     this.initBuffers();
@@ -97,7 +98,7 @@ class MyPiece extends CGFobject {
     this.scene.registerForPick(this.uniqueID, this);
     this.scene.pushMatrix();
     for(let anim of this.animations) anim.apply();
-    this.scene.translate(-2.5 + this.tile.y, 1, - 3.5 + this.tile.x);
+    this.scene.translate(-2.5 + this.tile.y, 1, -3.5 + this.tile.x);
     super.display();
     this.scene.popMatrix();
     this.scene.clearPickRegistration();
