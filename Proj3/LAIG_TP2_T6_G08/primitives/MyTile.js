@@ -23,7 +23,7 @@ class MyTile extends CGFobject {
 	display() {
 		this.scene.registerForPick(this.uniqueID, this);
     this.scene.pushMatrix();
-    this.scene.translate(-2.5 + this.y, 1, -2.5 + this.x);
+    this.scene.translate(-2.5 + this.y, 1, -3.5 + this.x);
 		this.obj.display();
 		this.scene.popMatrix();
 		this.scene.clearPickRegistration();

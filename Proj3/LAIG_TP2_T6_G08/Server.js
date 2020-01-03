@@ -19,7 +19,7 @@ let server = {
     },
     possibleMoves_req: function(x, y, player, board, reply){
         let requestString = 'get_piece_possible_destinations('
-        + JSON.stringify(x+1) + ','
+        + JSON.stringify(x) + ','
         + JSON.stringify(y) + ','
         + JSON.stringify(player) + ','
         + JSON.stringify(board)
@@ -60,8 +60,8 @@ let server = {
     validMove_req: function(board, fromX, fromY, toX, toY, player, reply){
         let requestString = 'valid_move('
         + JSON.stringify(board) + ','
-        + JSON.stringify(fromX+1) + ',' + JSON.stringify(fromY) + ','
-        + JSON.stringify(toX+1) + ',' + JSON.stringify(toY) + ','
+        + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
+        + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ','
         + JSON.stringify(player)
         + ')';
 
@@ -69,8 +69,8 @@ let server = {
     },
     makeMove_req: function(board, fromX, fromY, toX, toY, reply){
         let requestString = 'make_move('
-        + JSON.stringify(fromX+1) + ',' + JSON.stringify(fromY) + ','
-        + JSON.stringify(toX+1) + ',' + JSON.stringify(toY) + ','
+        + JSON.stringify(fromX) + ',' + JSON.stringify(fromY) + ','
+        + JSON.stringify(toX) + ',' + JSON.stringify(toY) + ','
         + JSON.stringify(board)
         + ')';
 
