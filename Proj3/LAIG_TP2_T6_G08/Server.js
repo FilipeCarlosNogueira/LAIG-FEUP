@@ -36,8 +36,10 @@ let server = {
         + JSON.stringify(Y) + ','
         + JSON.stringify(X_increment) + ','
         + JSON.stringify(Y_increment) + ','
-        + JSON.stringify(BackTrackingList) + ','
+        + JSON.stringify(BackTrackingList)
         + ')';
+
+        console.log(requestString);
 
         this.request(requestString, reply);
     },
@@ -52,7 +54,7 @@ let server = {
         + JSON.stringify(Y1) + ','
         + JSON.stringify(X2) + ','
         + JSON.stringify(Y2) + ','
-        + JSON.stringify(Board) + ','
+        + JSON.stringify(Board)
         + ')';
 
         this.request(requestString, reply);

@@ -70,7 +70,11 @@ class MyGameController {
       if(obj.piece) { // if tile has a piece select it
         this.selectPiece(obj.piece);
       } else if(this.selected_piece) {  // if tile does not have a piece than move selected piece
-        this.incrementMove(this.selected_piece, obj);
+        for(let moves = this.selected_piece.type; moves > 0; --moves){
+          console.log('Moves Left: ', moves);
+          if(moves > 1)this.incrementMove(this.selected_piece, obj, moves);
+          else this.movePiece(this.selected_piece, obj);
+        }
       }
     } else {
       console.log('ERROR with picking');
@@ -94,22 +98,44 @@ class MyGameController {
       this.highlightTiles(piece.tile.x, piece.tile.y);
     }
   }
-  /* Moves one the pice one tile at a time */
-  incrementMove(piece, tile){
+  /* Moves the piece one tile at a time */
+  incrementMove(piece, tile, moves){
     if(piece.isMoving()) return;
     let x = tile.x, y = tile.y;
     let px = piece.tile.x, py = piece.tile.y;
     let dx = x-px, dy = y-py;
 
+    if((dx <= 1 && dy == 0) || (dx == 0 && dy <= 1)){}
+    else return;
+
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, null, false);
 
     let BackTrackingList = [];
-    for(let moves = piece.type; moves > 0; --moves){
-      console.log('Moves Left: ', moves);
-      let BackTrackingList_aux = [];
-      server.incrementMove_req(moves, x, y, dx, dy, BackTrackingList, BackTrackingList_aux);
-      BackTrackingList = BackTrackingList_aux;
-    }
+
+    let onValid = function(data){
+      if(data.target.status == 200){
+        if(data.target.response){
+          this.boardState = JSON.parse(data.target.response);
+          this.unhighlightTiles();
+          this.highlightTiles(x,y);
+          this.checkGameOver();
+        }
+      }
+    }.bind(this);
+
+    let onReply = function(data) {
+      if(data.target.status == 200){
+        if(data.target.response){
+          BackTrackingList = JSON.parse(data.target.response);
+          piece.animations[1].play();
+          server.applyMoveIncrement_req(0, px, py, x, y, this.boardState, onValid);
+        }
+        else
+          console.log('🕹️ Invalid move');
+      }
+    }.bind(this);
+
+    server.incrementMove_req(moves, px, py, dx, dy, BackTrackingList, onReply);
   }
   /* Move selected piece */
   movePiece(piece, tile){
