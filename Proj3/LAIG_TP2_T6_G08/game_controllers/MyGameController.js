@@ -88,6 +88,7 @@ class MyGameController {
   /* Treat picking data */
   OnObjectSelected(obj, id) {
     if(obj instanceof MyPiece){ // if pick piece
+      if(this.selected_piece) this.deselectPiece(this.selected_piece);
       this.selectPiece(obj);
     } else if(obj instanceof MyTile){ // if pick tile
       if(!this.selected_piece && obj.piece){  // if no piece selected and has piece
@@ -159,7 +160,7 @@ class MyGameController {
       this.deselectPiece(piece);
       piece.moves_left = piece.type;
     }.bind(this);
-    piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain);
+    piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0, dx, chain);
     //this.unhighlightTiles();
 
     let onValid = function(data){
@@ -175,8 +176,21 @@ class MyGameController {
 
     let onReply = function(data) {
       if(data.target.status == 200){
-        if(data.target.response == 1){
+        if(data.target.response == 1){  // valid move
           server.makeMove_req(this.boardState, ox, oy, x, y, onValid);
+        } else { // invalid move go back
+          let dx = x-ox, dy = y-oy; // difference
+          if(piece.isMoving()) {
+            let chain1 = piece.animations[1].chain;
+            let chain2 = function(){
+              piece.move(this.selected_orig);
+              this.deselectPiece(piece);
+              piece.moves_left = piece.type;
+            }.bind(this);
+            piece.animations[1].chain = chain2;
+          } else {
+            piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0, dx);
+          }
         }
       }
     }.bind(this);
