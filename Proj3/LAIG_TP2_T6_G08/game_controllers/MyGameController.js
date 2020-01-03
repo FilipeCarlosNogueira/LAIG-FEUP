@@ -70,7 +70,7 @@ class MyGameController {
       if(obj.piece) { // if tile has a piece select it
         this.selectPiece(obj.piece);
       } else if(this.selected_piece) {  // if tile does not have a piece than move selected piece
-        this.movePiece(this.selected_piece, obj);
+        this.incrementMove(this.selected_piece, obj);
       }
     } else {
       console.log('ERROR with picking');
@@ -92,6 +92,23 @@ class MyGameController {
       piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0);
       this.unhighlightTiles();
       this.highlightTiles(piece.tile.x, piece.tile.y);
+    }
+  }
+  /* Moves one the pice one tile at a time */
+  incrementMove(piece, tile){
+    if(piece.isMoving()) return;
+    let x = tile.x, y = tile.y;
+    let px = piece.tile.x, py = piece.tile.y;
+    let dx = x-px, dy = y-py;
+
+    piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, null, false);
+
+    let BackTrackingList = [];
+    for(let moves = piece.type; moves > 0; --moves){
+      console.log('Moves Left: ', moves);
+      let BackTrackingList_aux = [];
+      server.incrementMove_req(moves, x, y, dx, dy, BackTrackingList, BackTrackingList_aux);
+      BackTrackingList = BackTrackingList_aux;
     }
   }
   /* Move selected piece */

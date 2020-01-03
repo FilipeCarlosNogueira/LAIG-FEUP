@@ -125,6 +125,44 @@ parse_input(game_over(B), 3).
 parse_input(get_piece_possible_destinations(X, Y, P, B), MoveList) :- get_piece_possible_destinations(X, Y, P, B, MoveList).
 parse_input(get_piece_possible_destinations(X, Y, P, B), []).
 
+/* Increment move */
+parse_input(increment_move(Moves, X1, Y1, X_increment, Y_increment, BackTrackingList), BackTrackingList_new) :-
+	Moves =:= 1,
+	/* Iteration */
+    X2 is X1+X_increment,
+    Y2 is Y1+Y_increment,
+    validate_increment_move(X2, Y2),
+    validate_BackTracking_list(BackTrackingList, X1, Y1, X2, Y2),
+    append(BackTrackingList, [[X1, Y1, X2, Y2]], BackTrackingList_new).
+
+parse_input(increment_move(Moves, X1, Y1, X_increment, Y_increment, BackTrackingList), BackTrackingList_aux) :-
+	Moves > 1,
+	/* Iteration */
+    X4 is X1+X_increment,
+    Y4 is Y1+Y_increment,
+    validate_increment_move(X4, Y4),
+    get_cell(X4, Y4, Board, C1),
+    C1 =< 0,
+    validate_BackTracking_list(BackTrackingList, X1, Y1, X4, Y4),
+    append(BackTrackingList, [[X1, Y1, X4, Y4]], BackTrackingList_aux).
+
+parse_input(increment_move(Moves, X1, Y1, X_increment, Y_increment, BackTrackingList), []).
+
+/* apply increment move */
+parse_input(apply_increment_move(Chain_move, X1, Y1, X2, Y2, Board), AuxBoard2) :-
+	Chain_move =:= 0,
+    get_cell(X1, Y1, Board, C1),
+    change_cell(X1, Y1, Board, AuxBoard, 0),
+    change_cell(X2, Y2, AuxBoard, AuxBoard2, C1).
+
+parse_input(apply_increment_move(Chain_move, X1, Y1, X2, Y2, Board), AuxBoard2) :-
+	Chain_move =:= 1,
+    get_cell(X1, Y1, Board, C1),
+    change_cell(X1, Y1, Board, AuxBoard, C1),
+    change_cell(X2, Y2, AuxBoard, AuxBoard2, C1).
+
+parse_input(apply_increment_move(Chain_move, X1, Y1, X2, Y2, Board), []). 
+
 /* check valid move */
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 1) :- valid_move(X1, Y1, X2, Y2, P, Board).
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 0).
@@ -134,7 +172,7 @@ parse_input(make_move(X1, Y1, X2, Y2, Board), NewBoard) :-
 	get_cell(X1, Y1, Board, C1),
 	get_cell(X2, Y2, Board, C2),
 	change_cell(X1, Y1, Board, AuxBoard, C2),
-  change_cell(X2, Y2, AuxBoard, NewBoard, C1).
+  	change_cell(X2, Y2, AuxBoard, NewBoard, C1).
 
 /* valid chain move */
 parse_input(valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice), 1) :- valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice).
