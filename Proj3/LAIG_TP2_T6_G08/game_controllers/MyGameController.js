@@ -113,6 +113,7 @@ class MyGameController {
       piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0);
       this.selected_piece = piece;
       this.selected_orig = piece.tile;
+      this.highlightTiles(piece.tile.x,piece.tile.y);
     }
   }
   /* Treat deselecting pieces */
@@ -143,8 +144,8 @@ class MyGameController {
       piece.moves_left--;
     }.bind(this);
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain);
-    //this.unhighlightTiles();
-    //this.highlightTiles(x,y); // highlight new moves
+    this.unhighlightTiles();
+    this.highlightTiles(x,y); // highlight new moves
   }
   /* Move and update board */
   finalMove(piece, tile) {
@@ -161,7 +162,7 @@ class MyGameController {
       piece.moves_left = piece.type;
     }.bind(this);
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0, dx, chain);
-    //this.unhighlightTiles();
+    this.unhighlightTiles();
 
     let onValid = function(data){
       if(data.target.status == 200){
@@ -199,6 +200,9 @@ class MyGameController {
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y){
     this.highlighted = this.board.highlightAdj(x,y);
+    for(let tile of this.highlighted){
+      tile.highlight = true;
+    }
   }
   /* Remove all highlighted tiles */
   unhighlightTiles(){

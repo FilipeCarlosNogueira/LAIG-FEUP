@@ -72,9 +72,10 @@ class MyBoard extends CGFobject {
     }
   }
   getTile(x,y){
-    let tile = this.tiles[x + y * this.y_length];
-    if(tile.x = x && tile.y == y) return tile;
-    else return null;
+    for(let tile of this.tiles)
+      if(tile.x == x && tile.y == y)
+        return tile;
+    return null;
   }
   update(t){
     for(let piece of this.pieces){
@@ -108,17 +109,10 @@ class MyBoard extends CGFobject {
   }
   highlightAdj(x,y){
     let list = [], bx=x-1, ax=x+1, by=y-1, ay=y+1, tile;
-
-    tile = this.getTile(bx, y);
-    if(tile) { list.push(tile); tile.highlight = true;}
-    tile = this.getTile(ax, y);
-    if(tile) { list.push(tile); tile.highlight = true;}
-    tile = this.getTile(x, by);
-    if(tile) { list.push(tile); tile.highlight = true;}
-    tile = this.getTile(x, ay);
-    if(tile) { list.push(tile); tile.highlight = true;}
-
-
+    if(tile = this.getTile(bx,y)) list.push(tile);
+    if(tile = this.getTile(ax,y)) list.push(tile);
+    if(tile = this.getTile(x,by)) list.push(tile);
+    if(tile = this.getTile(x,ay)) list.push(tile);
     return list;
   }
 }
