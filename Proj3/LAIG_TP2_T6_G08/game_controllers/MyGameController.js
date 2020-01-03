@@ -118,7 +118,7 @@ class MyGameController {
     let dx = x-px, dy = y-py;
     let chain = function(){
       piece.move(tile);
-      this.moves.push(new MyGameMove(this.scene, this, piece.tile, tile, piece));
+      this.moves.push(new MyGameMove(this.boardState, piece.tile, tile, piece));
     }.bind(this);
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain, false);
 
@@ -148,23 +148,21 @@ class MyGameController {
   undoMove(){
     // get move from array
     let prev_move = this.moves.pop(); if(!prev_move) return;
-    let chain = function(){
+
+    let chain = function() {
       let x = prev_move.dest.x - prev_move.orig.x;
-      let z = prev_move.dest.z - prev_move.orig.z;
+      let y = prev_move.dest.y - prev_move.orig.y;
       // move to tile -> down
-      if(x == -1)      { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  0, 0,  1, piece.animations[0].reverse, false); }
-      else if(x ==  1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  0, 0, -1, piece.animations[0].reverse, false); }
-      else if(z == -1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  1, 0,  0, piece.animations[0].reverse, false); }
-      else if(z ==  1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -1, 0,  0, piece.animations[0].reverse, false); }
-    };
+      prev_move.piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  x, 0,  y, function() { prev_move.piece.animations[0].reverse; this.boardState = prev_move.board; }, false);
+    }.bind(this);
+    
     // up -> move to tile -> down
-    piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0, chain);
+    prev_move.piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0, chain);
   }
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y){
     let onReply = function(data) {
       if(data.target.status == 200){
-          console.log(JSON.parse(data.target.response));
         let list = JSON.parse(data.target.response);
         if(list.length){
           let tile;

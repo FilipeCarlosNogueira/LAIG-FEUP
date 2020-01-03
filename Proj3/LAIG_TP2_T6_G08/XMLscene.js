@@ -25,9 +25,6 @@ class XMLscene extends CGFscene {
     }
     initGame() {
         this.gameController = new MyGameController(this);
-        //this.theme = 0;
-        //this.themeSelect = this.gameController.themes;
-        //this.interface.addThemeGroup();
     }
     initLights() {
         let i = 0;
@@ -80,6 +77,10 @@ class XMLscene extends CGFscene {
         this.initViews();
         this.sceneInited = true;
         this.interface.setActiveCamera(this.cameraView);
+        this.interface.addUndoButton();
+        //this.theme = 0;
+        //this.themeSelect = this.gameController.themes;
+        //this.interface.addThemeGroup();
     }
     render(Camera) {
         this.camera = Camera;
@@ -133,7 +134,10 @@ class XMLscene extends CGFscene {
         this.render(this.cameraView);
     }
     rotateCam(angle){
-        this.portion = angle/50;
-        this.n_portions = 50;
+        this.portion = angle/30;
+        this.n_portions = 30;
+    }
+    undo(){
+        this.gameController.undoMove();
     }
 }

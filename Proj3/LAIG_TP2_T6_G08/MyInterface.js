@@ -15,10 +15,10 @@ class MyInterface extends CGFinterface {
     }
     processKeyDown(event) {
         this.activeKeys[event.code]=true;
-    };
+    }
     processKeyUp(event) {
         this.activeKeys[event.code]=false;
-    };
+    }
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     }
@@ -40,5 +40,11 @@ class MyInterface extends CGFinterface {
     }
     addThemeGroup() {
         this.gui.add(this.scene, 'theme', this.scene.themeSelect).onChange(this.scene.updateTheme.bind(this.scene)).name('Theme');
+    }
+    addThemeGroup() {
+        this.gui.add(this.scene, 'theme', this.scene.themeSelect).onChange(this.scene.updateTheme.bind(this.scene)).name('Theme');
+    }
+    addUndoButton() {
+        this.gui.add(this.scene, 'undo').name('Undo');
     }
 }
