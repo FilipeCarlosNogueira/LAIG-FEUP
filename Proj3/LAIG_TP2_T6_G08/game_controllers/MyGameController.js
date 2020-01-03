@@ -70,7 +70,8 @@ class MyGameController {
       if(obj.piece) { // if tile has a piece select it
         this.selectPiece(obj.piece);
       } else if(this.selected_piece) {  // if tile does not have a piece than move selected piece
-        this.incrementMove(this.selected_piece, obj);
+        this.movePiece(this.selected_piece, obj);
+        //this.incrementMove(this.selected_piece, obj);
       }
     } else {
       console.log('ERROR with picking');
@@ -101,8 +102,6 @@ class MyGameController {
     let px = piece.tile.x, py = piece.tile.y;
     let dx = x-px, dy = y-py;
 
-    piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, null, false);
-
     let BackTrackingList = [];
     for(let moves = piece.type; moves > 0; --moves){
       console.log('Moves Left: ', moves);
@@ -130,6 +129,7 @@ class MyGameController {
           this.unhighlightTiles();
           this.highlightTiles(x,y);
           this.checkGameOver();
+          this.switchTurn();
         }
       }
     }.bind(this);
@@ -140,8 +140,6 @@ class MyGameController {
           piece.animations[1].play();
           server.makeMove_req(this.boardState, px, py, x, y, onValid);
         }
-        else
-          console.log('🕹️ Invalid move');
       }
     }.bind(this);
     server.validMove_req(this.boardState, px, py, x, y, this.player_turn, onReply);
@@ -208,6 +206,11 @@ class MyGameController {
     };
     server.gameOver_req(this.boardState, onReply);
   }
+  switchTurn(){
+    if(this.player_turn == 1) this.player_turn = 2;
+    else this.player_turn = 1;
 
+    this.scene.rotateCam(Math.PI);
+  }
 
 }

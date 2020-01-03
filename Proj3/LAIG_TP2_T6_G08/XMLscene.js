@@ -114,6 +114,10 @@ class XMLscene extends CGFscene {
         this.last_update = t;
         this.gameController.currentTheme.update(delta_time);
         this.gameController.update(delta_time);
+        if(this.n_portions) {
+            this.camera.orbit(CGFcameraAxis.Y, this.portion);
+            this.n_portions--;
+        }
     }
     updateCamera(){
         this.cameraView = this.gameController.currentTheme.views[this.view].camera;
@@ -127,5 +131,9 @@ class XMLscene extends CGFscene {
         this.clearPickRegistration();
 
         this.render(this.cameraView);
+    }
+    rotateCam(angle){
+        this.portion = angle/50;
+        this.n_portions = 50;
     }
 }
