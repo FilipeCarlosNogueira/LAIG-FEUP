@@ -23,7 +23,7 @@ server :-
 	socket_server_close(Socket),
 	write('Closed Server'),nl.
 
-% Server Loop 
+% Server Loop
 % Uncomment writes for more information on incomming connections
 server_loop(Socket) :-
 	repeat,
@@ -38,22 +38,22 @@ server_loop(Socket) :-
 			close_stream(Stream),
 			fail
 		)),
-		
+
 		% Generate Response
 		handle_request(Request, MyReply, Status),
 		format('Request: ~q~n',[Request]),
 		format('Reply: ~q~n', [MyReply]),
-		
+
 		% Output Response
 		format(Stream, 'HTTP/1.0 ~p~n', [Status]),
 		format(Stream, 'Access-Control-Allow-Origin: *~n', []),
 		format(Stream, 'Content-Type: text/plain~n~n', []),
 		format(Stream, '~p', [MyReply]),
-	
+
 		% write('Finnished Connection'),nl,nl,
 		close_stream(Stream),
 	(Request = quit), !.
-	
+
 close_stream(Stream) :- flush_output(Stream), close(Stream).
 
 % Handles parsed HTTP requests
@@ -69,15 +69,15 @@ handle_request(_, 'Bad Request', '400 Bad Request').
 read_request(Stream, Request) :-
 	read_line(Stream, LineCodes),
 	print_header_line(LineCodes),
-	
+
 	% Parse Request
 	atom_codes('GET /',Get),
 	append(Get,RL,LineCodes),
-	read_request_aux(RL,RL2),	
-	
+	read_request_aux(RL,RL2),
+
 	catch(read_from_codes(RL2, Request), error(syntax_error(_),_), fail), !.
 read_request(_,syntax_error).
-	
+
 read_request_aux([32|_],[46]) :- !.
 read_request_aux([C|Cs],[C|RCs]) :- read_request_aux(Cs, RCs).
 
@@ -128,7 +128,7 @@ parse_input(get_piece_possible_destinations(X, Y, P, B), []).
 /* check valid move */
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 1) :- valid_move(X1, Y1, X2, Y2, P, Board).
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 0).
-
+ 
 /* make move */
 parse_input(make_move(X1, Y1, X2, Y2, Board), NewBoard) :-
 	get_cell(X1, Y1, Board, C1),
@@ -146,5 +146,3 @@ parse_input(get_valid_chain_moves(X1, Y1, X2, Y2, P, B), MoveList) :- valid_chai
 /* CPU move */
 parse_input(cpu_move(Board, P), NewBoard) :-
 	cpu_move(Board, NewBoard, P).
-
-

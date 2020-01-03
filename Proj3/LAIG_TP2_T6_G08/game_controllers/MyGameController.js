@@ -102,17 +102,27 @@ class MyGameController {
     let dx = x-px, dy = y-py;
     let chain = function(){
       piece.move(tile);
-      this.unhighlightTiles();
-      this.highlightTiles(x,y);
       this.moves.push(new MyGameMove(this.scene, this, piece.tile, tile, piece));
-      this.checkGameOver();
     }.bind(this);
     piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain, false);
 
+    let onValid = function(data){
+      if(data.target.status == 200){
+        if(data.target.response){
+          this.boardState = JSON.parse(data.target.response);
+          this.unhighlightTiles();
+          this.highlightTiles(x,y);
+          this.checkGameOver();
+        }
+      }
+    }.bind(this);
+
     let onReply = function(data) {
       if(data.target.status == 200){
-        if(data.target.response == 1)
+        if(data.target.response == 1){
           piece.animations[1].play();
+          server.makeMove_req(this.boardState, px, py, x, y, onValid);
+        }
         else
           console.log('🕹️ Invalid move');
       }
@@ -129,8 +139,8 @@ class MyGameController {
       // move to tile -> down
       if(x == -1)      { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  0, 0,  1, piece.animations[0].reverse, false); }
       else if(x ==  1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  0, 0, -1, piece.animations[0].reverse, false); }
-      else if(y == -1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  1, 0,  0, piece.animations[0].reverse, false); }
-      else if(y ==  1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -1, 0,  0, piece.animations[0].reverse, false); }
+      else if(z == -1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  1, 0,  0, piece.animations[0].reverse, false); }
+      else if(z ==  1) { piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -1, 0,  0, piece.animations[0].reverse, false); }
     };
     // up -> move to tile -> down
     piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0, chain);
@@ -138,24 +148,22 @@ class MyGameController {
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y){
     let onReply = function(data) {
-      console.log(data.target);
       if(data.target.status == 200){
+          console.log(JSON.parse(data.target.response));
         let list = JSON.parse(data.target.response);
-        console.log(list);
         if(list.length){
-          console.log(list);
+          let tile;
+          for(let coords of list) {
+            tile = this.board.getTile(coords[1], coords[0]-1);
+            tile.highlight = true;
+            this.highlighted.push(tile);
+          }
         } else{
           console.log('🕹️ No moves');
         }
       }
     }.bind(this);
     server.possibleMoves_req(x, y, this.player_turn, this.boardState, onReply);
-    for(let tile of this.board.tiles){
-      if(tile.x == x && tile.y == (y - 1)) { tile.highlight = true; this.highlighted.push(tile); }
-      else if(tile.x == x && tile.y == (y + 1)) { tile.highlight = true; this.highlighted.push(tile); }
-      else if(tile.y == y && tile.x == (x - 1)) { tile.highlight = true; this.highlighted.push(tile); }
-      else if(tile.y == y && tile.x == (x + 1)) { tile.highlight = true; this.highlighted.push(tile); }
-    }
   }
   /* Remove all highlighted tiles */
   unhighlightTiles(){
@@ -176,9 +184,10 @@ class MyGameController {
   /* Check if game as reached final state */
   checkGameOver(){
     let onReply = function(data) {
-      console.log(data.target.status);
-      console.log(data.target.response);
-      console.log('🕹️ Game Over');
+      if(data.target.status == 200){
+        if(data.target.response != 3)
+          console.log('🕹️ Game Over');
+      }
     };
     server.gameOver_req(this.boardState, onReply);
   }

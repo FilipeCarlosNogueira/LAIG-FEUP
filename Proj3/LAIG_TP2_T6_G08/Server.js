@@ -10,7 +10,6 @@ let server = {
     },
     request: function(requestString, handleReply) {			 
         this.__request(requestString, handleReply);
-        console.log('---' + requestString);
     },
     gameOver_req: function(board, reply){
         let request = 'game_over(' + JSON.stringify(board) + ')';

@@ -49,27 +49,30 @@ class MyBoard extends CGFobject {
   }
   init_board(boardState){
     let uniqueID = 1;
-    let x_length = boardState.length - 2;
-    let y_length = boardState[0].length;
+    this.x_length = boardState.length - 2;
+    this.y_length = boardState[0].length;
     let tile;
-    for (let x = 0; x < x_length; x++) {
-      for(let y = 0; y < y_length; y++) {
+    for (let x = 0; x < this.x_length; x++) {
+      for(let y = 0; y < this.y_length; y++) {
         tile = new MyTile(this.scene, uniqueID, this.gameController, x, y);
         this.tiles.push(tile);
         uniqueID += 1;
       }
     }
     let piece;
-    for (let i = 0; i < y_length; i++) {
+    for (let i = 0; i < this.y_length; i++) {
       piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], boardState[1][i], 1);
       this.pieces.push(piece);
       uniqueID += 1;
     }
-    for (let i = 0; i < y_length; i++) {
-      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[this.tiles.length - i - 1], boardState[x_length][i], 2);
+    for (let i = 0; i < this.y_length; i++) {
+      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[this.tiles.length - i - 1], boardState[this.x_length][i], 2);
       this.pieces.push(piece);
       uniqueID += 1;
     }
+  }
+  getTile(x,y){
+    return this.tiles[x + y * this.y_length];
   }
   update(t){
     for(let piece of this.pieces){
