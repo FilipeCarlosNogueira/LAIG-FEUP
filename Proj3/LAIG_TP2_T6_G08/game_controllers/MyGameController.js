@@ -154,7 +154,7 @@ class MyGameController {
         if(list.length){
           let tile;
           for(let coords of list) {
-            tile = this.board.getTile(coords[1], coords[0]-1);
+            tile = this.board.getTile(coords[1], coords[0]);
             tile.highlight = true;
             this.highlighted.push(tile);
           }

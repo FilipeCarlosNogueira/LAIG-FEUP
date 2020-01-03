@@ -49,7 +49,7 @@ class MyBoard extends CGFobject {
   }
   init_board(boardState){
     let uniqueID = 1;
-    this.x_length = boardState.length - 2;
+    this.x_length = boardState.length;
     this.y_length = boardState[0].length;
     let tile;
     for (let x = 0; x < this.x_length; x++) {
@@ -61,12 +61,12 @@ class MyBoard extends CGFobject {
     }
     let piece;
     for (let i = 0; i < this.y_length; i++) {
-      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[i], boardState[1][i], 1);
+      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[this.y_length + i], boardState[1][i], 1);
       this.pieces.push(piece);
       uniqueID += 1;
     }
     for (let i = 0; i < this.y_length; i++) {
-      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[this.tiles.length - i - 1], boardState[this.x_length][i], 2);
+      piece = new MyPiece(this.scene, uniqueID, this.gameController, this.tiles[this.tiles.length - i - this.y_length - 1], boardState[this.x_length - 2][i], 2);
       this.pieces.push(piece);
       uniqueID += 1;
     }
