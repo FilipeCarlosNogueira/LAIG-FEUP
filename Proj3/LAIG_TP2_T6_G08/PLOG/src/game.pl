@@ -191,8 +191,7 @@ chain_move(X1, Y1, X2, Y2, C1, C2, P, Board, NewBoard, Choice, BackTrackingList)
     - Y2: Ordenada da casa destino da nave
     - C: nível da nave em questão
 */
-dest_cell_in_reach(X1, Y1, X2, Y2, C):-
-    C =:= abs(X2-X1) + abs(Y2-Y1).
+dest_cell_in_reach(X1, Y1, X2, Y2, C) :- C >= abs(X2-X1) + abs(Y2-Y1).
 
 /*
 * Predicado intermédio que verifica o jogador dado como argumento e chama o respetivo predicado com o intuito de
@@ -202,13 +201,8 @@ dest_cell_in_reach(X1, Y1, X2, Y2, C):-
     - B: board/tabuleiro
     - P: jogador
 */
-home_row_check(X, B, P):-
-    P =:= 1,
-    home_row_check_A(X, B, P, 1).
-
-home_row_check(X, B, P):-
-    P =:= 2,
-    home_row_check_B(X, B, P, 6).
+home_row_check(X, B, 1) :- home_row_check_A(X, B, 1, 1).
+home_row_check(X, B, 2) :- home_row_check_B(X, B, 2, 6).
 
 /*
 * Verifica se X é a abcissa da homerow do jogador A. Usando I como counter, começa-se no topo do tabuleiro e
