@@ -4376,7 +4376,7 @@ class CGFinterface {
         this.processMouse()
     }
     processMouse() {
-        if (false && this.activeCamera) {
+        if (this.mouse_enabled && this.activeCamera) {
             var t = vec2.subtract(vec2.create(), this.mouse, this.prevMouse);
             if (this.mouseButtons[0]) {
                 if (this.ctrlKey) {

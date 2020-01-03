@@ -87,6 +87,8 @@ class XMLscene extends CGFscene {
         this.checkKeys();
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+        this.gl.enable(this.gl.BLEND);
+        this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
         this.updateProjectionMatrix();
         this.loadIdentity();
         this.applyViewMatrix();
@@ -123,6 +125,8 @@ class XMLscene extends CGFscene {
     updateCamera(){
         this.cameraView = this.gameController.currentTheme.views[this.view].camera;
         this.interface.setActiveCamera(this.cameraView);
+        if(this.view == 'free_cam') this.interface.mouse_enabled = true;
+        else this.interface.mouse_enabled = false;
     }
     updateTheme(){
         this.gameController.changeTheme(this.theme);

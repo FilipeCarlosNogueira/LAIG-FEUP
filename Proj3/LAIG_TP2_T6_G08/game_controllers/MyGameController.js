@@ -89,18 +89,18 @@ class MyGameController {
   OnObjectSelected(obj, id) {
     if(obj instanceof MyPiece){ // if pick piece
       if(obj.player != this.player_turn) return;
-      if(this.selected_piece == obj) {
+      if(this.selected_piece == obj && this.selected_piece.moves_left == this.selected_piece.type) { // if reselected piece and didnt move
         this.deselectPiece(this.selected_piece);
-      } else if(this.selected_piece && this.selected_piece.moves_left == this.selected_piece.type) {
+      } else if(this.selected_piece && this.selected_piece.moves_left == this.selected_piece.type) { // if selected piece and didnt move selected
         this.deselectPiece(this.selected_piece);
         this.selectPiece(obj);
-      } else if(!this.selected_piece){
+      } else if(!this.selected_piece){ // if no selected piece
         this.selectPiece(obj);
       }
     } else if(obj instanceof MyTile){ // if pick tile
       if(!this.selected_piece && obj.piece){  // if no piece selected and has piece
         this.selectPiece(obj.piece);
-      } else if(this.selected_piece == obj.piece) {  // if piece did not move and has piece
+      } else if(this.selected_piece == obj.piece && this.selected_piece.moves_left == this.selected_piece.type) {  // if reselect and didnt move
         this.deselectPiece(this.selected_piece);
       } else if(this.selected_piece && this.selected_piece.moves_left == this.selected_piece.type && obj.piece) {  // if piece did not move and has piece
         this.deselectPiece(this.selected_piece);
@@ -148,6 +148,7 @@ class MyGameController {
   }
   /* Move to adjacent tile */
   normalMove(piece, tile) {
+    if(tile.piece) return;
     let x = tile.x, y = tile.y; // destination coords
     let px = piece.tile.x, py = piece.tile.y; // origin coords
     let dx = x-px, dy = y-py; // difference
@@ -164,7 +165,13 @@ class MyGameController {
   }
   /* Move and update board */
   finalMove(piece, tile) {
-    if(!tile) tile = piece.tile;
+    if(!tile) {
+      if(tile.piece) {  // if last move is towards piece of same player special stuff
+
+      } else { // if no tile defined
+        return;
+      }
+    }
     let x = tile.x, y = tile.y; // destination coords
     let px = piece.tile.x, py = piece.tile.y; // origin coords
     let dx = x-px, dy = y-py; // difference

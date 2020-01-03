@@ -1,6 +1,7 @@
 class MyInterface extends CGFinterface {
     constructor() {
         super();
+        this.mouse_enabled = false;
     }
     init(application) {
         super.init(application);
