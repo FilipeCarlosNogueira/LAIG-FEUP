@@ -4,6 +4,7 @@ class MyBoard extends CGFobject {
     this.gameController = gameController;
     this.tiles = [];
     this.pieces = [];
+    this.busy = false;
 
     this.init_materials();
     this.init_board(boardState);
@@ -103,6 +104,7 @@ class MyBoard extends CGFobject {
     }
   }
   isMoving() {
+    if(this.busy) return true;
     for(let piece of this.pieces) {
       if(piece.isMoving()) return true;
     }

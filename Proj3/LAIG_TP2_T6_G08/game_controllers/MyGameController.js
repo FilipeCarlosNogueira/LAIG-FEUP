@@ -20,9 +20,10 @@ class MyGameController {
     this.board = new MyBoard(this.scene, this, this.boardState);
     // Defines current player turn 
     // 1 for player A, 2 for player B
-    this.player_turn = 1;
     this.selected_piece;
     this.selected_orig;
+    this.cpuA = false;
+    this.cpuB = false;
     // Array of highlighted tiles
     this.highlighted = [];
     // Array of game moves
@@ -47,26 +48,28 @@ class MyGameController {
   /* Update animations and make CPU moves */
   update(t){
     if(this.board) this.board.update(t);
-    /*
-      TODO WIP
-      If bot playing, do move
-      interface will have dropdown
-    */
+
+    if(this.cpuA && this.player_turn == 1) this.cpu_turn();
+    if(this.cpuB && this.player_turn == 2) this.cpu_turn();
   }
   /* Check if game as reached final state */
   checkGameOver(){
     let onReply = function(data) {
       if(data.target.status == 200){
-        if(data.target.response != 3)
+        if(data.target.response != 3) {
           console.log('🕹️ Game Over');
+          this.reset();
+        }
       }
-    };
+    }.bind(this);
     server.gameOver_req(this.boardState, onReply);
   }
   /* Switch turn to other player */
   switchTurn(){
+    this.board.busy = true;
     if(this.player_turn == 1) this.player_turn = 2;
     else this.player_turn = 1;
+    this.deselectPiece(this.selected_piece);
 
     this.scene.rotateCam(Math.PI);
   }
@@ -87,6 +90,7 @@ class MyGameController {
   }
   /* Treat picking data */
   OnObjectSelected(obj, id) {
+    if(this.board.busy) return;
     if(obj instanceof MyPiece){                                           // if pick piece
       if(obj.player != this.player_turn) return;                            // if not current player return
       if(this.selected_piece) {                                             // if piece selected
@@ -203,10 +207,10 @@ class MyGameController {
     let onValid = function(data){
       if(data.target.status == 200){
         if(data.target.response){
-          this.boardState = JSON.parse(data.target.response);
           this.moves.push(new MyGameMove(this.boardState, this.selected_orig, tile, piece));
+          this.boardState = JSON.parse(data.target.response);
           this.checkGameOver();
-          console.log('Player ' + (this.player_turn == 1 ? 'A' : 'B') + 
+          console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') + 
                       ' made move: ' + this.selected_orig.x + ',' + this.selected_orig.y + 
                       ' » '+ tile.x + ',' + tile.y);
           this.switchTurn();
@@ -220,7 +224,7 @@ class MyGameController {
           server.makeMove_req(this.boardState, ox, oy, x, y, onValid);
         } else { // invalid move go back
           let dx = x-ox, dy = y-oy; // difference
-          if(piece.isMoving()) {
+          if(this.board.isMoving()) {
             let chain1 = piece.animations[1].chain;
             let chain2 = function(){
               piece.move(this.selected_orig);
@@ -250,4 +254,45 @@ class MyGameController {
     }
     this.highlighted = [];
   }
+  /* Set game to starting state */
+  reset() {
+    this.board.busy = true;
+    let onReply = function(data) {
+      if(this.player_turn == 2) this.scene.rotateCam(Math.PI);
+      this.boardState = JSON.parse(data.target.response)[0];
+      this.player_turn = JSON.parse(data.target.response)[1];
+      this.initBoard();
+      console.log('🕹️ Game initialized ');
+    }.bind(this);
+    server.request("start_board", onReply);
+  }
+  /* Undo last move */
+  undo(){
+    this.board.busy = true;
+    if(!this.moves.length) return;
+    if(this.selected_piece){
+      this.selected_piece.move(this.selected_orig);
+      this.deselectPiece(this.selected_piece);
+    }
+    let prev = this.moves.pop();
+    let dx = prev.dest.x - prev.orig.x;
+    let dy = prev.dest.y - prev.orig.y;
+
+    // move piece animation
+    let chain = function(){
+      prev.piece.move(prev.orig);
+      prev.piece.animations[0].reverse();
+      this.boardState = prev.board;
+      this.switchTurn();
+      console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') + 
+                      ' undo move: ' + prev.orig.x + ',' + prev.orig.y + 
+                      ' « '+ prev.dest.x + ',' + prev.dest.y);
+    }.bind(this);
+    prev.piece.animations[1] = new MyPieceAnimation(this.scene, 1, -dy, 0, -dx, chain, false);
+    prev.piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0, function(){prev.piece.animations[1].play();}.bind(this));
+  }
+  cpu_turn() {
+
+  }
 }
+

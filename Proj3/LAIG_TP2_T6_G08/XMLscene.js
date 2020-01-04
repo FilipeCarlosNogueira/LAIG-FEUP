@@ -78,6 +78,7 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
         this.interface.setActiveCamera(this.cameraView);
         this.interface.addUndoButton();
+        this.interface.addResetButton();
         //this.theme = 0;
         //this.themeSelect = this.gameController.themes;
         //this.interface.addThemeGroup();
@@ -120,7 +121,7 @@ class XMLscene extends CGFscene {
         if(this.n_portions) {
             this.camera.orbit(CGFcameraAxis.Y, this.portion);
             this.n_portions--;
-        }
+        } else { if(this.gameController.board) this.gameController.board.busy = false; }
     }
     updateCamera() {
         this.cameraView = this.gameController.currentTheme.views[this.view].camera;
@@ -142,6 +143,9 @@ class XMLscene extends CGFscene {
         this.n_portions = 30;
     }
     undo(){
-        this.gameController.undoMove();
+        this.gameController.undo();
+    }
+    reset(){
+        this.gameController.reset();
     }
 }

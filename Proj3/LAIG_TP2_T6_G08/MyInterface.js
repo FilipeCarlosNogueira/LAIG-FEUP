@@ -46,6 +46,9 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'theme', this.scene.themeSelect).onChange(this.scene.updateTheme.bind(this.scene)).name('Theme');
     }
     addUndoButton() {
-        this.gui.add(this.scene, 'undo').name('Undo');
+        this.gui.add(this.scene, 'undo').name('🕹 Undo');
+    }
+    addResetButton() {
+        this.gui.add(this.scene, 'reset').name('🕹 Reset');
     }
 }
