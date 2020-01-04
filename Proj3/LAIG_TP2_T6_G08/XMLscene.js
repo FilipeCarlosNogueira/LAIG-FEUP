@@ -14,7 +14,7 @@ class XMLscene extends CGFscene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
-        this.setUpdatePeriod(50);
+        this.setUpdatePeriod(10);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
         this.last_update = Date.now();
         this.axis = new CGFaxis(this);
@@ -143,8 +143,8 @@ class XMLscene extends CGFscene {
     }
     rotateCam(angle){
         let port = angle % (2*Math.PI);
-        this.portion = port/30;
-        this.n_portions = 30;
+        this.portion = port/20;
+        this.n_portions = 20;
     }
     undo(){
         this.gameController.undo();

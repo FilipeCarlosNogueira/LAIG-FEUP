@@ -98,6 +98,8 @@ class MyGameController {
       if(obj.player != this.player_turn) return;                            // if not current player return
       if(this.selected_piece) {                                             // if piece selected
         if(this.selected_piece.moves_left == 1) {                             // if last move -> do special move
+          if(obj == this.selected_piece && obj.type == 1)                       // if did not move -> deselect
+            this.deselectPiece(this.selected_piece);
           this.movePiece(this.selected_piece, obj.tile);
         } else if(this.selected_piece.moves_left == this.selected_piece.type) { // if did not move
           if(obj == this.selected_piece) {                                        // if click same -> deselect
@@ -114,6 +116,8 @@ class MyGameController {
       if(this.selected_piece) {                                                         // if piece selected
         if(obj.piece) {                                                                   // if tile has piece
           if(this.selected_piece.moves_left == 1) {                                         // if last move -> do special move
+            if(obj.piece == this.selected_piece && obj.piece.type == 1)                       // if did not move -> deselect
+              this.deselectPiece(this.selected_piece);
             this.movePiece(this.selected_piece, obj);
           } else if(this.selected_piece.moves_left == this.selected_piece.type) {           // if did not move
             if(this.selected_piece == obj.piece) {                                            // if reselect -> deselect
@@ -139,13 +143,11 @@ class MyGameController {
   /* Treat selecting pieces */
   selectPiece(piece) {
     this.unhighlightTiles();
-    if(piece.player != this.player_turn) 
+    if(piece.player != this.player_turn) {
       return;
-    else if(piece == this.selected_piece) 
-      this.finalMove(piece);
-    else {
+    } else {
       piece.selected = true;
-      piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0);
+      piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0);
       this.selected_piece = piece;
       this.selected_orig = piece.tile;
       this.highlightTiles(piece.tile.x,piece.tile.y);
@@ -163,6 +165,8 @@ class MyGameController {
   /* Treat piece movement */
   movePiece(piece, tile) {
     if(this.board.isMoving()) return;   // if board busy ignore
+    if(this.prev_tile == tile) return;
+    this.prev_tile = piece.tile;
     if(piece.moves_left == 1) {         // if final move
       if(tile.piece)                      // if tile has piece
         return;                           // <--------------------- HERE ADD ROCKET BOOST
@@ -184,10 +188,10 @@ class MyGameController {
     let chain = function(){
       piece.move(tile);
       piece.moves_left--;
+      this.highlightTiles(x,y); // highlight new moves 
     }.bind(this);
-    piece.animations[1] = new MyPieceAnimation(this.scene, 1,  dy, 0,  dx, chain);
+    piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  dy, 0,  dx, chain);
     this.unhighlightTiles();
-    this.highlightTiles(x,y); // highlight new moves 
   }
   /* Move and update board */
   finalMove(piece, tile) {
@@ -228,14 +232,22 @@ class MyGameController {
       piece.moves_left = piece.type;
       server.validMove_req(this.boardState, ox, oy, x, y, this.player_turn, onReply);
     }.bind(this);
-    piece.animations[1] = new MyPieceAnimation(this.scene, 0.7,  dy, 0, dx, chain);
+    piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  dy, 0, dx, chain);
     this.unhighlightTiles();
   }
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y) {
-    this.highlighted = this.board.highlightAdj(x,y);
-    for(let tile of this.highlighted){
-      tile.highlight = true;
+    let list = this.board.highlightAdj(x,y);
+    for(let tile of list){
+      if(tile != this.prev_tile && (this.player_turn - 1 ? (tile.x != 7) : (tile.x != 0)) && (!tile.piece)) {
+        tile.highlight = true;
+        this.highlighted.push(tile);
+      }
+      else if(tile.piece && this.selected_piece.moves_left == 1 && tile.piece.player == this.player_turn) {
+        tile.highlight = true;
+        this.highlighted.push(tile);
+      }
+      console.log(this.selected_piece.moves_left == 1);
     } 
   }
   /* Remove all highlighted tiles */
@@ -275,8 +287,8 @@ class MyGameController {
                     ' « '+ prev.dest.x + ',' + prev.dest.y);
       }
     }.bind(this);
-    prev.piece.animations[1] = new MyPieceAnimation(this.scene, 1, -dy, 0, -dx, chain, false);
-    prev.piece.animations[0] = new MyPieceAnimation(this.scene, 0.5, 0, 0.5, 0, function() {prev.piece.animations[1].play();}.bind(this));
+    prev.piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -dy, 0, -dx, chain, false);
+    prev.piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0, function() {prev.piece.animations[1].play();}.bind(this));
   }
   /* Asks prolog to play */
   cpu_turn() {
