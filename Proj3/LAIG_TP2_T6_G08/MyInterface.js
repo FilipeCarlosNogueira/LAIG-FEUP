@@ -51,4 +51,7 @@ class MyInterface extends CGFinterface {
     addResetButton() {
         this.gui.add(this.scene, 'reset').name('🕹 Reset');
     }
+    addMovieButton() {
+        this.gui.add(this.scene, 'movie').name('🕹 Movie');
+    }
 }

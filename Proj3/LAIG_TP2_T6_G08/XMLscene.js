@@ -14,7 +14,7 @@ class XMLscene extends CGFscene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
-        this.setUpdatePeriod(10);
+        this.setUpdatePeriod(32);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
         this.last_update = Date.now();
         this.axis = new CGFaxis(this);
@@ -79,6 +79,7 @@ class XMLscene extends CGFscene {
         this.interface.setActiveCamera(this.cameraView);
         this.interface.addUndoButton();
         this.interface.addResetButton();
+        this.interface.addMovieButton();
         //this.theme = 0;
         //this.themeSelect = this.gameController.themes;
         //this.interface.addThemeGroup();
@@ -121,9 +122,6 @@ class XMLscene extends CGFscene {
         if(this.n_portions > 0) {
             this.camera.orbit(CGFcameraAxis.Y, this.portion);
             this.n_portions--;
-        } else if(this.n_portions == 0) {
-            this.n_portions--;
-            if(this.gameController.board) this.gameController.board.busy = false;
         }
     }
     updateCamera() {
@@ -151,5 +149,11 @@ class XMLscene extends CGFscene {
     }
     reset(){
         this.gameController.reset();
+    }
+    movie(){
+        this.gameController.movie();
+    }
+    isMoving(){
+        return (this.n_portions > 0);
     }
 }

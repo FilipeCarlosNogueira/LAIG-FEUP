@@ -50,9 +50,11 @@ class MyGameController {
   /* Update animations and make CPU moves */
   update(t) {
     if(this.board) this.board.update(t);
-
-    if(this.cpuA && this.player_turn == 1) this.cpu_turn();
-    if(this.cpuB && this.player_turn == 2) this.cpu_turn();
+    if(this.n_undo > 0) this.undo();
+    if(!this.busy()){
+      if(this.cpuA && this.player_turn == 1) this.cpu_turn();
+      if(this.cpuB && this.player_turn == 2) this.cpu_turn();
+    }
   }
   /* Check if game as reached final state */
   checkGameOver() {
@@ -68,7 +70,6 @@ class MyGameController {
   }
   /* Switch turn to other player */
   switchTurn() {
-    this.board.busy = true;
     if(this.player_turn == 1) this.player_turn = 2;
     else this.player_turn = 1;
     this.deselectPiece(this.selected_piece);
@@ -92,7 +93,7 @@ class MyGameController {
   }
   /* Treat picking data */
   OnObjectSelected(obj, id) {
-    if(this.board.busy) return;
+    if(this.busy()) return;
     if((this.player_turn == 1 && this.cpuA) || (this.player_turn == 2 && this.cpuB)) return;
     if(obj instanceof MyPiece) {                                           // if pick piece
       if(obj.player != this.player_turn) return;                            // if not current player return
@@ -164,7 +165,7 @@ class MyGameController {
   }
   /* Treat piece movement */
   movePiece(piece, tile) {
-    if(this.board.isMoving()) return;   // if board busy ignore
+    if(this.busy()) return;   // if board busy ignore
     if(this.prev_tile == tile) return;
     this.prev_tile = piece.tile;
     if(piece.moves_left == 1) {         // if final move
@@ -220,7 +221,7 @@ class MyGameController {
         if(data.target.response == 1) {  // valid move
           server.makeMove_req(this.boardState, ox, oy, x, y, onValid);
         } else { // invalid move go back
-          this.undo(true);
+          if(!piece.animations[0].chained) piece.animations[0].chain = function(){ this.undo(true); }.bind(this);
         }
       }
     }.bind(this);
@@ -247,7 +248,6 @@ class MyGameController {
         tile.highlight = true;
         this.highlighted.push(tile);
       }
-      console.log(this.selected_piece.moves_left == 1);
     } 
   }
   /* Remove all highlighted tiles */
@@ -260,17 +260,14 @@ class MyGameController {
   /* Set game to starting state */
   reset() {
     let i = this.moves.length;
-    while(i){
-      this.undo(); i--;
-    }
+    this.n_undo = i;
   }
   /* Undo last move */
-  undo(ignoreTurn) {
+  undo(ignoreTurn, times) {
+    console.log(this.busy() || this.selected_piece);
     if(!this.moves.length) return;
-    if(this.selected_piece) {
-      this.selected_piece.move(this.selected_orig);
-      this.deselectPiece(this.selected_piece);
-    }
+    if(this.busy() || this.selected_piece) return;
+    this.board.busy = true;
     let prev = this.moves.pop();
     let dx = prev.dest.x - prev.orig.x;
     let dy = prev.dest.y - prev.orig.y;
@@ -286,9 +283,20 @@ class MyGameController {
                     ' undo move: ' + prev.orig.x + ',' + prev.orig.y + 
                     ' « '+ prev.dest.x + ',' + prev.dest.y);
       }
+      this.board.busy = false;
     }.bind(this);
     prev.piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -dy, 0, -dx, chain, false);
     prev.piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0, function() {prev.piece.animations[1].play();}.bind(this));
+  }
+  movie(){
+    let backup = this.moves;
+    this.reset();
+    let i = 0;
+    let piece, orig, dest, ox, oy, x, y, dx, dy;
+    for(let move of backup) {
+
+    }
+    this.board.busy = false;
   }
   /* Asks prolog to play */
   cpu_turn() {
@@ -297,9 +305,13 @@ class MyGameController {
       if(data.target.status == 200) {
         console.log(data.target.response);
         console.log('🤖 CPU move ');
+        this.board.busy = false;
       }
     }.bind(this);
     server.CPUMove_req(this.boardState, this.player_turn, onReply);
+  }
+  busy(){
+    return (this.board && (this.board.isMoving() || this.scene.isMoving()));
   }
 }
 
