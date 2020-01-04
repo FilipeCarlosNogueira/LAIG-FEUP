@@ -122,7 +122,7 @@ class XMLscene extends CGFscene {
             this.n_portions--;
         }
     }
-    updateCamera(){
+    updateCamera() {
         this.cameraView = this.gameController.currentTheme.views[this.view].camera;
         this.interface.setActiveCamera(this.cameraView);
         if(this.view == 'free_cam') this.interface.mouse_enabled = true;
