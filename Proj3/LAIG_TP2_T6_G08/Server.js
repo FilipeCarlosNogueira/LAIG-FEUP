@@ -11,6 +11,10 @@ let server = {
     request: function(requestString, handleReply) {			 
         this.__request(requestString, handleReply);
     },
+    startGame_req: function(reply){
+        let request = 'start_board';
+        this.request(request, reply);
+    },
     gameOver_req: function(board, reply){
         let request = 'game_over(' + JSON.stringify(board) + ')';
         if(board != null) {

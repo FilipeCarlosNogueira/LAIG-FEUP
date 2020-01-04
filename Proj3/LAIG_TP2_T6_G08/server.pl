@@ -182,5 +182,4 @@ parse_input(valid_chain_move(X1, Y1, X2, Y2, X3, Y3, P, B, Choice), 0).
 parse_input(get_valid_chain_moves(X1, Y1, X2, Y2, P, B), MoveList) :- valid_chain_moves(X1, Y1, X2, Y2, P, B, MoveList).
 
 /* CPU move */
-parse_input(cpu_move(Board, P), NewBoard) :-
-	cpu_move(Board, NewBoard, P).
+parse_input(cpu_move(Board, P), NewBoard) :- cpu_move(Board, NewBoard, P).

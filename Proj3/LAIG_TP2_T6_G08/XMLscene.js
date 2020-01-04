@@ -14,7 +14,7 @@ class XMLscene extends CGFscene {
         this.gl.enable(this.gl.DEPTH_TEST);
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
-        this.setUpdatePeriod(20);
+        this.setUpdatePeriod(50);
         this.textureRTT = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
         this.last_update = Date.now();
         this.axis = new CGFaxis(this);
@@ -106,7 +106,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             this.setDefaultAppearance();
             this.gameController.display();
-            this.axis.display();
+            //this.axis.display();
         }
         this.popMatrix();
     }
@@ -118,10 +118,13 @@ class XMLscene extends CGFscene {
         this.last_update = t;
         this.gameController.currentTheme.update(delta_time);
         this.gameController.update(delta_time);
-        if(this.n_portions) {
+        if(this.n_portions > 0) {
             this.camera.orbit(CGFcameraAxis.Y, this.portion);
             this.n_portions--;
-        } else { if(this.gameController.board) this.gameController.board.busy = false; }
+        } else if(this.n_portions == 0) {
+            this.n_portions--;
+            if(this.gameController.board) this.gameController.board.busy = false;
+        }
     }
     updateCamera() {
         this.cameraView = this.gameController.currentTheme.views[this.view].camera;
@@ -139,7 +142,8 @@ class XMLscene extends CGFscene {
         this.render(this.cameraView);
     }
     rotateCam(angle){
-        this.portion = angle/30;
+        let port = angle % (2*Math.PI);
+        this.portion = port/30;
         this.n_portions = 30;
     }
     undo(){
