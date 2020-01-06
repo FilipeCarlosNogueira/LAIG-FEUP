@@ -15,10 +15,19 @@ let server = {
         let request = 'start_board';
         this.request(request, reply);
     },
+    homeRowCheck_req: function(X, Board, Player, reply){
+        let requestString = 'homeRowCheck('
+        + JSON.stringify(X) + ','
+        + JSON.stringify(Board) + ','
+        + JSON.stringify(Player)
+        + ')';
+
+        this.request(requestString, reply);
+    },
     gameOver_req: function(board, reply){
-        let request = 'game_over(' + JSON.stringify(board) + ')';
+        let requestString = 'game_over(' + JSON.stringify(board) + ')';
         if(board != null) {
-            this.request(request, reply);
+            this.request(requestString, reply);
         }
     },
     possibleMoves_req: function(x, y, player, board, reply){
