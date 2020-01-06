@@ -147,11 +147,24 @@ class MyGameController {
     if(piece.player != this.player_turn) {
       return;
     } else {
-      piece.selected = true;
-      piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0);
-      this.selected_piece = piece;
-      this.selected_orig = piece.tile;
-      this.highlightTiles(piece.tile.x,piece.tile.y);
+      
+      let onReply = function(data){
+        if(data.target.status == 200){
+          if(data.target.response == 1){
+            piece.selected = true;
+            piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0);
+            this.selected_piece = piece;
+            this.selected_orig = piece.tile;
+            this.highlightTiles(piece.tile.x,piece.tile.y);
+          }
+          else{
+            alert('Piece does not belong to the home row! Pick again.');
+            return;
+          }
+        }
+      }.bind(this);
+
+      server.homeRowCheck_req(piece.tile.x, this.boardState, this.player_turn, onReply);
     }
   }
   /* Treat deselecting pieces */
@@ -169,10 +182,19 @@ class MyGameController {
     if(this.prev_tile == tile) return;
     this.prev_tile = piece.tile;
     if(piece.moves_left == 1) {         // if final move
-      if(tile.piece)                      // if tile has piece
-        return;                           // <--------------------- HERE ADD ROCKET BOOST
+      if(tile.piece){                   // if tile has piece --> ROCKET BOOST
+        // console.log('Rocket boost activated!');
+        // this.finalMove(piece, tile, true);
+
+        // console.log('pice:');console.log(piece);
+        // console.log('tile.pice:');console.log(tile.piece);
+        // this.scene.clearPickRegistration();
+        // this.OnObjectSelected(tile.piece, 0);
+        // this.selectPiece(tile.piece);
+        return;
+      }
       else                                // if tile empty
-        this.finalMove(piece, tile);
+        this.finalMove(piece, tile, false);
     } else {                            // if not final move
       this.normalMove(piece, tile);
     }
@@ -195,7 +217,7 @@ class MyGameController {
     this.unhighlightTiles();
   }
   /* Move and update board */
-  finalMove(piece, tile) {
+  finalMove(piece, tile, RocketBoost) {
     if(!tile) return;
     let x = tile.x, y = tile.y;               // destination coords
     let px = piece.tile.x, py = piece.tile.y; // origin coords
@@ -212,7 +234,7 @@ class MyGameController {
           console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') +
                       ' made move: ' + ox + ',' + oy +
                       ' » '+ x + ',' + y);
-          this.switchTurn();
+          if(!RocketBoost) this.switchTurn();
         }
       }
     }.bind(this);
