@@ -1035,6 +1035,7 @@ class MySceneGraph {
       }
       this.materials[apply_material].apply();
     }
+
     for (let childPrim of comp.primitiveChild) {
       if (apply_material != "none" && apply_texture != "none") {
         this.primitives[childPrim].updateTexCoords(apply_length_t, apply_length_s);

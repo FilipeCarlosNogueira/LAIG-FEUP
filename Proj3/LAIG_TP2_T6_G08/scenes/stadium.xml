@@ -79,6 +79,7 @@
         <texture id="wood_text"    file="scenes/images/wood.jpg" />
 
         <texture id="goal_net_text"    file="scenes/images/goal_net.png" />
+        <texture id="football_text"    file="scenes/images/ball.jpg" />
     </textures>
 
     <materials>
@@ -123,6 +124,10 @@
             <cylinder top="3" base="3" height="10" slices="30" stacks="10" />
         </primitive>
 
+        <primitive id="sphere">
+            <sphere radius="1" slices="30" stacks="30" />
+        </primitive>
+
         <primitive id="leg_cylinder">
             <cylinder base="0.5" top="0.5" height="5" slices="30" stacks="30"/>
         </primitive>
@@ -157,6 +162,19 @@
     </primitives>
 
     <components>
+        <!-- BALL -->
+            <component id="ball">
+                <transformation>
+                    <translate x="0" y="0" z="10" />
+                </transformation>
+                <materials>
+                    <material id="white" />
+                </materials>
+                <texture id="football_text" length_s="0.5" length_t="1" />
+                <children>
+                    <primitiveref id="sphere" />
+                </children>
+                </component>
         <!-- GOAL -->
             <component id="goal_0">
                 <transformation>
@@ -257,7 +275,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-                </component>            
+                </component>
             <component id="goal_post_0">
                 <transformation>
                     <translate x="1" y="-2" z="3" />
@@ -507,7 +525,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-                </component>        
+                </component>
             <component id="sky_top">
                 <transformation>
                     <translate x="0" y="0.5" z="0" />
@@ -521,7 +539,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-                </component>            
+                </component>
             <component id="sky_side2">
                 <transformation>
                     <translate x="-0.5" y="0" z="0" />
@@ -534,7 +552,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-                </component>            
+                </component>
             <component id="sky_side3">
                 <transformation>
                     <translate x="0.5" y="0" z="0" />
@@ -547,7 +565,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-                </component>            
+                </component>
             <component id="sky_side1">
                 <transformation>
                     <translate x="0" y="0" z="0.5" />
@@ -560,7 +578,7 @@
                 <children>
                     <primitiveref id="square" />
                 </children>
-                </component>            
+                </component>
             <component id="sky_side0">
                 <transformation>
                     <translate x="0" y="0" z="-0.5" />
@@ -767,6 +785,7 @@
                     <componentref id="light_post_3" />
                     <componentref id="goal_0" />
                     <componentref id="goal_1" />
+                    <componentref id="ball" />
                 </children>
                 </component>
     </components>
