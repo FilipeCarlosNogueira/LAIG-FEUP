@@ -161,12 +161,12 @@ parse_input(apply_increment_move(Chain_move, X1, Y1, X2, Y2, Board), AuxBoard2) 
     change_cell(X1, Y1, Board, AuxBoard, C1),
     change_cell(X2, Y2, AuxBoard, AuxBoard2, C1).
 
-parse_input(apply_increment_move(Chain_move, X1, Y1, X2, Y2, Board), []). 
+parse_input(apply_increment_move(Chain_move, X1, Y1, X2, Y2, Board), []).
 
 /* check valid move */
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 1) :- valid_move(X1, Y1, X2, Y2, P, Board).
 parse_input(valid_move(Board, X1, Y1, X2, Y2, P), 0).
- 
+
 /* make move */
 parse_input(make_move(X1, Y1, X2, Y2, Board), NewBoard) :-
 	get_cell(X1, Y1, Board, C1),

@@ -8,7 +8,7 @@ let server = {
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         request.send();
     },
-    request: function(requestString, handleReply) {			 
+    request: function(requestString, handleReply) {
         this.__request(requestString, handleReply);
     },
     startGame_req: function(reply){
@@ -110,8 +110,7 @@ let server = {
     CPUMove_req: function(board, player, reply){
         let requestString = 'cpu_move('
         + JSON.stringify(board) + ','
-        + JSON.stringify(player) + ','
-        + ')';
+        + JSON.stringify(player) + ')';
 
         this.request(requestString, reply);
     }

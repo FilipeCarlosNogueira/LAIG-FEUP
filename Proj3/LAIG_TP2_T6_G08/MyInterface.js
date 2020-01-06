@@ -42,8 +42,11 @@ class MyInterface extends CGFinterface {
     addThemeGroup() {
         this.gui.add(this.scene, 'theme', this.scene.themeSelect).onChange(this.scene.updateTheme.bind(this.scene)).name('Theme');
     }
-    addThemeGroup() {
-        this.gui.add(this.scene, 'theme', this.scene.themeSelect).onChange(this.scene.updateTheme.bind(this.scene)).name('Theme');
+    addCPUAGroup() {
+        this.gui.add(this.scene, 'cpuA', this.scene.on_off).onChange(this.scene.updateCPU.bind(this.scene)).name('CPU A');
+    }
+    addCPUBGroup() {
+        this.gui.add(this.scene, 'cpuB', this.scene.on_off).onChange(this.scene.updateCPU.bind(this.scene)).name('CPU B');
     }
     addUndoButton() {
         this.gui.add(this.scene, 'undo').name('🕹 Undo');

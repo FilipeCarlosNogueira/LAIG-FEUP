@@ -51,7 +51,7 @@ class MyGameController {
   update(t) {
     if(this.board) this.board.update(t);
     if(this.n_undo > 0) this.undo(true);
-    if(!this.busy()){
+    if(!this.busy()) {
       if(this.cpuA && this.player_turn == 1) this.cpu_turn();
       if(this.cpuB && this.player_turn == 2) this.cpu_turn();
     }
@@ -186,7 +186,7 @@ class MyGameController {
     if(Math.abs(dx) + Math.abs(dy) != 1) return; // only adjacent moves
 
     // move piece animation
-    let chain = function(){
+    let chain = function() {
       piece.move(tile);
       piece.moves_left--;
       this.highlightTiles(x,y); // highlight new moves
@@ -221,7 +221,7 @@ class MyGameController {
         if(data.target.response == 1) {  // valid move
           server.makeMove_req(this.boardState, ox, oy, x, y, onValid);
         } else { // invalid move go back
-          if(!piece.animations[0].chained) piece.animations[0].chain = function(){ this.undo(true); }.bind(this);
+          if(!piece.animations[0].chained) piece.animations[0].chain = function() { this.undo(true); }.bind(this);
         }
       }
     }.bind(this);
@@ -239,7 +239,7 @@ class MyGameController {
   /* Highlight adjacent tiles to (x,y) */
   highlightTiles(x, y) {
     let list = this.board.highlightAdj(x,y);
-    for(let tile of list){
+    for(let tile of list) {
       if(tile != this.prev_tile && (this.player_turn - 1 ? (tile.x != 7) : (tile.x != 0)) && (!tile.piece)) {
         tile.highlight = true;
         this.highlighted.push(tile);
@@ -252,7 +252,7 @@ class MyGameController {
   }
   /* Remove all highlighted tiles */
   unhighlightTiles() {
-    for(let tile of this.highlighted){
+    for(let tile of this.highlighted) {
       tile.highlight = false;
     }
     this.highlighted = [];
@@ -289,7 +289,7 @@ class MyGameController {
     prev.piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0, function() {prev.piece.animations[1].play();}.bind(this));
     if(this.n_undo) this.n_undo--;
   }
-  movie(){
+  movie() {
     let backup = this.moves;
     this.reset();
     let i = 0;
@@ -302,6 +302,7 @@ class MyGameController {
   /* Asks prolog to play */
   cpu_turn() {
     this.board.busy = true;
+    console.log('cpu');
     let onReply = function(data) {
       if(data.target.status == 200) {
         console.log(data.target.response);
@@ -311,7 +312,11 @@ class MyGameController {
     }.bind(this);
     server.CPUMove_req(this.boardState, this.player_turn, onReply);
   }
-  busy(){
+  busy() {
     return (this.board && (this.board.isMoving() || this.scene.isMoving()));
+  }
+  updateCPU(cpuA, cpuB) {
+    if(cpuA == 'On') this.cpuA = true; else this.cpuA = false;
+    if(cpuB == 'On') this.cpuB = true; else this.cpuB = false;
   }
 }

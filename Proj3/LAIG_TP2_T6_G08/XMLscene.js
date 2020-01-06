@@ -80,6 +80,14 @@ class XMLscene extends CGFscene {
         this.interface.addUndoButton();
         this.interface.addResetButton();
         this.interface.addMovieButton();
+        this.cpuA = 0;
+        this.cpuB = 0;
+        this.on_off = [];
+        this.on_off[0] =  'Off';
+        this.on_off [1] = 'On';
+        this.interface.addCPUAGroup();
+        this.interface.addCPUBGroup();
+
         //this.theme = 0;
         //this.themeSelect = this.gameController.themes;
         //this.interface.addThemeGroup();
@@ -132,6 +140,9 @@ class XMLscene extends CGFscene {
     }
     updateTheme(){
         this.gameController.changeTheme(this.theme);
+    }
+    updateCPU(){
+        this.gameController.updateCPU(this.cpuA, this.cpuB);
     }
     display(){
         this.gameController.managePick(false, this.pickResults);
