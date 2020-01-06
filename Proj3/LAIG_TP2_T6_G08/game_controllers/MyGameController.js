@@ -20,7 +20,7 @@ class MyGameController {
   initBoard() {
     // Build board from game state
     this.board = new MyBoard(this.scene, this, this.boardState);
-    // Defines current player turn 
+    // Defines current player turn
     // 1 for player A, 2 for player B
     this.selected_piece;
     this.selected_orig;
@@ -50,7 +50,7 @@ class MyGameController {
   /* Update animations and make CPU moves */
   update(t) {
     if(this.board) this.board.update(t);
-    if(this.n_undo > 0) this.undo();
+    if(this.n_undo > 0) this.undo(true);
     if(!this.busy()){
       if(this.cpuA && this.player_turn == 1) this.cpu_turn();
       if(this.cpuB && this.player_turn == 2) this.cpu_turn();
@@ -111,7 +111,7 @@ class MyGameController {
           }
         }
       } else {                                                              // if no piece selected -> select
-        this.selectPiece(obj);                                            
+        this.selectPiece(obj);
       }
     } else if(obj instanceof MyTile) {                                                 // if pick tile
       if(this.selected_piece) {                                                         // if piece selected
@@ -189,7 +189,7 @@ class MyGameController {
     let chain = function(){
       piece.move(tile);
       piece.moves_left--;
-      this.highlightTiles(x,y); // highlight new moves 
+      this.highlightTiles(x,y); // highlight new moves
     }.bind(this);
     piece.animations[1] = new MyPieceAnimation(this.scene, 0.5,  dy, 0,  dx, chain);
     this.unhighlightTiles();
@@ -209,8 +209,8 @@ class MyGameController {
         if(data.target.response) {
           this.boardState = JSON.parse(data.target.response);
           this.checkGameOver();
-          console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') + 
-                      ' made move: ' + ox + ',' + oy + 
+          console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') +
+                      ' made move: ' + ox + ',' + oy +
                       ' » '+ x + ',' + y);
           this.switchTurn();
         }
@@ -248,14 +248,14 @@ class MyGameController {
         tile.highlight = true;
         this.highlighted.push(tile);
       }
-    } 
+    }
   }
   /* Remove all highlighted tiles */
   unhighlightTiles() {
     for(let tile of this.highlighted){
       tile.highlight = false;
     }
-    this.highlighted = []; 
+    this.highlighted = [];
   }
   /* Set game to starting state */
   reset() {
@@ -263,7 +263,7 @@ class MyGameController {
     this.n_undo = i;
   }
   /* Undo last move */
-  undo(ignoreTurn, times) {
+  undo(ignoreTurn) {
     console.log(this.busy() || this.selected_piece);
     if(!this.moves.length) return;
     if(this.busy() || this.selected_piece) return;
@@ -279,14 +279,15 @@ class MyGameController {
       this.boardState = prev.board;
       if(!ignoreTurn) {
         this.switchTurn();
-        console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') + 
-                    ' undo move: ' + prev.orig.x + ',' + prev.orig.y + 
+        console.log((this.player_turn == 1 ? '🟡 Player A' : '🟢 Player B') +
+                    ' undo move: ' + prev.orig.x + ',' + prev.orig.y +
                     ' « '+ prev.dest.x + ',' + prev.dest.y);
       }
       this.board.busy = false;
     }.bind(this);
     prev.piece.animations[1] = new MyPieceAnimation(this.scene, 0.5, -dy, 0, -dx, chain, false);
     prev.piece.animations[0] = new MyPieceAnimation(this.scene, 0.2, 0, 0.5, 0, function() {prev.piece.animations[1].play();}.bind(this));
+    if(this.n_undo) this.n_undo--;
   }
   movie(){
     let backup = this.moves;
@@ -314,4 +315,3 @@ class MyGameController {
     return (this.board && (this.board.isMoving() || this.scene.isMoving()));
   }
 }
-
