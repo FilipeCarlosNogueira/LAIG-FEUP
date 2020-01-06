@@ -183,14 +183,15 @@ class MyGameController {
     this.prev_tile = piece.tile;
     if(piece.moves_left == 1) {         // if final move
       if(tile.piece){                   // if tile has piece --> ROCKET BOOST
-        console.log('Rocket boost activated!');
-        this.finalMove(piece, tile, true);
+        // console.log('Rocket boost activated!');
+        // this.finalMove(piece, tile, true);
 
-        console.log('pice:');console.log(piece);
-        console.log('tile.pice:');console.log(tile.piece);
-        this.scene.clearPickRegistration();
-        this.OnObjectSelected(tile.piece, 0);
-        this.selectPiece(tile.piece);
+        // console.log('pice:');console.log(piece);
+        // console.log('tile.pice:');console.log(tile.piece);
+        // this.scene.clearPickRegistration();
+        // this.OnObjectSelected(tile.piece, 0);
+        // this.selectPiece(tile.piece);
+        return;
       }
       else                                // if tile empty
         this.finalMove(piece, tile, false);
